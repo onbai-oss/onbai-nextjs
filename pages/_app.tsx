@@ -1,7 +1,28 @@
-import '../styles/globals.css'
 import type { AppProps } from 'next/app'
+import Head from 'next/head'
+import { ResetCSS, ThemeProvider, theme } from 'onui-ts'
+import '../styles/globals.css'
+import  { Toaster } from 'react-hot-toast';
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+  return (
+    <>
+      <Head>
+        <title>Onbai - Nextjs hehe</title>
+        <link rel="icon" href="/favicon.ico" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet"
+        />
+      </Head>
+
+      <ResetCSS />
+      <ThemeProvider theme={theme}>
+        <Component {...pageProps} />
+      </ThemeProvider>
+      <Toaster />
+    </>
+  )
 }
 export default MyApp

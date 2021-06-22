@@ -1,19 +1,29 @@
 {
-  "name": "onbai",
+  "name": "onbai-nextjs",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "fixonui": "npm unlink onui-ts && npm link onui-ts"
   },
   "dependencies": {
-    "next": "10.2.3",
+    "axios": "^0.21.1",
+    "next": "11.0.0",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "react-feather": "^2.0.9",
+    "react-hot-toast": "^2.0.0"
   },
   "devDependencies": {
-    "@types/react": "17.0.7",
-    "typescript": "4.2.4"
+    "@types/react": "17.0.11",
+    "typescript": "4.3.4"
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "es5"
   }
 }
