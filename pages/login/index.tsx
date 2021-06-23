@@ -3,8 +3,12 @@ import { BaseSyntheticEvent } from 'react'
 import { UserPlus, ArrowRight } from 'react-feather'
 import Link from 'next/link'
 import { API } from '../../utils/api'
+import { useRouter } from 'next/router'
+import { PAGES } from '../../utils/constant'
 
 const LoginForm = () => {
+  const router = useRouter()
+
   const onChange = (e: BaseSyntheticEvent) => {
     console.log('-> on change', e.target.value)
   }
@@ -18,6 +22,7 @@ const LoginForm = () => {
     })
       .then((res) => {
         console.log(res)
+        router.push(PAGES.DASHBOARD)
       })
       .catch((e) => {
         console.error(e)
@@ -44,9 +49,9 @@ const LoginForm = () => {
         ></FieldInput>
         <Flex mt="1" sx={{ justifyContent: 'flex-end' }}>
           <Link href="/forgot-password" passHref={true}>
-              <Text as="a" sx={{ fontSize: 1, cursor: 'pointer' }}>
-                Quên mật khẩu?
-              </Text>
+            <Text as="a" sx={{ fontSize: 1, cursor: 'pointer' }}>
+              Quên mật khẩu?
+            </Text>
           </Link>
         </Flex>
 
