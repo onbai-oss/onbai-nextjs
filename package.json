@@ -5,8 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "fixonui": "npm unlink onui-ts && npm link onui-ts"
+    "start": "next start"
   },
   "dependencies": {
     "axios": "^0.21.1",
@@ -17,8 +16,8 @@
     "react-hot-toast": "^2.0.0"
   },
   "devDependencies": {
-    "@types/react": "17.0.11",
-    "typescript": "4.3.4"
+    "@types/react": "17.0.13",
+    "typescript": "4.3.5"
   },
   "prettier": {
     "printWidth": 80,

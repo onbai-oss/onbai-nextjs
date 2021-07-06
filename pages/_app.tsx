@@ -1,8 +1,7 @@
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
-import { ResetCSS, ThemeProvider, theme } from 'onui-ts'
 import '../styles/globals.css'
-import  { Toaster } from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -16,11 +15,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           rel="stylesheet"
         />
       </Head>
-
-      <ResetCSS />
-      <ThemeProvider theme={theme}>
-        <Component {...pageProps} />
-      </ThemeProvider>
+      <Component {...pageProps} />
       <Toaster />
     </>
   )
