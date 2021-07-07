@@ -1,5 +1,8 @@
+@import './loading.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import './loading.css';
+@layer base {
+}
