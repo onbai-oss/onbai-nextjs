@@ -1,5 +1,4 @@
 import { BaseSyntheticEvent } from 'react'
-import { UserPlus, ArrowRight } from 'react-feather'
 import Link from 'next/link'
 import { API } from '../../utils/api'
 import toast from 'react-hot-toast'
