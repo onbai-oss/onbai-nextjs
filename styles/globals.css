@@ -1,5 +1,8 @@
-/* LOADING */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
+/* LOADING */
 .onbai-loading-full {
   position: fixed;
   z-index: 999999;
