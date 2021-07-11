@@ -1,8 +1,9 @@
 import { BaseSyntheticEvent } from 'react'
 import Link from 'next/link'
-import { API } from '../../utils/api'
+import { API } from 'utils/api'
 import { useRouter } from 'next/router'
-import { PAGES } from '../../utils/constant'
+import { PAGES } from 'utils/constant'
+import Button from '@/components/base/Button'
 
 const LoginForm = () => {
   const router = useRouter()
@@ -34,6 +35,7 @@ export default function LoginPage() {
   return (
     <>
       <div>LoginPage</div>
+      <Button>cc</Button>
     </>
   )
 }
