@@ -41,7 +41,7 @@ const LoginForm = () => {
           type="email"
           name="email"
           id="email"
-          placeholder="..."
+          placeholder=""
           required
         ></Input>
       </fieldset>
@@ -55,7 +55,7 @@ const LoginForm = () => {
           type="password"
           name="password"
           id="password"
-          placeholder="..."
+          placeholder=""
           required
         ></Input>
       </fieldset>
@@ -112,7 +112,7 @@ export default function SignUpPage() {
           </div>
         </div>
         <div
-          className={`flex-1 bg-green-500 text-white flex justify-center items-center`}
+          className={`flex-1 bg-gradient-to-r from-green-600 to-green-500 text-white flex justify-center items-center`}
         >
           <div className={`p-2`}>
             <ul className={`list-disc`}>

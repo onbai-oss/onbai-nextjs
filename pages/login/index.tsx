@@ -41,7 +41,7 @@ const LoginForm = () => {
           type="email"
           name="email"
           id="email"
-          placeholder="..."
+          placeholder=""
           required
         ></Input>
       </fieldset>
@@ -55,7 +55,7 @@ const LoginForm = () => {
           type="password"
           name="password"
           id="password"
-          placeholder="..."
+          placeholder=""
           required
         ></Input>
       </fieldset>
@@ -111,7 +111,9 @@ export default function LoginPage() {
           </div>
         </section>
 
-        <section className={`flex-1 bg-green-600 text-white `}>
+        <section
+          className={`flex-1 bg-gradient-to-r from-green-600 to-green-500 text-white `}
+        >
           <div className={`p-2  h-screen flex justify-center items-center`}>
             <ul className={`list-disc`}>
               <li>

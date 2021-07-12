@@ -41,7 +41,7 @@ const LoginForm = () => {
           type="email"
           name="email"
           id="email"
-          placeholder="..."
+          placeholder=""
           required
           autoFocus
         ></Input>
@@ -69,13 +69,13 @@ export default function ForgotPasswordPage() {
           </div>
         </div>
         <div
-          className={`flex-1 bg-green-500 text-white flex justify-center items-center`}
+          className={`flex-1 bg-gradient-to-r from-yellow-500 to-yellow-400 text-white flex justify-center items-center`}
         >
           <div className={`p-2`}>
             <ul className={`list-disc`}>
               <li>
                 <h1 className={`text-2xl text-center font-semibold`}>
-                  Free education tool.
+                  Recovery password
                 </h1>
               </li>
             </ul>
