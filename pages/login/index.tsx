@@ -4,6 +4,7 @@ import { API } from 'utils/api'
 import { useRouter } from 'next/router'
 import { PAGES } from 'utils/constant'
 import Button from '@/components/base/Button'
+import Input from '@/components/base/Input'
 
 const LoginForm = () => {
   const router = useRouter()
@@ -34,8 +35,7 @@ const LoginForm = () => {
 export default function LoginPage() {
   return (
     <>
-      <div>LoginPage</div>
-      <Button>cc</Button>
+      <div className={`p-4`}>Login page</div>
     </>
   )
 }
