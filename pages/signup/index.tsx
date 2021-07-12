@@ -95,6 +95,20 @@ export default function SignUpPage() {
                 </div>
               </Link>
             </div> */}
+
+            <div className={`my-6`}>
+              <hr />
+            </div>
+
+            <div className={`my-4 grid grid-cols-1 grid-rows-1 gap-4`}>
+              <Button icon="google" className={`w-full`} color="danger">
+                Continue with Google
+              </Button>
+
+              <Button icon="facebook" color="info">
+                Continue with Facebook
+              </Button>
+            </div>
           </div>
         </div>
         <div

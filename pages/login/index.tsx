@@ -60,9 +60,21 @@ const LoginForm = () => {
         ></Input>
       </fieldset>
 
-      <fieldset className={`mt-4`}>
+      <div className={`mt-2 flex justify-end text-sm`}>
+        <Link href="/forgot-password">
+          <div
+            className={`flex justify-items-center items-center gap-2 cursor-pointer`}
+          >
+            <a className={`hover:underline text-blue-500 font-semibold`}>
+              Forgot your password?
+            </a>
+          </div>
+        </Link>
+      </div>
+
+      <fieldset className={`mt-2`}>
         <Button icon="arrow-circle-right-outline" type="submit">
-          Submit
+          Login
         </Button>
       </fieldset>
     </form>
@@ -72,37 +84,35 @@ const LoginForm = () => {
 export default function LoginPage() {
   return (
     <>
-      <div className={`w-screen h-screen flex flex-col sm:flex-row`}>
-        <div
-          className={` p-6 w-full sm:w-96 flex justify-center items-center `}
+      <main className={`w-screen h-auto sm:h-screen block sm:flex-row sm:flex`}>
+        <section
+          className={` p-6 w-full sm:w-96 flex justify-center items-center overflow-auto`}
         >
           <div className={`w-full`}>
             <div className={`my-4 flex justify-center`}>
               <LogoLink />
             </div>
+
             <LoginForm />
 
             <div className={`my-6`}>
-              <Link href="/forgot-password">
-                <div
-                  className={`flex justify-items-center items-center gap-2 cursor-pointer`}
-                >
-                  <i
-                    data-eva="question-mark-circle-outline"
-                    data-eva-fill="rgba(59, 130, 246,1)"
-                  ></i>
-                  <a className={`hover:underline text-blue-500 font-semibold`}>
-                    Forgot your password
-                  </a>
-                </div>
-              </Link>
+              <hr />
+            </div>
+
+            <div className={`my-4 grid grid-cols-1 grid-rows-1 gap-4`}>
+              <Button icon="google" className={`w-full`} color="danger">
+                Continue with Google
+              </Button>
+
+              <Button icon="facebook" color="info">
+                Continue with Facebook
+              </Button>
             </div>
           </div>
-        </div>
-        <div
-          className={`flex-1 bg-green-500 text-white flex justify-center items-center`}
-        >
-          <div className={`p-2`}>
+        </section>
+
+        <section className={`flex-1 bg-green-600 text-white `}>
+          <div className={`p-2  h-screen flex justify-center items-center`}>
             <ul className={`list-disc`}>
               <li>
                 <h1 className={`text-2xl text-center font-semibold`}>
@@ -111,8 +121,8 @@ export default function LoginPage() {
               </li>
             </ul>
           </div>
-        </div>
-      </div>
+        </section>
+      </main>
     </>
   )
 }
