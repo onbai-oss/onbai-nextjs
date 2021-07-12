@@ -23,9 +23,10 @@ const Button: React.FC<ButtonProps> = (props) => {
       {...props}
       className={`
       appearance-none cursor-pointer outline-none
-      px-8 py-2.5 font-semibold rounded
+      px-6 py-2.5 font-semibold rounded
       flex gap-2 items-center flex-wrap justify-center
       focus:ring-1 ring-gray-900 ring-offset-2
+      hover:shadow-md
       ${
         disabled
           ? outline

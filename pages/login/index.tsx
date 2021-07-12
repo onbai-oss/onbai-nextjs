@@ -5,6 +5,7 @@ import { useRouter } from 'next/router'
 import { PAGES } from 'utils/constant'
 import Button from '@/components/base/Button'
 import Input from '@/components/base/Input'
+import LogoLink from '@/components/base/LogoLink'
 
 const LoginForm = () => {
   const router = useRouter()
@@ -29,13 +30,89 @@ const LoginForm = () => {
       })
   }
 
-  return <div>LoginForm</div>
+  return (
+    <form onSubmit={onSubmit} className={`w-full`}>
+      <fieldset>
+        <label htmlFor="email" className={`my-2 block font-semibold`}>
+          Email
+        </label>
+        <Input
+          icon="email-outline"
+          type="email"
+          name="email"
+          id="email"
+          placeholder="..."
+          required
+        ></Input>
+      </fieldset>
+
+      <fieldset>
+        <label htmlFor="password" className={`my-2 block font-semibold`}>
+          Password
+        </label>
+        <Input
+          icon="lock-outline"
+          type="password"
+          name="password"
+          id="password"
+          placeholder="..."
+          required
+        ></Input>
+      </fieldset>
+
+      <fieldset className={`mt-4`}>
+        <Button icon="arrow-circle-right-outline" type="submit">
+          Submit
+        </Button>
+      </fieldset>
+    </form>
+  )
 }
 
 export default function LoginPage() {
   return (
     <>
-      <div className={`p-4`}>Login page</div>
+      <div className={`w-screen h-screen flex flex-col sm:flex-row`}>
+        <div
+          className={` p-6 w-full sm:w-96 flex justify-center items-center `}
+        >
+          <div className={`w-full`}>
+            <div className={`my-4 flex justify-center`}>
+              <LogoLink />
+            </div>
+            <LoginForm />
+
+            <div className={`my-6`}>
+              <Link href="/forgot-password">
+                <div
+                  className={`flex justify-items-center items-center gap-2 cursor-pointer`}
+                >
+                  <i
+                    data-eva="question-mark-circle-outline"
+                    data-eva-fill="rgba(59, 130, 246,1)"
+                  ></i>
+                  <a className={`hover:underline text-blue-500 font-semibold`}>
+                    Forgot your password
+                  </a>
+                </div>
+              </Link>
+            </div>
+          </div>
+        </div>
+        <div
+          className={`flex-1 bg-green-500 text-white flex justify-center items-center`}
+        >
+          <div className={`p-2`}>
+            <ul className={`list-disc`}>
+              <li>
+                <h1 className={`text-2xl text-center font-semibold`}>
+                  Free education tool.
+                </h1>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </>
   )
 }

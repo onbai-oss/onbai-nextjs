@@ -5,4 +5,7 @@
 @tailwind utilities;
 
 @layer base {
+  body {
+    color: #1b324f;
+  }
 }
