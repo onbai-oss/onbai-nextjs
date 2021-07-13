@@ -44,6 +44,7 @@ const LoginForm = () => {
           placeholder=""
           required
           autoFocus
+          autoComplete="email"
         ></Input>
       </fieldset>
 

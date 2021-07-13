@@ -43,6 +43,7 @@ const LoginForm = () => {
           id="email"
           placeholder=""
           required
+          autoComplete="email"
         ></Input>
       </fieldset>
 
@@ -57,6 +58,7 @@ const LoginForm = () => {
           id="password"
           placeholder=""
           required
+          autoComplete="on"
         ></Input>
       </fieldset>
 

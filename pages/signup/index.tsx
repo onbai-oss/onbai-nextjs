@@ -16,7 +16,7 @@ const LoginForm = () => {
   const onSubmit = (e: BaseSyntheticEvent) => {
     e.preventDefault()
     console.log('On Submit', e.target)
-    API.post('authentication', {
+    API.post('users', {
       strategy: 'local',
       email: e.target.email.value,
       password: e.target.password.value,
@@ -43,6 +43,7 @@ const LoginForm = () => {
           id="email"
           placeholder=""
           required
+          autoComplete="email"
         ></Input>
       </fieldset>
 
@@ -56,6 +57,7 @@ const LoginForm = () => {
           name="password"
           id="password"
           placeholder=""
+          autoComplete="on"
           required
         ></Input>
       </fieldset>
