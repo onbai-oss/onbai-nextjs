@@ -23,7 +23,7 @@ const LoginForm = () => {
     })
       .then((res) => {
         console.log(res)
-        router.push(PAGES.DASHBOARD)
+        router.push(PAGES.LOGIN)
       })
       .catch((e) => {
         console.error(e)
@@ -113,19 +113,20 @@ export default function SignUpPage() {
             </div>
           </div>
         </div>
-        <div
-          className={`flex-1 bg-gradient-to-r from-green-600 to-green-500 text-white flex justify-center items-center`}
+
+        <section
+          className={`flex-1 bg-gradient-to-r from-green-600 to-green-500 text-white `}
         >
-          <div className={`p-2`}>
-            <ul className={`list-disc`}>
+          <div className={`p-2  h-screen flex justify-center items-center`}>
+            <ul className={``}>
               <li>
                 <h1 className={`text-2xl text-center font-semibold`}>
-                  Free education tool.
+                  Hi! Wellcome to the club 👋
                 </h1>
               </li>
             </ul>
           </div>
-        </div>
+        </section>
       </div>
     </>
   )

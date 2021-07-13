@@ -88,7 +88,7 @@ export default function LoginPage() {
     <>
       <main className={`w-screen h-auto sm:h-screen block sm:flex-row sm:flex`}>
         <section
-          className={` p-6 w-full sm:w-96 flex justify-center items-center overflow-auto`}
+          className={`p-6 w-full sm:w-96 flex justify-center items-center overflow-auto`}
         >
           <div className={`w-full`}>
             <div className={`my-4 flex justify-center`}>
@@ -102,10 +102,11 @@ export default function LoginPage() {
             </div>
 
             <div className={`my-4 grid grid-cols-1 grid-rows-1 gap-4`}>
-              <Button icon="google" className={`w-full`} color="danger">
-                Continue with Google
-              </Button>
-
+              <Link href={PAGES.DASHBOARD}>
+                <Button icon="google" className={`w-full`} color="danger">
+                  Continue with Google
+                </Button>
+              </Link>
               <Button icon="facebook" color="info">
                 Continue with Facebook
               </Button>
@@ -117,10 +118,10 @@ export default function LoginPage() {
           className={`flex-1 bg-gradient-to-r from-green-600 to-green-500 text-white `}
         >
           <div className={`p-2  h-screen flex justify-center items-center`}>
-            <ul className={`list-disc`}>
+            <ul className={``}>
               <li>
                 <h1 className={`text-2xl text-center font-semibold`}>
-                  Free education tool.
+                  Good to see you again! 🥳
                 </h1>
               </li>
             </ul>

@@ -73,10 +73,10 @@ export default function ForgotPasswordPage() {
           className={`flex-1 bg-gradient-to-r from-yellow-500 to-yellow-400 text-white flex justify-center items-center`}
         >
           <div className={`p-2`}>
-            <ul className={`list-disc`}>
+            <ul className={``}>
               <li>
                 <h1 className={`text-2xl text-center font-semibold`}>
-                  Recovery password
+                  Don't worry, your password will recovery soon 🚀
                 </h1>
               </li>
             </ul>

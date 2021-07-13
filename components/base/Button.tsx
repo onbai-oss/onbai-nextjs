@@ -14,14 +14,16 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   icon?: string
 }
 
-const Button: React.FC<ButtonProps> = (props) => {
-  const { children, size = 'base', color = 'primary', icon, disabled } = props
-  const outline = color.includes('outline')
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  (props, ref) => {
+    const { children, size = 'base', color = 'primary', icon, disabled } = props
+    const outline = color.includes('outline')
 
-  return (
-    <button
-      {...props}
-      className={`
+    return (
+      <button
+        {...props}
+        ref={ref}
+        className={`
       appearance-none cursor-pointer outline-none
       px-6 py-2.5 font-semibold rounded
       flex gap-2 items-center flex-wrap justify-center
@@ -70,26 +72,27 @@ const Button: React.FC<ButtonProps> = (props) => {
       border-2 border-solid border-transparent
       hover:opacity-95
     `}
-    >
-      {icon && icon ? (
-        <i
-          data-eva={icon}
-          data-eva-fill={
-            outline
-              ? disabled
-                ? '#D1D5DB'
-                : (color.includes('primary') && '#10B981') ||
-                  (color.includes('danger') && '#EF4444 ') ||
-                  (color.includes('warning') && '#F59E0B ') ||
-                  (color.includes('info') && '#3B82F6')
-              : 'rgba(255,255,255,1)'
-          }
-        ></i>
-      ) : null}
+      >
+        {icon && icon ? (
+          <i
+            data-eva={icon}
+            data-eva-fill={
+              outline
+                ? disabled
+                  ? '#D1D5DB'
+                  : (color.includes('primary') && '#10B981') ||
+                    (color.includes('danger') && '#EF4444 ') ||
+                    (color.includes('warning') && '#F59E0B ') ||
+                    (color.includes('info') && '#3B82F6')
+                : 'rgba(255,255,255,1)'
+            }
+          ></i>
+        ) : null}
 
-      {children}
-    </button>
-  )
-}
+        {children}
+      </button>
+    )
+  }
+)
 
 export default Button
