@@ -63,3 +63,11 @@
     opacity: 1;
   }
 }
+
+.emoji-mart-category .emoji-mart-emoji span {
+  cursor: pointer !important;
+}
+
+.emoji-mart-anchor-icon svg {
+  margin: auto;
+}

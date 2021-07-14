@@ -2,6 +2,7 @@ import React from 'react'
 import Button from '@/components/base/Button'
 import Input from '@/components/base/Input'
 import 'styles/globals.css'
+import Textarea from '@/components/base/Textarea'
 export default {
   title: 'UI',
 }
@@ -101,7 +102,7 @@ export const UI = () => {
           onSubmit={(e) => e.preventDefault()}
           className={`grid grid-cols-1 grid-rows-1 gap-2`}
         >
-          <div>
+          <fieldset>
             <label htmlFor="text" className={`my-2 block font-semibold`}>
               Text
             </label>
@@ -113,9 +114,9 @@ export const UI = () => {
               placeholder="Input something ..."
               required
             ></Input>
-          </div>
+          </fieldset>
 
-          <div>
+          <fieldset>
             <label htmlFor="search" className={`my-2 block font-semibold`}>
               Search
             </label>
@@ -127,18 +128,25 @@ export const UI = () => {
               placeholder="Search something ..."
               required
             ></Input>
-          </div>
+          </fieldset>
 
-          <div>
+          <fieldset>
+            <label htmlFor="textarea" className={`my-2 block font-semibold`}>
+              Textarea
+            </label>
+            <Textarea id="textarea" name="textarea" />
+          </fieldset>
+
+          <fieldset>
             <label className={`my-2 block font-semibold`}>Disabled</label>
             <Input placeholder="Input something ..." required disabled></Input>
-          </div>
+          </fieldset>
 
-          <div className={`mt-2`}>
+          <fieldset className={`mt-2`}>
             <Button icon="arrow-circle-right-outline" type="submit">
               Submit
             </Button>
-          </div>
+          </fieldset>
         </form>
       </section>
     </div>

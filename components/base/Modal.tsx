@@ -15,35 +15,19 @@ export function Modal({ isOpen, closeModal, children }: IModalProps) {
         className="fixed inset-0 z-10 overflow-y-auto bg-opacity-5 bg-black"
         onClose={closeModal}
       >
-        <div className="min-h-screen px-4 text-center">
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-200"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
+        <div className="min-h-screen px-2 sm:px-4 text-center">
+          <Transition.Child as={Fragment}>
             <Dialog.Overlay className="fixed inset-0" />
           </Transition.Child>
 
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-200"
-            enterFrom="opacity-0 scale-95"
-            enterTo="opacity-100 scale-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100 scale-100"
-            leaveTo="opacity-0 scale-95"
-          >
-            <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-lg hover:shadow-xl rounded-md relative">
+          <Transition.Child as={Fragment}>
+            <div className="inline-block w-full max-w-md p-4 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-lg hover:shadow-xl rounded-md relative">
               {/* Modal content */}
               {children}
 
               <button
                 onClick={closeModal}
-                className={`absolute top-1 right-1 `}
+                className={`absolute top-1 right-1 appearance-none bg-transparent border-none outline-none`}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

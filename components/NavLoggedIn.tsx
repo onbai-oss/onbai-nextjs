@@ -26,14 +26,16 @@ export function NavLoggedIn({ isHideNew, ...props }: INavLoggedInProps) {
       <nav
         {...props}
         className={`
-      p-4  flex justify-between items-center
-    `}
+        py-4 px-4 flex justify-between items-center
+        sm:py-2
+        `}
       >
         <LogoLink></LogoLink>
-        <div className={`flex gap-4`}>
+        <div className={`flex `}>
           {isHideNew ? null : (
-            <div className={`fixed bottom-12 right-6 sm:static`}>
-              <Link href={PAGES.NEW}>
+            // fixed bottom-12 right-6 sm:static
+            <div className={``}>
+              <Link href={PAGES.NEW_COLLECION}>
                 <Button icon="plus">New</Button>
               </Link>
             </div>
@@ -41,7 +43,7 @@ export function NavLoggedIn({ isHideNew, ...props }: INavLoggedInProps) {
 
           <button
             onClick={openModal}
-            className={`rounded border-2 px-2 border-solid border-transparent hover:border-gray-700`}
+            className={`ml-2 rounded border-2 px-2 border-solid border-transparent hover:border-gray-700`}
           >
             <i
               data-eva="menu"

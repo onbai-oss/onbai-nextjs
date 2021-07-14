@@ -20,7 +20,7 @@ export default function Custom404() {
       <div className={`my-5`}>
         <Link href="/">
           <div
-            className={`flex justify-items-center items-center gap-2 cursor-pointer`}
+            className={`flex justify-items-center items-center cursor-pointer`}
           >
             <i
               data-eva="arrow-back-outline"

@@ -1,8 +1,9 @@
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
-import '../styles/globals.css'
 import { Toaster } from 'react-hot-toast'
 import { useEffect } from 'react'
+
+import '../styles/globals.css'
 
 declare global {
   interface Window {

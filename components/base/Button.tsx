@@ -10,6 +10,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     | 'danger-outline'
     | 'warning-outline'
     | 'info-outline'
+    | 'text-outline'
   size?: 'small' | 'base' | 'large'
   icon?: string
 }
@@ -24,11 +25,11 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {...props}
         ref={ref}
         className={`
-      appearance-none cursor-pointer outline-none
-      px-6 py-2.5 font-semibold rounded
-      flex gap-2 items-center flex-wrap justify-center
-      focus:ring-1 ring-gray-900 ring-offset-2
-      hover:shadow-md
+      appearance-none cursor-pointer outline-none 
+      px-6 py-2.5 font-semibold rounded 
+      flex items-center flex-wrap justify-center 
+      focus:ring-2 ring-gray-900 ring-offset-2
+      hover:shadow-md 
       ${
         disabled
           ? outline
@@ -68,6 +69,13 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           : ''
       }
       
+      ${
+        !disabled && color.includes('text')
+          ? outline
+            ? 'text-gray-600 bg-white border-gray-600'
+            : 'bg-gray-600 text-white'
+          : ''
+      }
       
       border-2 border-solid border-transparent
       hover:opacity-95
@@ -75,6 +83,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       >
         {icon && icon ? (
           <i
+            className={`mr-2`}
             data-eva={icon}
             data-eva-fill={
               outline

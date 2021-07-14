@@ -15,9 +15,10 @@ export function NavUnlogin(props: INavUnloginProps) {
     sm:justify-between sm:py-2
   `}
     >
-      <div className={`flex gap-3 items-center`}>
+      <div className={`flex items-center`}>
         <LogoLink />
         <img
+          className={`ml-3`}
           src="https://www.countryflags.io/vn/flat/48.png"
           alt="lang"
           draggable="false"
@@ -25,21 +26,19 @@ export function NavUnlogin(props: INavUnloginProps) {
       </div>
       <div
         className={`fixed bottom-0 left-0 w-screen p-4 border-t-2 bg-white
-        sm:static sm:w-auto sm:p-0 border:none
+        sm:static sm:w-auto sm:p-0 sm:border-t-0
         `}
       >
-        <div className={`flex gap-2 justify-center sm:justify-start`}>
-          <Link href="/login">
-            <a>
+        <div className={`flex justify-center sm:justify-start`}>
+          <div className={`mr-2`}>
+            <Link href="/login">
               <Button icon="arrow-circle-right-outline">Login</Button>
-            </a>
-          </Link>
+            </Link>
+          </div>
           <Link href="/signup">
-            <a>
-              <Button icon="person-add-outline" color="primary-outline">
-                Sign up
-              </Button>
-            </a>
+            <Button icon="person-add-outline" color="primary-outline">
+              Sign up
+            </Button>
           </Link>
         </div>
       </div>

@@ -65,7 +65,7 @@ const LoginForm = () => {
       <div className={`mt-2 flex justify-end text-sm`}>
         <Link href="/forgot-password">
           <div
-            className={`flex justify-items-center items-center gap-2 cursor-pointer`}
+            className={`flex justify-items-center items-center cursor-pointer`}
           >
             <a className={`hover:underline text-blue-500 font-semibold`}>
               Forgot your password?
