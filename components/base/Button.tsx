@@ -83,7 +83,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       >
         {icon && icon ? (
           <i
-            className={`mr-2`}
+            className={children ? 'mr-2' : ''}
             data-eva={icon}
             data-eva-fill={
               outline

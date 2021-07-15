@@ -1,5 +1,6 @@
 import BookIcon from '@/components/base/BookIcon'
 import Button from '@/components/base/Button'
+import CollectionIcon from '@/components/base/CollectionIcon'
 import Input from '@/components/base/Input'
 import { NavLoggedIn } from '@/components/NavLoggedIn'
 import { PAGES } from '@/utils/constant'
@@ -26,29 +27,11 @@ export default function DashboardPage() {
         >
           {Array.from(new Array(10)).map((i, index) => (
             <div key={index}>
-              <Link href={PAGES.COLLECTION}>
+              <Link href={PAGES.COLLECTION + '/123'}>
                 <button
                   className={`w-full text-center p-4 shadow hover:shadow-lg rounded-md `}
                 >
-                  <div className={`relative`}>
-                    <BookIcon />
-                    <div
-                      className={`
-                    absolute bottom-1/2 right-1/2 transform translate-y-1/2 translate-x-1/2
-                     w-12 h-12 bg-white rounded-md flex justify-center items-center mb-4 cursor-pointer
-                    `}
-                    >
-                      <div
-                        onClick={() => {}}
-                        style={{
-                          fontSize: 32,
-                        }}
-                        className={` rounded  font-semibold`}
-                      >
-                        <Twemoji text={'C'} />
-                      </div>
-                    </div>
-                  </div>
+                  <CollectionIcon />
                   <div className={`mt-2 font-semibold text-xl`}>Collection</div>
                 </button>
               </Link>

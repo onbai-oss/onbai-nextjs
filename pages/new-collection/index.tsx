@@ -1,27 +1,23 @@
 import BookIcon from '@/components/base/BookIcon'
 import Button from '@/components/base/Button'
 import Input from '@/components/base/Input'
+import Textarea from '@/components/base/Textarea'
+import { useRouter } from 'next/router'
 import { NavLoggedIn } from '@/components/NavLoggedIn'
 import { FormEventHandler, useRef, useState, useEffect } from 'react'
-import dynamic from 'next/dynamic'
 import { Modal } from '@/components/base/Modal'
 import { Picker } from 'emoji-mart'
 import { Twemoji } from 'react-emoji-render'
+import toast from 'react-hot-toast'
 
 import 'emoji-mart/css/emoji-mart.css'
-import Textarea from '@/components/base/Textarea'
-// const Picker: any = dynamic(
-//   import('emoji-mart').then(({ Picker }) => Picker),
-//   {
-//     ssr: true,
-//   }
-// )
+import CollectionIcon from '@/components/base/CollectionIcon'
 
 export default function NewCollectionPage() {
-  const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
-    e.preventDefault()
-    console.log('submit', e)
-  }
+  const router = useRouter()
+  const { id } = router.query
+  const isEdit = Boolean(id)
+
   const [bookColor, setBookColor] = useState('#0F9B6E')
   const [emoji, setEmoji] = useState('')
   const [openModalEmoji, setOpenModalEmoji] = useState(false)
@@ -34,29 +30,46 @@ export default function NewCollectionPage() {
     setOpenModalEmoji(false)
   }
 
+  const onResetStyle = () => {
+    setEmoji('🍀')
+    setBookColor('#0F9B6E')
+  }
+
+  const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault()
+    console.log('submit', e)
+    // TODO: call api
+  }
+
   const onColorPick = (e) => {}
 
   useEffect(() => {
-    setEmoji('🍀')
+    if (isEdit) {
+      // TODO get data collection
+    } else {
+      setEmoji('🍀')
+    }
   }, [])
 
   return (
     <>
       <NavLoggedIn isHideNew />
 
-      <main className={`mb-12`}>
+      <main className={`mt-4 mb-12`}>
         <div
-          className={`font-semibold flex flex-col justify-center items-center 
-
+          className={`
+            font-semibold flex flex-col justify-center items-center 
           `}
         >
           {/* bg-gradient-to-r from-green-600 to-green-500 */}
-          <div className={`my-4 text-2xl`}>New collection</div>
+          <div className={`my-4 text-2xl`}>
+            {isEdit ? 'Edit' : 'New'} collection{' '}
+          </div>
         </div>
 
         <form
           onSubmit={onSubmit}
-          className={`p-4 w-full sm:w-96 mx-auto flex flex-col `}
+          className={`px-4 w-full sm:w-96 mx-auto flex flex-col `}
         >
           <fieldset>
             <label htmlFor="name" className={`my-2 block font-semibold`}>
@@ -92,31 +105,12 @@ export default function NewCollectionPage() {
               <div
                 className={`w-full text-center border-2 border-gray-600 rounded-md p-2`}
               >
-                <div className={`relative`}>
-                  <BookIcon fill={bookColor} />
-                  <div
-                    className={`
-                    absolute bottom-1/2 right-1/2 transform translate-y-1/2 translate-x-1/2
-                     w-12 h-12 bg-white rounded-md flex justify-center items-center mb-4 cursor-pointer
-                    `}
-                  >
-                    <div
-                      onClick={() => setOpenModalEmoji(true)}
-                      style={{
-                        fontSize: 32,
-                      }}
-                      className={` rounded  font-semibold`}
-                      title="Click to change icon"
-                    >
-                      <Twemoji text={emoji} />
-                    </div>
-                  </div>
-                </div>
+                <CollectionIcon fill={bookColor} icon={emoji} />
               </div>
             </div>
 
             <div className={`flex-1 pl-4`}>
-              <div className={`grid grid-rows-1 grid-cols-1 gap-4`}>
+              <div className={`grid grid-rows-1 grid-cols-1 gap-3`}>
                 <Button
                   onClick={onColorPick}
                   type="button"
@@ -142,6 +136,13 @@ export default function NewCollectionPage() {
                 >
                   <span className={`mr-3`}>Icon</span> <Twemoji text={emoji} />
                 </Button>
+                <Button
+                  onClick={onResetStyle}
+                  type="button"
+                  color="text-outline"
+                >
+                  Reset
+                </Button>
               </div>
             </div>
           </fieldset>
@@ -152,7 +153,7 @@ export default function NewCollectionPage() {
               type="submit"
               icon="arrow-circle-right-outline"
             >
-              Create
+              {isEdit ? 'Update' : 'Create'}
             </Button>
           </fieldset>
         </form>

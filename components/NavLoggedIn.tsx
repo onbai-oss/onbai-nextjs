@@ -27,7 +27,7 @@ export function NavLoggedIn({ isHideNew, ...props }: INavLoggedInProps) {
         {...props}
         className={`
         py-4 px-4 flex justify-between items-center
-        sm:py-2
+        sm:py-2 shadow
         `}
       >
         <LogoLink></LogoLink>
