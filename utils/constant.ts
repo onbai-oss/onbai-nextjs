@@ -8,4 +8,5 @@ export const PAGES = {
   EDIT_COLLECION: '/edit-collection',
   NEW_GAME: '/new-game',
   COLLECTION: '/collection',
+  NEW_QUIZ: '/new-quiz',
 }

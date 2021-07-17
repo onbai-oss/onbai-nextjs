@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 
 export interface IModalProps {
@@ -8,6 +8,15 @@ export interface IModalProps {
 }
 
 export function Modal({ isOpen, closeModal, children }: IModalProps) {
+  // For show icon
+  useEffect(() => {
+    if (isOpen) {
+      setTimeout(() => {
+        window.eva.replace()
+      }, 0)
+    }
+  }, [isOpen])
+
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog

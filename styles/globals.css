@@ -9,3 +9,21 @@
     color: #1b324f;
   }
 }
+
+.tiptap-custom-menubar button {
+  border: 1px solid black;
+  padding: 5px 8px;
+  margin: 5px;
+  border-radius: 4px;
+}
+.tiptap-custom-menubar button.is-active {
+  border: 1px solid #15af7c;
+  padding: 5px;
+  margin: 5px;
+  background: #15af7c;
+  color: white;
+}
+
+.onbai-editor {
+  min-height: 64px;
+}
