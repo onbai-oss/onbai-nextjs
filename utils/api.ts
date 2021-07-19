@@ -1,5 +1,7 @@
 import axios, { AxiosInstance } from 'axios'
-import toast from 'react-hot-toast';
+import Router from 'next/router'
+import toast from 'react-hot-toast'
+import { PAGES } from './constant'
 
 const API: AxiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -21,11 +23,19 @@ function hideLoading() {
   listLoading.forEach((e) => e.remove())
 }
 
+const onLogout = () => {
+  localStorage.removeItem('token')
+  Router.replace(PAGES.NOT_LOGIN)
+}
+
 // Add a request interceptor
 API.interceptors.request.use(
   function (config) {
     // Do something before request is sent
     showLoading()
+    config.headers.Authorization =
+      'Bearer ' + (process.browser && localStorage.getItem('token'))
+
     return config
   },
   function (error) {
@@ -47,7 +57,17 @@ API.interceptors.response.use(
     hideLoading()
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
-    toast.error('Có lỗi, vui lòng thử lại.')
+    // TODO: refactor check auth
+    if (
+      error?.response?.status === 401 &&
+      error?.response?.data?.message !== 'Invalid login'
+    ) {
+      onLogout()
+    } else {
+      toast.error(error?.response?.data?.message || error.message)
+    }
+    console.error(error.response)
+
     return Promise.reject(error)
   }
 )

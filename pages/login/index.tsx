@@ -6,6 +6,7 @@ import { PAGES } from 'utils/constant'
 import Button from '@/components/base/Button'
 import Input from '@/components/base/Input'
 import LogoLink from '@/components/base/LogoLink'
+import toast from 'react-hot-toast'
 
 const LoginForm = () => {
   const router = useRouter()
@@ -22,8 +23,11 @@ const LoginForm = () => {
       password: e.target.password.value,
     })
       .then((res) => {
-        console.log(res)
-        router.push(PAGES.DASHBOARD)
+        if (res.status === 201) {
+          localStorage.setItem('token', res.data.accessToken)
+          router.push(PAGES.DASHBOARD)
+          toast.success('Login success')
+        }
       })
       .catch((e) => {
         console.error(e)

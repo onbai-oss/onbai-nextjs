@@ -3,11 +3,18 @@ import Button from '@/components/base/Button'
 import CollectionIcon from '@/components/base/CollectionIcon'
 import Input from '@/components/base/Input'
 import { NavLoggedIn } from '@/components/NavLoggedIn'
+import { API } from '@/utils/api'
 import { PAGES } from '@/utils/constant'
 import Link from 'next/link'
+import { useEffect } from 'react'
 import { Twemoji } from 'react-emoji-render'
 
 export default function DashboardPage() {
+  useEffect(() => {
+    API.get('collection').then((r) => {
+      console.log(r)
+    })
+  }, [])
   return (
     <>
       <NavLoggedIn />

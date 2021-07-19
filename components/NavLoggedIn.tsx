@@ -2,9 +2,11 @@ import { PAGES } from '@/utils/constant'
 import Link from 'next/link'
 import React, { useState } from 'react'
 import Button from './base/Button'
+import Router from 'next/router'
 
 import LogoLink from './base/LogoLink'
 import { Modal } from './base/Modal'
+import toast from 'react-hot-toast'
 
 export interface INavLoggedInProps {
   isHideNew?: boolean
@@ -21,6 +23,12 @@ export function NavLoggedIn({ isHideNew, ...props }: INavLoggedInProps) {
     setIsOpen(true)
   }
 
+  const onLogout = () => {
+    localStorage.removeItem('token')
+    toast.success('Logout success')
+    Router.push('/')
+  }
+
   return (
     <>
       <nav
@@ -30,7 +38,7 @@ export function NavLoggedIn({ isHideNew, ...props }: INavLoggedInProps) {
         sm:py-2 shadow
         `}
       >
-        <LogoLink></LogoLink>
+        <LogoLink linkTo={PAGES.DASHBOARD}></LogoLink>
         <div className={`flex `}>
           {isHideNew ? null : (
             // fixed bottom-12 right-6 sm:static
@@ -77,7 +85,9 @@ export function NavLoggedIn({ isHideNew, ...props }: INavLoggedInProps) {
             <hr />
           </div>
           <div className={`flex justify-center`}>
-            <Button color="warning-outline">Logout</Button>
+            <Button onClick={onLogout} type="button" color="warning-outline">
+              Logout
+            </Button>
           </div>
         </>
       </Modal>

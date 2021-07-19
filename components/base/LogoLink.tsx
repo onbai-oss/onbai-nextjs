@@ -1,11 +1,13 @@
 import Link from 'next/link'
 import React, { ReactElement } from 'react'
 
-interface Props {}
+interface Props {
+  linkTo?: string
+}
 
-export default function LogoLink({}: Props): ReactElement {
+export default function LogoLink({ linkTo = '/' }: Props): ReactElement {
   return (
-    <Link href="/">
+    <Link href={linkTo}>
       <a>
         <img
           className={`w-24 `}

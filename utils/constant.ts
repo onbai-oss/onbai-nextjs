@@ -1,4 +1,6 @@
 export const PAGES = {
+  NOT_LOGIN: '/not-login',
+  LANDING: '/landing',
   DASHBOARD: '/dashboard',
   LOGIN: '/login',
   SIGNUP: '/signup',

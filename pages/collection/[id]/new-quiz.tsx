@@ -19,7 +19,7 @@ export default function NewQuiz() {
     <>
       <NavLoggedIn isHideNew />
 
-      <main className={`mb-8`}>
+      <main className={`mb-8 `}>
         <div
           className={`h-32 font-semibold flex flex-col justify-center items-center bg-gradient-to-r from-green-600 to-green-500`}
         >
@@ -65,35 +65,41 @@ export default function NewQuiz() {
             <Editor />
           </fieldset>
 
-          <fieldset className={`mt-6 flex justify-center -mx-2`}>
-            <div className={`mx-2`}>
-              <Button
-                color="info"
-                icon="arrow-circle-right-outline"
-                type="submit"
-              >
-                {mode ? 'Update' : 'Create'}
-              </Button>
+          <div className={`animate__animated animate__fadeIn animate__faster`}>
+            <fieldset className={`mt-6 flex justify-center -mx-2`}>
+              <div className={`mx-2`}>
+                <Button
+                  color="info"
+                  icon="arrow-circle-right-outline"
+                  type="submit"
+                >
+                  {mode ? 'Update' : 'Create'}
+                </Button>
+              </div>
+            </fieldset>
+
+            <div className={`mt-4`}>
+              <hr />
             </div>
-          </fieldset>
 
-          <div className={`mt-4`}>
-            <hr />
-          </div>
-
-          {/* <div className={`mt-4 flex justify-center`}>
+            {/* <div className={`mt-4 flex justify-center`}>
             <Button icon="eye-outline" color="info-outline" type="button">
               Preview
             </Button>
           </div> */}
 
-          {mode ? (
-            <div className={`mt-4 flex justify-center`}>
-              <Button color="danger-outline" icon="trash-outline" type="submit">
-                Delete
-              </Button>
-            </div>
-          ) : null}
+            {mode ? (
+              <div className={`mt-4 flex justify-center`}>
+                <Button
+                  color="danger-outline"
+                  icon="trash-outline"
+                  type="submit"
+                >
+                  Delete
+                </Button>
+              </div>
+            ) : null}
+          </div>
         </form>
       </main>
     </>
