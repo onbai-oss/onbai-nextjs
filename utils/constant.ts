@@ -12,3 +12,10 @@ export const PAGES = {
   COLLECTION: '/collection',
   NEW_QUIZ: '/new-quiz',
 }
+
+export const API_PATH = {
+  USER: 'user',
+  AUTH: 'authentication',
+  COLLECTION: 'collection',
+  QUESTION: 'question',
+}

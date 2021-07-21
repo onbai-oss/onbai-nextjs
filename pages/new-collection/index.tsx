@@ -12,11 +12,16 @@ import toast from 'react-hot-toast'
 
 import 'emoji-mart/css/emoji-mart.css'
 import CollectionIcon from '@/components/base/CollectionIcon'
+import { API } from '@/utils/api'
+import { PAGES } from '@/utils/constant'
 
 export default function NewCollectionPage() {
   const router = useRouter()
   const { id } = router.query
   const isEdit = Boolean(id)
+
+  const [title, setTitle] = useState('')
+  const [desc, setDesc] = useState('')
 
   const [bookColor, setBookColor] = useState('#0F9B6E')
   const [emoji, setEmoji] = useState('')
@@ -39,6 +44,20 @@ export default function NewCollectionPage() {
     e.preventDefault()
     console.log('submit', e)
     // TODO: call api
+    const data = {
+      title,
+      desc,
+      icon: emoji,
+      color: bookColor,
+    }
+    if (isEdit) {
+    } else {
+      API.post('collection', data).then((res) => {
+        console.log(res)
+        toast.success('Collection created!')
+        router.push(PAGES.DASHBOARD)
+      })
+    }
   }
 
   const onColorPick = (e) => {}
@@ -84,6 +103,8 @@ export default function NewCollectionPage() {
               required
               autoFocus
               autoComplete="off"
+              value={title}
+              onChange={(e) => setTitle(e.target.value.trim())}
             ></Input>
           </fieldset>
 
@@ -97,6 +118,8 @@ export default function NewCollectionPage() {
               id="desc"
               placeholder=""
               autoComplete="off"
+              value={desc}
+              onChange={(e) => setDesc(e.target.value.trim())}
             />
           </fieldset>
 
