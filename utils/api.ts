@@ -76,7 +76,7 @@ API.interceptors.response.use(
 const fetcher = (url) => API.get(url).then((res) => res.data)
 
 const getData = (url: string) => {
-  const { data, error } = useSWR(url, fetcher)
+  const { data, error } = useSWR(url, fetcher, {})
 
   return {
     data,

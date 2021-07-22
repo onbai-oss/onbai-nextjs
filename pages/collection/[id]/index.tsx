@@ -1,5 +1,6 @@
 import Button from '@/components/base/Button'
 import CollectionIcon from '@/components/base/CollectionIcon'
+import CollectionLoader from '@/components/base/CollectionLoader'
 import Input from '@/components/base/Input'
 import { Modal } from '@/components/base/Modal'
 import { NavLoggedIn } from '@/components/NavLoggedIn'
@@ -21,18 +22,23 @@ export default function CollectionPage() {
   const [emoji, setEmoji] = useState('')
   const [numberCreate, setNumberCreate] = useState<number>(10)
 
-  const { data: collection, error, isLoading } = getData(
-    id ? `collection/${id}` : ''
-  )
+  const {
+    data: collection,
+    error: errorCollection,
+    isLoading: isLoadingColletion,
+  } = getData(id ? `collection/${id}` : '')
+
+  const {
+    data: questions,
+    error: errorQuestion,
+    isLoading: isLoadingQuestion,
+  } = getData(id ? `question/?collectionID=${id}` : '')
 
   const onSubmitAddQuiz: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault()
-    // router.push(`
-    // ${PAGES.COLLECTION}/123/new-quiz?current=0&number_create=${numberCreate}
-    // `)
 
     router.push({
-      pathname: '123/new-quiz',
+      pathname: `${id}${PAGES.NEW_QUESTION}`,
       query: {
         number_create: numberCreate,
         current: '0',
@@ -40,9 +46,9 @@ export default function CollectionPage() {
     })
   }
 
-  const onClickQuestion = () => {
+  const onClickQuestion = (questionID) => {
     router.push({
-      pathname: '123/edit-quiz/456',
+      pathname: `${id}${PAGES.EDIT_QUESTION}/${questionID}`,
       query: {
         mode: 'editSingle',
       },
@@ -108,18 +114,55 @@ export default function CollectionPage() {
         <div className={`my-4`}>
           <hr />
         </div>
-        <div className={` px-4`}>
-          <div className={`font-semibold my-4`}> 30 question </div>
+        <div className={` container mx-auto px-4 mb-12`}>
+          <div className={` font-semibold my-4`}>
+            {questions?.data.length || '0'} questions
+          </div>
 
           <div className={`grid grid-cols-1 grid-rows-1 gap-2`}>
-            {[1, 2, 3, 4].map((i) => (
-              <button
-                onClick={onClickQuestion}
-                className={`shadow rounded-md hover:shadow-md hover:border-blue-500 border-2 border-transparent border-solid   p-4`}
-              >
-                <div>Question</div>
-              </button>
-            ))}
+            {isLoadingQuestion && !errorQuestion ? (
+              <div className={`flex justify-center`}>
+                <CollectionLoader uniqueKey={'collection-loader'} />
+              </div>
+            ) : questions?.data?.length ? (
+              questions?.data.map((i) => (
+                <button
+                  key={i._id}
+                  onClick={() => onClickQuestion(i._id)}
+                  className={`max-w-full w-96 mx-auto shadow rounded-md hover:shadow-md hover:border-blue-500 border-2 border-transparent border-solid   p-4`}
+                >
+                  <div
+                    className={`prose prose-sm`}
+                    dangerouslySetInnerHTML={{ __html: i.question }}
+                  ></div>
+                </button>
+              ))
+            ) : (
+              <div className={`flex justify-center items-center `}>
+                <div>
+                  <div>
+                    <img
+                      width="175"
+                      className={`mx-auto`}
+                      src="/nodata_flower.png"
+                      alt="no data"
+                    />
+                  </div>
+                  <div className={`mt-4 text-center font-semibold`}>
+                    You don't have any question.
+                  </div>
+                  <div className={`mt-4 flex justify-center`}>
+                    <Button
+                      color="info-outline"
+                      onClick={() => setIsShowAddQuiz(true)}
+                      icon="plus-outline"
+                    >
+                      Create new question
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </main>
@@ -137,6 +180,8 @@ export default function CollectionPage() {
               icon="file-text-outline"
               type="number"
               autoFocus
+              min="1"
+              max="5000"
               onChange={(e) => {
                 setNumberCreate(+e.target.value)
               }}

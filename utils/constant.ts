@@ -6,11 +6,13 @@ export const PAGES = {
   SIGNUP: '/signup',
   FORGOT_PASSWORD: '/forgot-password',
   NEW: '/new',
+  COLLECTION: '/collection',
   NEW_COLLECION: '/new-collection',
   EDIT_COLLECION: '/edit-collection',
+  QUESTION: '/question',
+  NEW_QUESTION: '/new-question',
+  EDIT_QUESTION: '/edit-question',
   NEW_GAME: '/new-game',
-  COLLECTION: '/collection',
-  NEW_QUIZ: '/new-quiz',
 }
 
 export const API_PATH = {

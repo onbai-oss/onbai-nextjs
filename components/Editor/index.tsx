@@ -172,28 +172,28 @@ const MenuBar = ({ editor }) => {
   )
 }
 
-const Tiptap = () => {
-  const editor = useEditor({
-    extensions: [StarterKit],
-    editorProps: {
-      attributes: {
-        spellcheck: 'false',
-        class:
-          'onbai-editor prose prose-blue w-full max-w-full px-4 py-2 border-2 border-solid border-gray-600 hover:border-gray-500 rounded-md focus:outline-none focus:ring-1 ring-gray-600 ring-offset-2',
-      },
-    },
-    content: ``,
-    editable: true,
-  })
+const Tiptap = (props) => {
+  const editor = props.editor
+    ? props.editor
+    : useEditor({
+        extensions: [StarterKit],
+        editorProps: {
+          attributes: {
+            spellcheck: 'false',
+            class:
+              'onbai-editor prose prose-blue w-full max-w-full px-4 py-2 border-2 border-solid border-gray-600 hover:border-gray-500 rounded-md focus:outline-none focus:ring-1 ring-gray-600 ring-offset-2',
+          },
+        },
+        content: `default`,
+        editable: true,
+      })
 
   return (
     <>
       {/* <MenuBar editor={editor} /> */}
-      <EditorContent editor={editor} />
+      <EditorContent editor={editor} {...props} />
     </>
   )
 }
 
-export default function Editor({}: Props): ReactElement {
-  return <Tiptap />
-}
+export default Tiptap

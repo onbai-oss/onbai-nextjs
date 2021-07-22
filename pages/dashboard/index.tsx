@@ -69,9 +69,11 @@ export default function DashboardPage() {
               <div className={`mt-4 text-center font-semibold`}>
                 No collection found.
               </div>
-              <div className={`mt-4`}>
+              <div className={`mt-4 flex justify-center`}>
                 <Link href={PAGES.NEW_COLLECION}>
-                  <Button>Create new collection</Button>
+                  <Button color="info-outline" icon="plus-outline">
+                    Create new collection
+                  </Button>
                 </Link>
               </div>
             </div>
