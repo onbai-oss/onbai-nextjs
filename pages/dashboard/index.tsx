@@ -39,7 +39,7 @@ export default function DashboardPage() {
           {!isLoading && !error && listCollection?.data?.length
             ? listCollection.data.map((i, index) => (
                 <div key={index}>
-                  <Link href={PAGES.COLLECTION + '/123'}>
+                  <Link href={PAGES.COLLECTION + `/${i._id}`}>
                     <button
                       className={`w-full text-center p-4 shadow hover:shadow-lg rounded-md `}
                     >

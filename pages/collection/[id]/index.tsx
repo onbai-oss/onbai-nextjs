@@ -3,10 +3,12 @@ import CollectionIcon from '@/components/base/CollectionIcon'
 import Input from '@/components/base/Input'
 import { Modal } from '@/components/base/Modal'
 import { NavLoggedIn } from '@/components/NavLoggedIn'
+import { API, getData } from '@/utils/api'
 import { PAGES } from '@/utils/constant'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { FormEventHandler, useState } from 'react'
+import toast from 'react-hot-toast'
 
 export default function CollectionPage() {
   const router = useRouter()
@@ -18,6 +20,10 @@ export default function CollectionPage() {
   const [bookColor, setBookColor] = useState('#0F9B6E')
   const [emoji, setEmoji] = useState('')
   const [numberCreate, setNumberCreate] = useState<number>(10)
+
+  const { data: collection, error, isLoading } = getData(
+    id ? `collection/${id}` : ''
+  )
 
   const onSubmitAddQuiz: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault()
@@ -43,18 +49,31 @@ export default function CollectionPage() {
     })
   }
 
+  const onDeleteCollection = () => {
+    API.delete(`collection/${id}`)
+      .then((r) => {
+        toast.success('Deleted!')
+        router.push(PAGES.DASHBOARD)
+      })
+      .finally(() => {
+        setIsShowDelete(false)
+      })
+  }
+
   return (
     <>
       <NavLoggedIn isHideNew />
       <main>
         <div className={`my-6`}>
           <div className={`w-32 mx-auto text-center `}>
-            <CollectionIcon fill={bookColor} icon={emoji} />
+            <CollectionIcon fill={collection?.color} icon={collection?.icon} />
           </div>
           <div className={`text-center mt-3 text-2xl font-semibold`}>
-            Collection name
+            {collection?.title}
           </div>
-          <div className={`text-center mt-1  font-semibold`}>Description</div>
+          <div className={`text-center mt-1  font-semibold`}>
+            {collection?.desc}
+          </div>
 
           <div className={`mt-4`}>
             <div className={`flex justify-center my-2`}>
@@ -146,7 +165,7 @@ export default function CollectionPage() {
           <div className={`flex`}>
             <div className="mr-2">
               <Button
-                onClick={() => setIsShowDelete(false)}
+                onClick={onDeleteCollection}
                 title="Delete collecion"
                 icon="trash-outline"
                 color="danger"

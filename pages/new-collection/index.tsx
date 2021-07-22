@@ -12,7 +12,7 @@ import toast from 'react-hot-toast'
 
 import 'emoji-mart/css/emoji-mart.css'
 import CollectionIcon from '@/components/base/CollectionIcon'
-import { API } from '@/utils/api'
+import { API, getData } from '@/utils/api'
 import { PAGES } from '@/utils/constant'
 
 export default function NewCollectionPage() {
@@ -50,14 +50,15 @@ export default function NewCollectionPage() {
       icon: emoji,
       color: bookColor,
     }
-    if (isEdit) {
-    } else {
-      API.post('collection', data).then((res) => {
-        console.log(res)
-        toast.success('Collection created!')
-        router.push(PAGES.DASHBOARD)
-      })
-    }
+
+    API[isEdit ? 'patch' : 'post'](
+      'collection' + (isEdit ? `/${id}` : ''),
+      data
+    ).then((res) => {
+      console.log(res)
+      toast.success(isEdit ? 'Updated!' : 'Collection created!')
+      router.push(PAGES.DASHBOARD)
+    })
   }
 
   const onColorPick = (e) => {}
@@ -65,10 +66,17 @@ export default function NewCollectionPage() {
   useEffect(() => {
     if (isEdit) {
       // TODO get data collection
+      API.get('collection/' + id).then((res) => {
+        const { title, desc, color, icon } = res.data
+        setTitle(title)
+        setDesc(desc)
+        setBookColor(color)
+        setEmoji(icon)
+      })
     } else {
       setEmoji('🍀')
     }
-  }, [])
+  }, [isEdit])
 
   return (
     <>
@@ -104,7 +112,7 @@ export default function NewCollectionPage() {
               autoFocus
               autoComplete="off"
               value={title}
-              onChange={(e) => setTitle(e.target.value.trim())}
+              onChange={(e) => setTitle(e.target.value)}
             ></Input>
           </fieldset>
 
@@ -119,7 +127,7 @@ export default function NewCollectionPage() {
               placeholder=""
               autoComplete="off"
               value={desc}
-              onChange={(e) => setDesc(e.target.value.trim())}
+              onChange={(e) => setDesc(e.target.value)}
             />
           </fieldset>
 
@@ -145,7 +153,7 @@ export default function NewCollectionPage() {
                     className={`ml-2 cursor-pointer`}
                     type="color"
                     id="color"
-                    defaultValue="#0F9B6E"
+                    value={bookColor}
                     onChange={(e) => setBookColor(e.target.value)}
                     title="Click to change color"
                   />
