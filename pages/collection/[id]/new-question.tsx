@@ -12,7 +12,7 @@ import { Modal } from '@/components/base/Modal'
 
 export default function NewQuiz() {
   const router = useRouter()
-  const { number_create, current, questionID, id: collectionID } = router.query
+  const { number_create, current, questionID, id: collectionId } = router.query
   const [isShowDelete, setIsShowDelete] = useState(false)
 
   const defaultEditor = {
@@ -54,7 +54,7 @@ export default function NewQuiz() {
       answer: answerEditor?.getHTML(),
       hint: hintEditor?.getHTML(),
       explain: explainEditor?.getHTML(),
-      collectionID,
+      collectionId,
     }
 
     API[questionID ? 'patch' : 'post'](

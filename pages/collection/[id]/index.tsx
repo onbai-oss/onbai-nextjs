@@ -32,7 +32,7 @@ export default function CollectionPage() {
     data: questions,
     error: errorQuestion,
     isLoading: isLoadingQuestion,
-  } = getData(id ? `question/?collectionID=${id}` : '')
+  } = getData(id ? `question/?collectionId=${id}` : '')
 
   const onSubmitAddQuiz: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault()
