@@ -6,6 +6,7 @@ import { PAGES } from 'utils/constant'
 import Button from '@/components/base/Button'
 import Input from '@/components/base/Input'
 import LogoLink from '@/components/base/LogoLink'
+import toast from 'react-hot-toast'
 
 const LoginForm = () => {
   const router = useRouter()
@@ -23,6 +24,7 @@ const LoginForm = () => {
     })
       .then((res) => {
         console.log(res)
+        toast.success('Your account has created!')
         router.push(PAGES.LOGIN)
       })
       .catch((e) => {

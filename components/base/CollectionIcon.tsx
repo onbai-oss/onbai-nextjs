@@ -8,7 +8,7 @@ interface Props {
 }
 
 export default function CollectionIcon({
-  fill,
+  fill = '#fff',
   icon = '',
 }: Props): ReactElement {
   return (

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 interface IInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   icon?: string
@@ -6,6 +6,14 @@ interface IInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 
 const Input: React.FC<IInputProps> = (props) => {
   const { disabled, icon } = props
+
+  useEffect(() => {
+    if (icon) {
+      // @ts-ignore
+      eva && eva?.replace()
+    }
+  }, [icon])
+
   return (
     <div
       className={`

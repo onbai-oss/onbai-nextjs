@@ -1,23 +1,10 @@
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
 import { Toaster } from 'react-hot-toast'
-import { useEffect } from 'react'
-import { useRouter } from 'next/router'
 
 import '../styles/globals.css'
 
-declare global {
-  interface Window {
-    eva: any
-  }
-}
-
 function App({ Component, pageProps }: AppProps) {
-  const router = useRouter()
-  useEffect(() => {
-    window.eva && window.eva?.replace()
-  })
-
   return (
     <>
       <Head>

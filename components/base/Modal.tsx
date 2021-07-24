@@ -8,15 +8,6 @@ export interface IModalProps {
 }
 
 export function Modal({ isOpen, closeModal, children }: IModalProps) {
-  // For show icon
-  useEffect(() => {
-    if (isOpen) {
-      setTimeout(() => {
-        window.eva.replace()
-      }, 0)
-    }
-  }, [isOpen])
-
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog

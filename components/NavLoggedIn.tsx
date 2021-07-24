@@ -7,6 +7,7 @@ import Router from 'next/router'
 import LogoLink from './base/LogoLink'
 import { Modal } from './base/Modal'
 import toast from 'react-hot-toast'
+import { useUserLocal } from '@/utils/hooks'
 
 export interface INavLoggedInProps {
   isHideNew?: boolean
@@ -14,6 +15,7 @@ export interface INavLoggedInProps {
 
 export function NavLoggedIn({ isHideNew, ...props }: INavLoggedInProps) {
   let [isOpen, setIsOpen] = useState(false)
+  const userLocal = useUserLocal()
 
   function closeModal() {
     setIsOpen(false)
@@ -68,18 +70,18 @@ export function NavLoggedIn({ isHideNew, ...props }: INavLoggedInProps) {
           <div className={``}>
             <img
               className={`mx-auto rounded-full shadow hover:shadow-md`}
-              src="https://ui-avatars.com/api/?size=128"
+              src="https://ui-avatars.com/api/?background=10B981&color=fff&name=ob&size=128"
               alt=""
             />
           </div>
           <div className={`text-center`}>
-            <h1 className="mt-2 font-semibold text-xl">User name</h1>
-            <h1 className=" font-semibold text-md">user@email</h1>
+            {/* <h1 className="mt-2 font-semibold text-xl">User name</h1> */}
+            <h1 className="mt-2 font-semibold text-md">{userLocal?.email}</h1>
           </div>
 
-          <div className={`my-2 flex justify-center`}>
+          {/* <div className={`my-2 flex justify-center`}>
             <Button color="primary">Settings</Button>
-          </div>
+          </div> */}
 
           <div className={`my-4`}>
             <hr />

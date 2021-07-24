@@ -27,3 +27,15 @@
 .onbai-editor {
   min-height: 64px;
 }
+
+/* Hidden arrow number input */
+/* Chrome, Safari, Edge, Opera */
+.no-arrow::-webkit-outer-spin-button,
+.no-arrow::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+/* Firefox */
+.no-arrow[type='number'] {
+  -moz-appearance: textfield;
+}

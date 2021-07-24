@@ -6,6 +6,7 @@ import { Modal } from '@/components/base/Modal'
 import { NavLoggedIn } from '@/components/NavLoggedIn'
 import { API, getData } from '@/utils/api'
 import { PAGES } from '@/utils/constant'
+import { useUserLocal } from '@/utils/hooks'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { FormEventHandler, useState } from 'react'
@@ -22,6 +23,7 @@ export default function CollectionPage() {
   const [emoji, setEmoji] = useState('')
   const [numberCreate, setNumberCreate] = useState<number>(10)
 
+  const userLocal = useUserLocal()
   const {
     data: collection,
     error: errorCollection,
@@ -33,6 +35,8 @@ export default function CollectionPage() {
     error: errorQuestion,
     isLoading: isLoadingQuestion,
   } = getData(id ? `question/?collectionId=${id}` : '')
+
+  const isAuthor = collection?.userId && userLocal?.id === collection?.userId
 
   const onSubmitAddQuiz: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault()
@@ -81,7 +85,7 @@ export default function CollectionPage() {
             {collection?.desc}
           </div>
 
-          <div className={`mt-4`}>
+          <div className={`mt-4 ${!isAuthor && 'hidden'}`}>
             <div className={`flex justify-center my-2`}>
               <div className={`mr-2`}>
                 <Button
@@ -115,9 +119,11 @@ export default function CollectionPage() {
           <hr />
         </div>
         <div className={` container mx-auto px-4 mb-12`}>
-          <div className={` font-semibold my-4`}>
-            {questions?.data.length || '0'} questions
-          </div>
+          {questions?.data.length ? (
+            <div className={` font-semibold my-4`}>
+              {questions?.data.length || '0'} questions
+            </div>
+          ) : null}
 
           <div className={`grid grid-cols-1 grid-rows-1 gap-2`}>
             {isLoadingQuestion && !errorQuestion ? (
@@ -127,8 +133,8 @@ export default function CollectionPage() {
             ) : questions?.data?.length ? (
               questions?.data.map((i) => (
                 <button
-                  key={i._id}
-                  onClick={() => onClickQuestion(i._id)}
+                  key={i.id}
+                  onClick={() => onClickQuestion(i.id)}
                   className={`max-w-full w-96 mx-auto shadow rounded-md hover:shadow-md hover:border-blue-500 border-2 border-transparent border-solid   p-4`}
                 >
                   <div
@@ -138,7 +144,9 @@ export default function CollectionPage() {
                 </button>
               ))
             ) : (
-              <div className={`flex justify-center items-center `}>
+              <div
+                className={`flex justify-center items-center animate__animated animate__fadeIn`}
+              >
                 <div>
                   <div>
                     <img
@@ -149,9 +157,13 @@ export default function CollectionPage() {
                     />
                   </div>
                   <div className={`mt-4 text-center font-semibold`}>
-                    You don't have any question.
+                    This collection don't have any question.
                   </div>
-                  <div className={`mt-4 flex justify-center`}>
+                  <div
+                    className={`mt-4 flex justify-center ${
+                      !isAuthor && 'hidden'
+                    }`}
+                  >
                     <Button
                       color="info-outline"
                       onClick={() => setIsShowAddQuiz(true)}

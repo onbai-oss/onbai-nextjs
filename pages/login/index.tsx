@@ -25,6 +25,7 @@ const LoginForm = () => {
       .then((res) => {
         if (res.status === 201) {
           localStorage.setItem('token', res.data.accessToken)
+          localStorage.setItem('user', JSON.stringify(res.data.user))
           router.push(PAGES.DASHBOARD)
           toast.success('Login success')
         }

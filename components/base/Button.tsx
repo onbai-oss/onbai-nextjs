@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   color?:
@@ -19,6 +19,13 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (props, ref) => {
     const { children, size = 'base', color = 'primary', icon, disabled } = props
     const outline = color.includes('outline')
+
+    useEffect(() => {
+      if (icon) {
+        // @ts-ignore
+        eva && eva?.replace()
+      }
+    }, [icon])
 
     return (
       <button

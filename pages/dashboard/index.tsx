@@ -6,57 +6,80 @@ import CollectionLoader from '@/components/base/CollectionLoader'
 import { NavLoggedIn } from '@/components/NavLoggedIn'
 import { getData } from '@/utils/api'
 import { PAGES } from '@/utils/constant'
+import { useUserLocal } from '@/utils/hooks'
+import Pagination from '@/components/base/Pagination'
 
 export default function DashboardPage() {
-  const { data: listCollection, error, isLoading } = getData('collection')
+  // const { data: userData } = getData('users')
+  const userLocal = useUserLocal()
+  const { data: listCollection, error, isLoading } = getData(
+    `collection?userId=${userLocal?.id}`
+  )
 
   return (
     <>
       <NavLoggedIn />
       <main className={`mb-8`}>
-        <div
+        <section
           className={`h-32 font-semibold flex flex-col justify-center items-center
           bg-gradient-to-r from-green-600 to-green-500
           `}
         >
-          <div className={`my-4 text-white text-2xl`}>Wellcome you.</div>
-        </div>
-        <div className={`px-4 py-4 mb-4`}>
+          <div className={`my-4 text-white text-2xl`}>
+            Wellcome {userLocal?.email}
+          </div>
+        </section>
+
+        <section className={`px-4 py-4 mb-4 container mx-auto `}>
           <h1 className={`font-semibold text-xl`}>Your library</h1>
-        </div>
+        </section>
 
         {/* Loading */}
         {isLoading ? (
-          <div className={`flex justify-center`}>
+          <section className={`flex justify-center`}>
             <CollectionLoader uniqueKey={'collection-loader'} />
-          </div>
+          </section>
         ) : null}
 
         {/* List Collection */}
-        <div
-          className={`px-4 grid grid-rows-1 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6  gap-4`}
-        >
-          {!isLoading && !error && listCollection?.data?.length
-            ? listCollection.data.map((i, index) => (
+        {!isLoading && !error && listCollection?.data?.length ? (
+          <>
+            <section
+              className={`container mx-auto px-4 grid grid-rows-1 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5  gap-4`}
+            >
+              {listCollection.data.map((i, index) => (
                 <div key={index}>
-                  <Link href={PAGES.COLLECTION + `/${i._id}`}>
+                  <Link href={PAGES.COLLECTION + `/${i.id}`}>
                     <button
-                      className={`w-full text-center p-4 shadow hover:shadow-lg rounded-md `}
+                      className={`w-full text-center p-4 rounded-md shadow-md hover:shadow-xl`}
                     >
-                      <CollectionIcon fill={i.color} icon={i.icon} />
-                      <div className={`mt-2 font-semibold text-xl`}>
+                      <div className={`w-32 mx-auto`}>
+                        <CollectionIcon fill={i.color} icon={i.icon} />
+                      </div>
+                      <div
+                        title={i.title}
+                        className={`mt-2 font-semibold text-xl sm:truncate `}
+                      >
                         {i.title}
                       </div>
                     </button>
                   </Link>
                 </div>
-              ))
-            : null}
-        </div>
+              ))}
+            </section>
+            <div className={`flex justify-center my-3`}>
+              <Pagination
+                pageCount={2}
+                initialPage={0}
+                onPageChange={(e) => console.log(e)}
+              />
+            </div>
+          </>
+        ) : null}
 
         {/* Not found */}
         {!isLoading && !error && !listCollection?.data?.length ? (
-          <div className={`flex justify-center items-center `}>
+          <section className={`flex justify-center items-center `}>
             <div>
               <div>
                 <img
@@ -77,7 +100,7 @@ export default function DashboardPage() {
                 </Link>
               </div>
             </div>
-          </div>
+          </section>
         ) : null}
 
         {!isLoading && error ? <GetDataError /> : null}
