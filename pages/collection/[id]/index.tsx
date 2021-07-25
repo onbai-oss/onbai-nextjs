@@ -49,8 +49,8 @@ export default function CollectionPage() {
     router.push({
       pathname: `${id}${PAGES.NEW_QUESTION}`,
       query: {
-        number_create: numberCreate,
-        current: '0',
+        numberCreate: numberCreate,
+        current: 0,
       },
     })
   }
@@ -126,7 +126,7 @@ export default function CollectionPage() {
         <div className={` container mx-auto px-4 mb-12`}>
           {questions?.data.length ? (
             <div className={` font-semibold my-4`}>
-              {questions?.data.length || '0'} questions
+              {questions?.total || '0'} questions
             </div>
           ) : null}
           {/* List questions */}

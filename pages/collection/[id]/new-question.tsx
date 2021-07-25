@@ -12,7 +12,7 @@ import { Modal } from '@/components/base/Modal'
 
 export default function NewQuiz() {
   const router = useRouter()
-  const { number_create, current, questionID, id: collectionId } = router.query
+  const { numberCreate, current, questionID, id: collectionId } = router.query
   const [isShowDelete, setIsShowDelete] = useState(false)
 
   const defaultEditor = {
@@ -46,6 +46,14 @@ export default function NewQuiz() {
     }
   }, [questionID, questionEditor, answerEditor, hintEditor, explainEditor])
 
+  const resetEditor = () => {
+    questionEditor?.commands?.setContent(``)
+    answerEditor?.commands?.setContent(``)
+    hintEditor?.commands?.setContent(``)
+    explainEditor?.commands?.setContent(``)
+    questionEditor?.commands?.focus()
+  }
+
   const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault()
     console.log('Submit', e)
@@ -62,8 +70,26 @@ export default function NewQuiz() {
       dataAPI
     ).then((res) => {
       console.log(res)
-      toast.success(questionID ? 'Updated!' : 'Created!')
-      router.back()
+
+      if (questionID) {
+        toast.success('Updated!')
+        router.back()
+      } else {
+        if (Number(current) + 1 === Number(numberCreate)) {
+          toast.success(`Congrat!, you've created ${numberCreate} question.`)
+          router.push(`/collection/${collectionId}`)
+        } else {
+          toast.success('Created!')
+          resetEditor()
+          router.replace({
+            pathname: `/collection/${collectionId}${PAGES.NEW_QUESTION}`,
+            query: {
+              numberCreate: numberCreate,
+              current: Number(current) + 1,
+            },
+          })
+        }
+      }
     })
   }
 
@@ -87,7 +113,7 @@ export default function NewQuiz() {
               <div>Edit question </div>
             ) : (
               <div>
-                New question {current}/{number_create}
+                New question {Number(current) + 1}/{numberCreate}
               </div>
             )}
           </div>
