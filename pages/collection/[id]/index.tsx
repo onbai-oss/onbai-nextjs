@@ -3,6 +3,7 @@ import CollectionIcon from '@/components/base/CollectionIcon'
 import CollectionLoader from '@/components/base/CollectionLoader'
 import Input from '@/components/base/Input'
 import { Modal } from '@/components/base/Modal'
+import Pagination from '@/components/base/Pagination'
 import { NavLoggedIn } from '@/components/NavLoggedIn'
 import { API, getData } from '@/utils/api'
 import { PAGES } from '@/utils/constant'
@@ -22,6 +23,10 @@ export default function CollectionPage() {
   const [bookColor, setBookColor] = useState('#0F9B6E')
   const [emoji, setEmoji] = useState('')
   const [numberCreate, setNumberCreate] = useState<number>(10)
+
+  const [page, setPage] = useState(0)
+  const [limit, setLimit] = useState(10)
+  const paginateQuery = `&$skip=${page * limit}&$limit=${limit}`
 
   const userLocal = useUserLocal()
   const {
@@ -124,7 +129,7 @@ export default function CollectionPage() {
               {questions?.data.length || '0'} questions
             </div>
           ) : null}
-
+          {/* List questions */}
           <div className={`grid grid-cols-1 grid-rows-1 gap-2`}>
             {isLoadingQuestion && !errorQuestion ? (
               <div className={`flex justify-center`}>
@@ -176,6 +181,14 @@ export default function CollectionPage() {
               </div>
             )}
           </div>
+        </div>
+        <div className={`flex container mx-auto justify-end my-6 px-4`}>
+          <Pagination
+            page={page}
+            total={questions?.total}
+            limit={questions?.limit}
+            onPageChange={setPage}
+          />
         </div>
       </main>
 

@@ -16,12 +16,9 @@ export default function DashboardPage() {
   const [limit, setLimit] = useState(10)
 
   const userLocal = useUserLocal()
+  const paginateQuery = `&$skip=${page * limit}&$limit=${limit}`
   const { data: listCollection, error, isLoading } = getData(
-    userLocal?.id
-      ? `collection?userId=${userLocal?.id}&$skip=${
-          page * limit
-        }&$limit=${limit}`
-      : ''
+    userLocal?.id ? `collection?userId=${userLocal?.id}${paginateQuery}` : ''
   )
 
   return (
