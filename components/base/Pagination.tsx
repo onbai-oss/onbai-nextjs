@@ -1,29 +1,87 @@
 import React, { ReactElement } from 'react'
-import ReactPaginate from 'react-paginate'
 
-interface Props {
-  pageCount: number
-  initialPage: number
-  onPageChange?: (e: any) => any
+interface PaginationProps {
+  page?: number
+  total?: number
+  limit?: number
+  onPageChange?
 }
 
 export default function Pagination({
-  pageCount,
-  initialPage,
+  page = 0,
+  total = 0,
+  limit = 10,
   onPageChange,
-}: Props): ReactElement {
+}: PaginationProps): ReactElement {
+  const listPage = Array.from(Array(Math.ceil(total / limit))).map(
+    (_, index) => index
+  )
+
+  const btnClass = `
+  mx-1 border border-gray-300 shadow rounded-md bg-gray-50 py-2 px-4 text-sm 
+  hover:shadow-md hover:bg-green-600 hover:text-white flex justify-center items-center 
+  `
+
+  const onChange = (type) => {
+    if (type === 'prev') {
+      if (!page) return
+      onPageChange(page - 1)
+      window.scroll(0, 0)
+    }
+    if (type === 'next') {
+      if (page === listPage.length - 1) return
+      onPageChange(page + 1)
+      window.scroll(0, 0)
+    }
+  }
+
+  const onSelectChange = (e) => {
+    window.scroll(0, 0)
+    onPageChange(Number(e.target.value))
+  }
+
   return (
-    <ReactPaginate
-      onPageChange={onPageChange}
-      initialPage={initialPage}
-      pageCount={pageCount}
-      pageRangeDisplayed={1}
-      marginPagesDisplayed={1}
-      containerClassName="flex items-center select-none"
-      pageLinkClassName="hover:underline w-10 m-2 flex items-center justify-center p-2 border rounded-md"
-      activeLinkClassName="bg-green-500 text-white"
-      nextClassName="p-2 hover:underline"
-      previousClassName="p-2 hover:underline"
-    />
+    <section className={``}>
+      {Math.ceil(total / limit) > 1 ? (
+        <div className={`flex items-center`}>
+          <div className={`mr-4 flex items-center justify-center`}>
+            <select
+              onChange={onSelectChange}
+              className={`p-2 bg-transparent`}
+              name="page"
+              id="page-select"
+              value={page}
+            >
+              {listPage.map((i) => (
+                <option key={i} value={i}>
+                  Page {i + 1}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {page ? (
+            <button
+              onClick={() => onChange('prev')}
+              className={btnClass + ` ${page ? '' : ' cursor-not-allowed'}`}
+            >
+              Prev
+            </button>
+          ) : null}
+
+          {page !== listPage.length - 1 ? (
+            <button
+              onClick={() => onChange('next')}
+              className={
+                btnClass +
+                ` ${page !== listPage.length - 1 ? '' : ' cursor-not-allowed'}`
+              }
+            >
+              Next
+            </button>
+          ) : null}
+        </div>
+      ) : null}
+    </section>
   )
 }

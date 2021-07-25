@@ -8,12 +8,20 @@ import { getData } from '@/utils/api'
 import { PAGES } from '@/utils/constant'
 import { useUserLocal } from '@/utils/hooks'
 import Pagination from '@/components/base/Pagination'
+import { useState } from 'react'
 
 export default function DashboardPage() {
   // const { data: userData } = getData('users')
+  const [page, setPage] = useState(0)
+  const [limit, setLimit] = useState(10)
+
   const userLocal = useUserLocal()
   const { data: listCollection, error, isLoading } = getData(
-    `collection?userId=${userLocal?.id}`
+    userLocal?.id
+      ? `collection?userId=${userLocal?.id}&$skip=${
+          page * limit
+        }&$limit=${limit}`
+      : ''
   )
 
   return (
@@ -31,7 +39,9 @@ export default function DashboardPage() {
         </section>
 
         <section className={`px-4 py-4 mb-4 container mx-auto `}>
-          <h1 className={`font-semibold text-xl`}>Your library</h1>
+          <h1 className={`font-semibold text-xl`}>
+            Your library ( {listCollection?.total} collections)
+          </h1>
         </section>
 
         {/* Loading */}
@@ -67,11 +77,12 @@ export default function DashboardPage() {
                 </div>
               ))}
             </section>
-            <div className={`flex justify-center my-3`}>
+            <div className={`flex container mx-auto justify-end my-6 px-4`}>
               <Pagination
-                pageCount={2}
-                initialPage={0}
-                onPageChange={(e) => console.log(e)}
+                page={page}
+                total={listCollection.total}
+                limit={listCollection.limit}
+                onPageChange={setPage}
               />
             </div>
           </>

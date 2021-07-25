@@ -2,7 +2,7 @@ import axios, { AxiosInstance } from 'axios'
 import Router from 'next/router'
 import toast from 'react-hot-toast'
 import { PAGES } from './constant'
-import useSWR from 'swr'
+import useSWR, { useSWRInfinite } from 'swr'
 
 const API: AxiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -72,6 +72,8 @@ API.interceptors.response.use(
     return Promise.reject(error)
   }
 )
+
+// Hook SWR
 
 const fetcher = (url) => API.get(url).then((res) => res.data)
 
