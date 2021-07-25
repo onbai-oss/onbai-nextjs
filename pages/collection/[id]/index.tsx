@@ -39,7 +39,7 @@ export default function CollectionPage() {
     data: questions,
     error: errorQuestion,
     isLoading: isLoadingQuestion,
-  } = getData(id ? `question/?collectionId=${id}` : '')
+  } = getData(id ? `question/?collectionId=${id}${paginateQuery}` : '')
 
   const isAuthor = collection?.userId && userLocal?.id === collection?.userId
 
@@ -182,7 +182,7 @@ export default function CollectionPage() {
             )}
           </div>
         </div>
-        <div className={`flex container mx-auto justify-end my-6 px-4`}>
+        <div className={`flex container mx-auto justify-center my-6 px-4`}>
           <Pagination
             page={page}
             total={questions?.total}
