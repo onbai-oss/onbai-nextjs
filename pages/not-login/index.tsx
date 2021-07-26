@@ -13,10 +13,10 @@ export default function NotLoginPage() {
         >
           <div className={` my-4 flex justify-center `}>
             <img
+              className={`w-full`}
               draggable="false"
               src="/cat_sorry.png"
               alt="sorry"
-              width="200"
             />
           </div>
           <h1 className={`text-xl font-semibold`}>

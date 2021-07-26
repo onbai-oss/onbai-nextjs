@@ -123,7 +123,7 @@ export default function CollectionPage() {
         <div className={`my-4`}>
           <hr />
         </div>
-        <div className={` container mx-auto px-4 mb-12`}>
+        <div className={` container mx-auto px-4 mb-6`}>
           {questions?.data.length ? (
             <div className={` font-semibold my-4`}>
               {questions?.total || '0'} questions
