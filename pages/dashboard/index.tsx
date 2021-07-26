@@ -9,17 +9,26 @@ import { PAGES } from '@/utils/constant'
 import { useUserLocal } from '@/utils/hooks'
 import Pagination from '@/components/base/Pagination'
 import { useState } from 'react'
+import Input from '@/components/base/Input'
 
 export default function DashboardPage() {
   // const { data: userData } = getData('users')
   const [page, setPage] = useState(0)
   const [limit, setLimit] = useState(10)
+  const [search, setSearch] = useState('')
 
   const userLocal = useUserLocal()
-  const paginateQuery = `&$skip=${page * limit}&$limit=${limit}`
+  const paginateQuery = `&$skip=${
+    page * limit
+  }&$limit=${limit}&title[$search]=${search}`
   const { data: listCollection, error, isLoading } = getData(
     userLocal?.id ? `collection?userId=${userLocal?.id}${paginateQuery}` : ''
   )
+
+  const onSearch = (e) => {
+    e.preventDefault()
+    e.target.search.blur()
+  }
 
   return (
     <>
@@ -35,10 +44,22 @@ export default function DashboardPage() {
           </div>
         </section>
 
-        <section className={`px-4 py-4 mb-4 container mx-auto `}>
+        <section
+          className={`px-4 py-4 mb-4 container mx-auto flex flex-col sm:flex-row justify-between items-center`}
+        >
           <h1 className={`font-semibold text-xl`}>
-            Your library ( {listCollection?.total} collections)
+            {listCollection?.total} collections
           </h1>
+          <form onSubmit={onSearch} className={`m-2`}>
+            <Input
+              name="search"
+              icon="search-outline"
+              type="search"
+              placeholder="search title..."
+              onChange={(e) => setSearch(e.target.value)}
+              defaultValue={search}
+            ></Input>
+          </form>
         </section>
 
         {/* Loading */}

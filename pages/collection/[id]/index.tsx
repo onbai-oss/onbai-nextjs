@@ -26,7 +26,10 @@ export default function CollectionPage() {
 
   const [page, setPage] = useState(0)
   const [limit, setLimit] = useState(10)
-  const paginateQuery = `&$skip=${page * limit}&$limit=${limit}`
+  const [search, setSearch] = useState('')
+  const paginateQuery = `&$skip=${
+    page * limit
+  }&$limit=${limit}&question[$search]=${search}`
 
   const userLocal = useUserLocal()
   const {
@@ -73,6 +76,11 @@ export default function CollectionPage() {
       .finally(() => {
         setIsShowDelete(false)
       })
+  }
+
+  const onSearch = (e) => {
+    e.preventDefault()
+    e.target.search.blur()
   }
 
   return (
@@ -124,11 +132,23 @@ export default function CollectionPage() {
           <hr />
         </div>
         <div className={` container mx-auto px-4 mb-6`}>
-          {questions?.data.length ? (
+          <div
+            className={`flex flex-col sm:flex-row justify-between items-center mb-4`}
+          >
             <div className={` font-semibold my-4`}>
               {questions?.total || '0'} questions
             </div>
-          ) : null}
+            <form onSubmit={onSearch} className={`my-2 w-full sm:w-auto`}>
+              <Input
+                name="search"
+                icon="search-outline"
+                type="search"
+                placeholder="search question..."
+                onChange={(e) => setSearch(e.target.value)}
+                defaultValue={search}
+              ></Input>
+            </form>
+          </div>
           {/* List questions */}
           <div className={`grid grid-cols-1 grid-rows-1 gap-2`}>
             {isLoadingQuestion && !errorQuestion ? (
