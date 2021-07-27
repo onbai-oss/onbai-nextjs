@@ -1,6 +1,6 @@
 import { PAGES } from '@/utils/constant'
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Button from './base/Button'
 import Router from 'next/router'
 
@@ -14,6 +14,11 @@ export interface INavLoggedInProps {
 }
 
 export function NavLoggedIn({ isHideNew, ...props }: INavLoggedInProps) {
+  useEffect(() => {
+    // @ts-ignore
+    eva && eva?.replace()
+  }, [])
+
   let [isOpen, setIsOpen] = useState(false)
   const userLocal = useUserLocal()
 

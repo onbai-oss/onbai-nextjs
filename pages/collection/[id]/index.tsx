@@ -1,10 +1,9 @@
 import Button from '@/components/base/Button'
 import CollectionIcon from '@/components/base/CollectionIcon'
-import CollectionLoader from '@/components/base/CollectionLoader'
 import Input from '@/components/base/Input'
 import { Modal } from '@/components/base/Modal'
-import Pagination from '@/components/base/Pagination'
 import { NavLoggedIn } from '@/components/NavLoggedIn'
+import QuestionList from '@/components/QuestionList'
 import { API, getData } from '@/utils/api'
 import { PAGES } from '@/utils/constant'
 import { useUserLocal } from '@/utils/hooks'
@@ -24,25 +23,12 @@ export default function CollectionPage() {
   const [emoji, setEmoji] = useState('')
   const [numberCreate, setNumberCreate] = useState<number>(10)
 
-  const [page, setPage] = useState(0)
-  const [limit, setLimit] = useState(10)
-  const [search, setSearch] = useState('')
-  const paginateQuery = `&$skip=${
-    page * limit
-  }&$limit=${limit}&question[$search]=${search}`
-
   const userLocal = useUserLocal()
   const {
     data: collection,
     error: errorCollection,
     isLoading: isLoadingColletion,
   } = getData(id ? `collection/${id}` : '')
-
-  const {
-    data: questions,
-    error: errorQuestion,
-    isLoading: isLoadingQuestion,
-  } = getData(id ? `question/?collectionId=${id}${paginateQuery}` : '')
 
   const isAuthor = collection?.userId && userLocal?.id === collection?.userId
 
@@ -58,15 +44,6 @@ export default function CollectionPage() {
     })
   }
 
-  const onClickQuestion = (questionID) => {
-    router.push({
-      pathname: `${id}${PAGES.EDIT_QUESTION}/${questionID}`,
-      query: {
-        mode: 'editSingle',
-      },
-    })
-  }
-
   const onDeleteCollection = () => {
     API.delete(`collection/${id}`)
       .then((r) => {
@@ -76,11 +53,6 @@ export default function CollectionPage() {
       .finally(() => {
         setIsShowDelete(false)
       })
-  }
-
-  const onSearch = (e) => {
-    e.preventDefault()
-    e.target.search.blur()
   }
 
   return (
@@ -131,91 +103,23 @@ export default function CollectionPage() {
         <div className={`my-4`}>
           <hr />
         </div>
-        <div className={` container mx-auto px-4 mb-6`}>
-          <div
-            className={`flex flex-col sm:flex-row justify-between items-center mb-4`}
-          >
-            <div className={` font-semibold my-4`}>
-              {questions?.total || '0'} questions
-            </div>
-            <form onSubmit={onSearch} className={`my-2 w-full sm:w-auto`}>
-              <Input
-                name="search"
-                icon="search-outline"
-                type="search"
-                placeholder="search question..."
-                onChange={(e) => setSearch(e.target.value)}
-                defaultValue={search}
-              ></Input>
-            </form>
-          </div>
-          {/* List questions */}
-          <div className={`grid grid-cols-1 grid-rows-1 gap-2`}>
-            {isLoadingQuestion && !errorQuestion ? (
-              <div className={`flex justify-center`}>
-                <CollectionLoader uniqueKey={'collection-loader'} />
-              </div>
-            ) : questions?.data?.length ? (
-              questions?.data.map((i) => (
-                <button
-                  key={i.id}
-                  onClick={() => onClickQuestion(i.id)}
-                  className={`max-w-full w-96 mx-auto shadow rounded-md hover:shadow-md hover:border-blue-500 border-2 border-transparent border-solid   p-4`}
-                >
-                  <div
-                    className={`prose prose-sm`}
-                    dangerouslySetInnerHTML={{ __html: i.question }}
-                  ></div>
-                </button>
-              ))
-            ) : (
-              <div
-                className={`flex justify-center items-center animate__animated animate__fadeIn`}
-              >
-                <div>
-                  <div>
-                    <img
-                      width="175"
-                      className={`mx-auto`}
-                      src="/nodata_flower.png"
-                      alt="no data"
-                    />
-                  </div>
-                  <div className={`mt-4 text-center font-semibold`}>
-                    This collection don't have any question.
-                  </div>
-                  <div
-                    className={`mt-4 flex justify-center ${
-                      !isAuthor && 'hidden'
-                    }`}
-                  >
-                    <Button
-                      color="info-outline"
-                      onClick={() => setIsShowAddQuiz(true)}
-                      icon="plus-outline"
-                    >
-                      Create new question
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-        <div className={`flex container mx-auto justify-center my-6 px-4`}>
-          <Pagination
-            page={page}
-            total={questions?.total}
-            limit={questions?.limit}
-            onPageChange={setPage}
-          />
-        </div>
+
+        <QuestionList
+          isAuthor={isAuthor}
+          onClickNew={() => setIsShowAddQuiz(true)}
+        />
       </main>
 
+      {/* Modals */}
       <Modal isOpen={isShowAddQuiz} closeModal={() => setIsShowAddQuiz(false)}>
         <form onSubmit={onSubmitAddQuiz} className={`p-2`}>
-          <div>
-            <img src="/quiz3.png" className={`mx-auto`} width="175" alt="" />
+          <div className={`w-48 mx-auto mb-4`}>
+            <img
+              src="/studying.svg"
+              className={`w-full`}
+              alt="new quizz"
+              draggable="false"
+            />
           </div>
           <div className={`mt-2 mb-4 text-2xl font-semibold`}>
             <h1>How many quiz you want create?</h1>

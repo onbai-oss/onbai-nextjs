@@ -32,7 +32,7 @@ export default function NewPage() {
               <h1 className={`mt-2 font-semibold`}>Collection</h1>
             </button>
           </Link>
-          <Link href={PAGES.NEW_GAME}>
+          <Link href={PAGES.NEW_ROOM}>
             <button
               className={`
             w-60 my-2  text-center border-2 border-gray-500 border-dashed p-4
@@ -42,7 +42,7 @@ export default function NewPage() {
               <div>
                 <img className={`mx-auto`} width="75" src="/chat.png" alt="" />
               </div>
-              <h1 className={`mt-2 font-semibold`}>Game</h1>
+              <h1 className={`mt-2 font-semibold`}>Room</h1>
             </button>
           </Link>
         </div>

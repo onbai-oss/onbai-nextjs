@@ -12,7 +12,8 @@ export const PAGES = {
   QUESTION: '/question',
   NEW_QUESTION: '/new-question',
   EDIT_QUESTION: '/edit-question',
-  NEW_GAME: '/new-game',
+  NEW_ROOM: '/new-room',
+  ROOM: '/room',
 }
 
 export const API_PATH = {
@@ -20,4 +21,5 @@ export const API_PATH = {
   AUTH: 'authentication',
   COLLECTION: 'collection',
   QUESTION: 'question',
+  ROOM: 'room',
 }
