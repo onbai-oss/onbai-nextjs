@@ -3,8 +3,13 @@ import RoomList from '@/components/RoomList'
 import CollectionList from '@/components/CollectionList'
 import { NavLoggedIn } from '@/components/NavLoggedIn'
 import { getPropsUserSever } from '@/utils/session'
+import PleaseLogin from '@/components/PleaseLogin'
 
 export default function DashboardPage({ user }) {
+  if (!user) {
+    return <PleaseLogin />
+  }
+
   return (
     <>
       <NavLoggedIn user={user} />

@@ -122,7 +122,7 @@ export default function NewQuiz({ user }) {
           </div>
         </div>
 
-        <form onSubmit={onSubmit} className={`p-4 container mx-auto`}>
+        <form onSubmit={onSubmit} className={`p-4 max-w-2xl mx-auto`}>
           <fieldset className={`my-2`}>
             <label className={`my-2 flex items-center font-semibold`}>
               <i data-eva="question-mark-outline" data-eva-fill="#1B324F"></i>

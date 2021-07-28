@@ -11,6 +11,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { FormEventHandler, useState } from 'react'
 import toast from 'react-hot-toast'
+import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 export default function CollectionPage({ user }) {
   const router = useRouter()
@@ -29,7 +30,7 @@ export default function CollectionPage({ user }) {
     isLoading: isLoadingColletion,
   } = getData(id ? `collection/${id}` : '')
 
-  const isAuthor = collection?.userId && user?.id === collection?.userId
+  const isAuthor = user?.id === collection?.userId
 
   const onSubmitAddQuiz: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault()
@@ -95,7 +96,25 @@ export default function CollectionPage({ user }) {
                 color="primary"
               ></Button>
             </div>
-            <div className={`flex justify-center my-2`}></div>
+          </div>
+
+          <div className={`flex justify-center my-4`}>
+            <div className={`mr-2`}>
+              <CopyToClipboard
+                text={process.browser ? location.href : ''}
+                onCopy={() => {
+                  toast.success('Copied to your clipboard!')
+                }}
+              >
+                <Button
+                  title="Edit collecion"
+                  icon="share-outline"
+                  color="primary-outline"
+                >
+                  Share
+                </Button>
+              </CopyToClipboard>
+            </div>
           </div>
         </div>
 

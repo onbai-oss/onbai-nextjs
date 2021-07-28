@@ -7,6 +7,7 @@ import Input from './base/Input'
 import Pagination from './base/Pagination'
 import CollectionLoader from './base/CollectionLoader'
 import GetDataError from './base/GetDataError'
+import { Twemoji } from 'react-emoji-render'
 
 interface Props {
   user
@@ -32,7 +33,7 @@ export default function RoomList({ user }: Props): ReactElement {
   }
 
   return (
-    <section className={`container mx-auto px-4 mb-6`}>
+    <section className={`container mx-auto px-4 `}>
       <div
         className={`flex flex-col sm:flex-row justify-between items-center mb-4`}
       >
@@ -53,12 +54,19 @@ export default function RoomList({ user }: Props): ReactElement {
 
       <div>
         {!isLoadingRoom && !errorRooms && rooms?.data?.length ? (
-          <div className={`grid grid-cols-1 sm:grid-cols-2 grid-rows-1 gap-4`}>
+          <div
+            className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  grid-rows-1 gap-4`}
+          >
             {rooms.data?.map((i) => (
               <Link href={PAGES.ROOM + `/${i.id}`} key={i.id}>
                 <button
-                  className={`appearance-none  px-4 py-6 w-full shadow-md block rounded-md hover:shadow-lg border-2 border-solid focus:ring-1 ring-gray-600 ring-offset-2`}
+                  className={`appearance-none relative px-4 py-6 w-full shadow-md block rounded-md hover:shadow-lg border-2 border-solid focus:ring-1 ring-gray-600 ring-offset-2`}
                 >
+                  {i?.password ? (
+                    <div className={`absolute top-2 right-2`}>
+                      <Twemoji text={'🔒'} />
+                    </div>
+                  ) : null}
                   <div className={`text-left font-semibold`}>{i?.name}</div>
                 </button>
               </Link>
@@ -87,7 +95,11 @@ export default function RoomList({ user }: Props): ReactElement {
         {!isLoadingRoom && errorRooms ? <GetDataError /> : null}
       </div>
 
-      <div className={`flex container mx-auto justify-end my-6 px-4`}>
+      <div
+        className={`flex container mx-auto justify-end ${
+          page > 1 ? 'my-6' : ''
+        } px-4`}
+      >
         <Pagination
           page={page}
           total={rooms?.total}

@@ -11,6 +11,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard'
 import bcrypt from 'bcryptjs'
 import { getPropsUserSever } from '@/utils/session'
 import PleaseLogin from '@/components/PleaseLogin'
+import { Twemoji } from 'react-emoji-render'
 
 export default function RoomPage({ user }) {
   const router = useRouter()
@@ -22,6 +23,8 @@ export default function RoomPage({ user }) {
   const { data: room, error: errorRoom, isLoading: isLoadingRoom } = getData(
     id ? `room/${id}` : ''
   )
+
+  const isAuthor = user?.id === room?.userId
 
   const onDelete = () => {
     API.delete(PAGES.ROOM + `/${id}`).then((res) => {
@@ -36,11 +39,14 @@ export default function RoomPage({ user }) {
   }
 
   useEffect(() => {
+    if (errorRoom) {
+      router.push('/')
+    }
+  }, [errorRoom])
+
+  useEffect(() => {
     if (!room) return
     if (!isCheckedLock) {
-      if (errorRoom) {
-        router.push(PAGES.DASHBOARD)
-      }
       if (user?.id === room?.userId) {
         setIsLock(false)
       } else {
@@ -114,10 +120,11 @@ export default function RoomPage({ user }) {
         ) : (
           <section className={`container mx-auto`}>
             <div className={`h-24 p-2 flex justify-center items-center`}>
+              <div className={`mr-1`}>
+                <Twemoji text={room?.password ? '🔒' : '#'} />
+              </div>
               <div>
-                <h1 className={`text-2xl font-semibold`}>
-                  #Room: {room?.name}
-                </h1>
+                <h1 className={`text-2xl font-semibold`}>Room: {room?.name}</h1>
               </div>
             </div>
             <div className={`flex justify-center my-2`}>
@@ -133,7 +140,7 @@ export default function RoomPage({ user }) {
                       <Button icon="share-outline">Share </Button>
                     </CopyToClipboard>
                   </div>
-                  <div>
+                  <div className={`${isAuthor ? '' : 'hidden'}`}>
                     <Button
                       onClick={() => setIsShowDelete(true)}
                       icon="trash-outline"
