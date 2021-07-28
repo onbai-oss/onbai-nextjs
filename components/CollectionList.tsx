@@ -1,6 +1,5 @@
 import { getData } from '@/utils/api'
 import { PAGES } from '@/utils/constant'
-import { useUserLocal } from '@/utils/hooks'
 import React, { ReactElement, useState } from 'react'
 import Button from './base/Button'
 import CollectionIcon from './base/CollectionIcon'
@@ -10,19 +9,20 @@ import CollectionLoader from './base/CollectionLoader'
 import GetDataError from './base/GetDataError'
 import Link from 'next/link'
 
-interface Props {}
+interface Props {
+  user
+}
 
-export default function CollectionList({}: Props): ReactElement {
+export default function CollectionList({ user }: Props): ReactElement {
   const [page, setPage] = useState(0)
   const [limit, setLimit] = useState(10)
   const [search, setSearch] = useState('')
 
-  const userLocal = useUserLocal()
   const paginateQuery = `&$skip=${
     page * limit
   }&$limit=${limit}&title[$search]=${search}`
   const { data: listCollection, error, isLoading } = getData(
-    userLocal?.id ? `collection?userId=${userLocal?.id}${paginateQuery}` : ''
+    user?.id ? `collection?userId=${user?.id}${paginateQuery}` : ''
   )
 
   const onSearch = (e) => {
@@ -32,12 +32,12 @@ export default function CollectionList({}: Props): ReactElement {
   return (
     <div>
       <section
-        className={`px-4 py-4 mb-4 container mx-auto flex flex-col sm:flex-row justify-between items-center`}
+        className={`px-4 py-4 container mx-auto flex flex-col sm:flex-row justify-between items-center`}
       >
         <h1 className={`font-semibold text-xl`}>
           {listCollection?.total} collections
         </h1>
-        <form onSubmit={onSearch} className={`m-2`}>
+        <form onSubmit={onSearch} className={`my-2 w-full sm:w-auto`}>
           <Input
             name="search"
             icon="search-outline"
@@ -66,7 +66,7 @@ export default function CollectionList({}: Props): ReactElement {
               <div key={index}>
                 <Link href={PAGES.COLLECTION + `/${i.id}`}>
                   <button
-                    className={`w-full text-center p-4 rounded-md shadow-md hover:shadow-xl`}
+                    className={`border-2 border-solid focus:ring-1 ring-gray-600 ring-offset-2 w-full text-center p-4 rounded-md shadow-md hover:shadow-xl `}
                   >
                     <div className={`w-32 mx-auto`}>
                       <CollectionIcon fill={i.color} icon={i.icon} />
@@ -97,14 +97,14 @@ export default function CollectionList({}: Props): ReactElement {
       {!isLoading && !error && !listCollection?.data?.length ? (
         <section className={`flex justify-center items-center `}>
           <div>
-            <div>
+            <figure>
               <img
                 width="175"
                 className={`mx-auto`}
                 src="/nodata_flower.png"
                 alt="no data"
               />
-            </div>
+            </figure>
             <div className={`mt-4 text-center font-semibold`}>
               No collection found.
             </div>

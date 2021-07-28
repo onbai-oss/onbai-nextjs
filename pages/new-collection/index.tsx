@@ -14,8 +14,9 @@ import 'emoji-mart/css/emoji-mart.css'
 import CollectionIcon from '@/components/base/CollectionIcon'
 import { API, getData } from '@/utils/api'
 import { PAGES } from '@/utils/constant'
+import { getPropsUserSever } from '@/utils/session'
 
-export default function NewCollectionPage() {
+export default function NewCollectionPage({ user }) {
   const router = useRouter()
   const { id } = router.query
   const isEdit = Boolean(id)
@@ -80,7 +81,7 @@ export default function NewCollectionPage() {
 
   return (
     <>
-      <NavLoggedIn isHideNew />
+      <NavLoggedIn user={user} isHideNew />
 
       <main className={`mt-4 mb-12`}>
         <div
@@ -213,3 +214,5 @@ export default function NewCollectionPage() {
     </>
   )
 }
+
+export const getServerSideProps = getPropsUserSever

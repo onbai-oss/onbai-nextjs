@@ -48,7 +48,7 @@ export default function QuestionList({
 
   return (
     <>
-      <section className={` container mx-auto px-4 mb-6`}>
+      <section className={`container mx-auto px-4 mb-6`}>
         <div
           className={`flex flex-col sm:flex-row justify-between items-center mb-4`}
         >

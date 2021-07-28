@@ -4,6 +4,10 @@ import toast from 'react-hot-toast'
 import { PAGES } from './constant'
 import useSWR, { useSWRInfinite } from 'swr'
 
+/**
+ * Feathers.js apis
+ * docs: https://docs.feathersjs.com/api/client/rest.html#jquery
+ */
 const API: AxiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
 })
@@ -73,6 +77,36 @@ API.interceptors.response.use(
   }
 )
 
+/**
+ * Next.js apis
+ */
+const NEXTJS_API: AxiosInstance = axios.create({
+  baseURL: '/',
+})
+// Add a request interceptor
+NEXTJS_API.interceptors.request.use(
+  function (config) {
+    showLoading()
+    return config
+  },
+  function (error) {
+    hideLoading()
+    return Promise.reject(error)
+  }
+)
+
+// Add a response interceptor
+NEXTJS_API.interceptors.response.use(
+  function (response) {
+    hideLoading()
+    return response
+  },
+  function (error) {
+    hideLoading()
+    console.error(error.response)
+  }
+)
+
 // Hook SWR
 
 const fetcher = (url) => API.get(url).then((res) => res.data)
@@ -87,4 +121,4 @@ const getData = (url: string) => {
   }
 }
 
-export { API, getData }
+export { API, NEXTJS_API, getData }

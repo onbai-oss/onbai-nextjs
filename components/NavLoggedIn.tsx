@@ -7,20 +7,20 @@ import Router from 'next/router'
 import LogoLink from './base/LogoLink'
 import { Modal } from './base/Modal'
 import toast from 'react-hot-toast'
-import { useUserLocal } from '@/utils/hooks'
+import { NEXTJS_API } from '@/utils/api'
 
 export interface INavLoggedInProps {
   isHideNew?: boolean
+  user
 }
 
-export function NavLoggedIn({ isHideNew, ...props }: INavLoggedInProps) {
+export function NavLoggedIn({ isHideNew, user, ...props }: INavLoggedInProps) {
   useEffect(() => {
     // @ts-ignore
     eva && eva?.replace()
   }, [])
 
   let [isOpen, setIsOpen] = useState(false)
-  const userLocal = useUserLocal()
 
   function closeModal() {
     setIsOpen(false)
@@ -31,9 +31,14 @@ export function NavLoggedIn({ isHideNew, ...props }: INavLoggedInProps) {
   }
 
   const onLogout = () => {
-    localStorage.removeItem('token')
-    toast.success('Logout success')
-    Router.push('/')
+    NEXTJS_API.post('/api/logout').then((res) => {
+      console.log(res)
+      if (res.data) {
+        localStorage.removeItem('token')
+        toast.success('Logout success')
+        Router.push('/')
+      }
+    })
   }
 
   return (
@@ -72,30 +77,49 @@ export function NavLoggedIn({ isHideNew, ...props }: INavLoggedInProps) {
 
       <Modal isOpen={isOpen} closeModal={closeModal}>
         <>
-          <div className={``}>
-            <img
-              className={`mx-auto rounded-full shadow hover:shadow-md`}
-              src="https://ui-avatars.com/api/?background=10B981&color=fff&name=ob&size=128"
-              alt=""
-            />
-          </div>
-          <div className={`text-center`}>
-            {/* <h1 className="mt-2 font-semibold text-xl">User name</h1> */}
-            <h1 className="mt-2 font-semibold text-md">{userLocal?.email}</h1>
-          </div>
+          {user ? (
+            <div>
+              <div className={``}>
+                <img
+                  className={`mx-auto rounded-full shadow hover:shadow-md`}
+                  src={`https://ui-avatars.com/api/?background=10B981&color=fff&name=${user?.email}&size=72`}
+                  alt=""
+                />
+              </div>
+              <div className={`text-center`}>
+                <h1 className="mt-2 font-semibold text-xl"></h1>
+                <h1 className="mt-2 font-semibold text-md">{user?.email}</h1>
+              </div>
 
-          {/* <div className={`my-2 flex justify-center`}>
+              {/* <div className={`my-2 flex justify-center`}>
             <Button color="primary">Settings</Button>
           </div> */}
 
-          <div className={`my-4`}>
-            <hr />
-          </div>
-          <div className={`flex justify-center`}>
-            <Button onClick={onLogout} type="button" color="warning-outline">
-              Logout
-            </Button>
-          </div>
+              <div className={`my-4`}>
+                <hr />
+              </div>
+              <div className={`flex justify-center`}>
+                <Button
+                  onClick={onLogout}
+                  type="button"
+                  color="warning-outline"
+                >
+                  Logout
+                </Button>
+              </div>
+            </div>
+          ) : (
+            <div className={``}>
+              <div className={`text-center`}>
+                <h1 className={`text-xl my-4`}>You not login!</h1>
+                <div className={`flex justify-center`}>
+                  <Link href={PAGES.LOGIN}>
+                    <Button type="button">Login</Button>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          )}
         </>
       </Modal>
     </>

@@ -6,13 +6,13 @@ import { NavLoggedIn } from '@/components/NavLoggedIn'
 import QuestionList from '@/components/QuestionList'
 import { API, getData } from '@/utils/api'
 import { PAGES } from '@/utils/constant'
-import { useUserLocal } from '@/utils/hooks'
+import { getPropsUserSever } from '@/utils/session'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { FormEventHandler, useState } from 'react'
 import toast from 'react-hot-toast'
 
-export default function CollectionPage() {
+export default function CollectionPage({ user }) {
   const router = useRouter()
   const { id } = router.query
 
@@ -23,14 +23,13 @@ export default function CollectionPage() {
   const [emoji, setEmoji] = useState('')
   const [numberCreate, setNumberCreate] = useState<number>(10)
 
-  const userLocal = useUserLocal()
   const {
     data: collection,
     error: errorCollection,
     isLoading: isLoadingColletion,
   } = getData(id ? `collection/${id}` : '')
 
-  const isAuthor = collection?.userId && userLocal?.id === collection?.userId
+  const isAuthor = collection?.userId && user?.id === collection?.userId
 
   const onSubmitAddQuiz: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault()
@@ -57,7 +56,7 @@ export default function CollectionPage() {
 
   return (
     <>
-      <NavLoggedIn isHideNew />
+      <NavLoggedIn user={user} isHideNew />
       <main>
         <div className={`my-6`}>
           <div className={`w-32 mx-auto text-center `}>
@@ -176,3 +175,5 @@ export default function CollectionPage() {
     </>
   )
 }
+
+export const getServerSideProps = getPropsUserSever

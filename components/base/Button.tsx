@@ -99,7 +99,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
                   : (color.includes('primary') && '#10B981') ||
                     (color.includes('danger') && '#EF4444 ') ||
                     (color.includes('warning') && '#F59E0B ') ||
-                    (color.includes('info') && '#3B82F6')
+                    (color.includes('info') && '#3B82F6') ||
+                    (color.includes('text') && '#1B324F')
                 : 'rgba(255,255,255,1)'
             }
           ></i>

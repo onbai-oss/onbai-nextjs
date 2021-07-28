@@ -11,9 +11,9 @@ export default function NotLoginPage() {
         <div
           className={` mt-12 rounded-md shadow-md hover:shadow-lg px-12 py-6 text-center bg-white`}
         >
-          <div className={` my-4 flex justify-center `}>
+          <div className={` my-4 w-full mx-auto flex justify-center `}>
             <img
-              className={`w-full`}
+              className={`w-full object-contain`}
               draggable="false"
               src="/cat_sorry.png"
               alt="sorry"

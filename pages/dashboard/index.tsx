@@ -2,13 +2,12 @@ import RoomCard from '@/components/RoomCard'
 import RoomList from '@/components/RoomList'
 import CollectionList from '@/components/CollectionList'
 import { NavLoggedIn } from '@/components/NavLoggedIn'
-import { useUserLocal } from '@/utils/hooks'
+import { getPropsUserSever } from '@/utils/session'
 
-export default function DashboardPage() {
-  const userLocal = useUserLocal()
+export default function DashboardPage({ user }) {
   return (
     <>
-      <NavLoggedIn />
+      <NavLoggedIn user={user} />
       <main className={`mb-8`}>
         <section
           className={`h-32 font-semibold flex flex-col justify-center items-center
@@ -16,14 +15,16 @@ export default function DashboardPage() {
           `}
         >
           <div className={`my-4 text-white text-2xl`}>
-            Wellcome {userLocal?.email}
+            Wellcome {user?.email}
           </div>
         </section>
 
         <RoomCard />
-        <RoomList />
-        <CollectionList />
+        <RoomList user={user} />
+        <CollectionList user={user} />
       </main>
     </>
   )
 }
+
+export const getServerSideProps = getPropsUserSever

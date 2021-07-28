@@ -9,8 +9,10 @@ import { API } from '@/utils/api'
 import { PAGES } from '@/utils/constant'
 import toast from 'react-hot-toast'
 import { Modal } from '@/components/base/Modal'
+import confetti from 'canvas-confetti'
+import { getPropsUserSever } from '@/utils/session'
 
-export default function NewQuiz() {
+export default function NewQuiz({ user }) {
   const router = useRouter()
   const { numberCreate, current, questionID, id: collectionId } = router.query
   const [isShowDelete, setIsShowDelete] = useState(false)
@@ -77,6 +79,7 @@ export default function NewQuiz() {
       } else {
         if (Number(current) + 1 === Number(numberCreate)) {
           toast.success(`Congrat!, you've created ${numberCreate} question.`)
+          confetti()
           router.push(`/collection/${collectionId}`)
         } else {
           toast.success('Created!')
@@ -102,7 +105,7 @@ export default function NewQuiz() {
 
   return (
     <>
-      <NavLoggedIn isHideNew />
+      <NavLoggedIn user={user} isHideNew />
 
       <main className={`mb-8 `}>
         <div
@@ -223,3 +226,5 @@ export default function NewQuiz() {
     </>
   )
 }
+
+export const getServerSideProps = getPropsUserSever

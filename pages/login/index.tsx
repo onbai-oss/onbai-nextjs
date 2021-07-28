@@ -1,12 +1,13 @@
 import { BaseSyntheticEvent } from 'react'
 import Link from 'next/link'
-import { API } from 'utils/api'
+import { API, NEXTJS_API } from 'utils/api'
 import { useRouter } from 'next/router'
 import { PAGES } from 'utils/constant'
 import Button from '@/components/base/Button'
 import Input from '@/components/base/Input'
 import LogoLink from '@/components/base/LogoLink'
 import toast from 'react-hot-toast'
+import axios from 'axios'
 
 const LoginForm = () => {
   const router = useRouter()
@@ -25,13 +26,23 @@ const LoginForm = () => {
       .then((res) => {
         if (res.status === 201) {
           localStorage.setItem('token', res.data.accessToken)
-          localStorage.setItem('user', JSON.stringify(res.data.user))
+          return NEXTJS_API.post('api/login', res.data)
+        } else {
+          return new Promise((reslove) => reslove({}))
+        }
+      })
+      .then((res: any) => {
+        console.log('Login res', res)
+        if (res && res.data) {
           router.push(PAGES.DASHBOARD)
           toast.success('Login success')
+        } else {
+          toast.error('Something went wrong! please try again.')
         }
       })
       .catch((e) => {
         console.error(e)
+        localStorage.removeItem('token')
       })
   }
 
