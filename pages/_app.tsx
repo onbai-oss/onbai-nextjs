@@ -19,7 +19,11 @@ function App({ Component, pageProps }: AppProps) {
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
         />
-        <script defer src="https://unpkg.com/eva-icons"></script>
+        <script
+          src="https://cdn.jsdelivr.net/npm/eva-icons@1.1.3/eva.min.js"
+          integrity="sha256-gjzS0a/05vKcbfZH+V+l5VEXWSzMhddz6x5swhlhjtY="
+          crossOrigin="anonymous"
+        ></script>
       </Head>
       <Component {...pageProps} />
       <Toaster />

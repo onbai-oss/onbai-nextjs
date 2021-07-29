@@ -81,13 +81,14 @@ export function NavLoggedIn({ isHideNew, user, ...props }: INavLoggedInProps) {
             <div>
               <div className={``}>
                 <img
-                  className={`mx-auto rounded-full shadow hover:shadow-md`}
-                  src={`https://ui-avatars.com/api/?background=10B981&color=fff&name=${user?.email}&size=72`}
-                  alt=""
+                  className={`mx-auto w-24 rounded-full shadow hover:shadow-md`}
+                  src={`${user?.image}`}
+                  alt="user avatar"
+                  draggable="false"
                 />
               </div>
               <div className={`text-center`}>
-                <h1 className="mt-2 font-semibold text-xl"></h1>
+                <h1 className="mt-2 font-semibold text-xl">{user?.name}</h1>
                 <h1 className="mt-2 font-semibold text-md">{user?.email}</h1>
               </div>
 

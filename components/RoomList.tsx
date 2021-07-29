@@ -8,6 +8,7 @@ import Pagination from './base/Pagination'
 import CollectionLoader from './base/CollectionLoader'
 import GetDataError from './base/GetDataError'
 import { Twemoji } from 'react-emoji-render'
+import { useEffect } from 'react'
 
 interface Props {
   user

@@ -106,11 +106,11 @@ export default function SignUpPage() {
 
             <div className={`my-4 grid grid-cols-1 grid-rows-1 gap-4`}>
               <Button icon="google" className={`w-full`} color="danger">
-                Continue with Google
+                Signup with Google
               </Button>
 
               <Button icon="facebook" color="info">
-                Continue with Facebook
+                Signup with Facebook
               </Button>
             </div>
           </div>

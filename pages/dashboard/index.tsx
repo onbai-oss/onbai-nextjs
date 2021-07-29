@@ -20,7 +20,7 @@ export default function DashboardPage({ user }) {
           `}
         >
           <div className={`my-4 text-white text-2xl`}>
-            Wellcome {user?.email}
+            Wellcome {user?.name}
           </div>
         </section>
 

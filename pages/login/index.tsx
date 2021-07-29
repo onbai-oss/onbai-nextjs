@@ -7,14 +7,10 @@ import Button from '@/components/base/Button'
 import Input from '@/components/base/Input'
 import LogoLink from '@/components/base/LogoLink'
 import toast from 'react-hot-toast'
-import axios from 'axios'
 
 const LoginForm = () => {
   const router = useRouter()
 
-  const onChange = (e: BaseSyntheticEvent) => {
-    console.log('-> on change', e.target.value)
-  }
   const onSubmit = (e: BaseSyntheticEvent) => {
     e.preventDefault()
     console.log('On Submit', e.target)
@@ -26,7 +22,9 @@ const LoginForm = () => {
       .then((res) => {
         if (res.status === 201) {
           localStorage.setItem('token', res.data.accessToken)
-          return NEXTJS_API.post('api/login', res.data)
+          return NEXTJS_API.post('api/login', {
+            user: res.data.user,
+          })
         } else {
           return new Promise((reslove) => reslove({}))
         }
@@ -118,14 +116,27 @@ export default function LoginPage() {
             </div>
 
             <div className={`my-4 grid grid-cols-1 grid-rows-1 gap-4`}>
-              <Link href={PAGES.DASHBOARD}>
+              <a
+                href={process.env.NEXT_PUBLIC_OAUTH_URL + '/google'}
+                className={`grid`}
+              >
                 <Button icon="google" className={`w-full`} color="danger">
-                  Continue with Google
+                  Login with Google
                 </Button>
-              </Link>
-              <Button icon="facebook" color="info">
-                Continue with Facebook
-              </Button>
+              </a>
+              <a
+                href={process.env.NEXT_PUBLIC_OAUTH_URL + '/facebook'}
+                className={`grid`}
+              >
+                <Button icon="facebook" color="info">
+                  Login with Facebook
+                </Button>
+              </a>
+              <a href={PAGES.SIGNUP} className={`grid`}>
+                <Button icon="email-outline" color="primary-outline">
+                  Signup with email
+                </Button>
+              </a>
             </div>
           </div>
         </section>
