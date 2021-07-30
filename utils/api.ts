@@ -3,6 +3,8 @@ import Router from 'next/router'
 import toast from 'react-hot-toast'
 import { PAGES } from './constant'
 import useSWR, { useSWRInfinite } from 'swr'
+import io from 'socket.io-client'
+import feathers from '@feathersjs/client'
 
 /**
  * Feathers.js apis
@@ -123,4 +125,32 @@ const getData = (url: string) => {
   }
 }
 
-export { API, NEXTJS_API, getData }
+// Feathers
+// Socket.io is exposed as the `io` global.
+const socket = io('http://localhost:3030', {})
+
+socket.on('connect', () => {
+  if (process.browser) {
+    setTimeout(() => {
+      socket.emit(
+        'create',
+        'authentication',
+        {
+          strategy: 'jwt',
+          accessToken: localStorage.getItem('token'),
+        },
+        function (error, newAuthResult) {
+          console.log(newAuthResult)
+        }
+      )
+    }, 0)
+  }
+})
+// @feathersjs/client is exposed as the `feathers` global.
+//@ts-ignore
+const app = feathers()
+
+app.configure(feathers.socketio(socket))
+app.configure(feathers.authentication())
+
+export { API, NEXTJS_API, getData, app }

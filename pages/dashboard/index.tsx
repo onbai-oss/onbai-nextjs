@@ -4,8 +4,12 @@ import CollectionList from '@/components/CollectionList'
 import { NavLoggedIn } from '@/components/NavLoggedIn'
 import { getPropsUserSever } from '@/utils/session'
 import PleaseLogin from '@/components/PleaseLogin'
+import { useEffect } from 'react'
+import { app } from '@/utils/api'
 
 export default function DashboardPage({ user }) {
+  useEffect(() => {}, [])
+
   if (!user) {
     return <PleaseLogin />
   }

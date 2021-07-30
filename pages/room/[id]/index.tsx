@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { NavLoggedIn } from '@/components/NavLoggedIn'
 import Button from '@/components/base/Button'
 import { useRouter } from 'next/router'
-import { API, getData } from '@/utils/api'
+import { API, app, getData } from '@/utils/api'
 import { Modal } from '@/components/base/Modal'
 import { PAGES } from '@/utils/constant'
 import toast from 'react-hot-toast'
@@ -61,6 +61,8 @@ export default function RoomPage({ user }) {
     }
   }, [room])
 
+  useEffect(() => {}, [])
+
   const onSubmitPass = (e) => {
     e.preventDefault()
     const isMatch = bcrypt.compareSync(e.target.password.value, room?.password)
@@ -72,6 +74,9 @@ export default function RoomPage({ user }) {
       wellcomeToRoom()
     }
   }
+
+  const joinRoom = () => {}
+  const outRoom = () => {}
 
   if (!user) {
     return <PleaseLogin />
@@ -151,6 +156,29 @@ export default function RoomPage({ user }) {
             </div>
             <div className={`my-4 p-2`}>
               <hr />
+            </div>
+
+            {/* list user waiting */}
+            <div></div>
+
+            <div>
+              {isAuthor ? (
+                <div className={`flex justify-center`}>
+                  <Button
+                    icon="arrow-circle-right-outline"
+                    color="info"
+                    onClick={joinRoom}
+                  >
+                    Start practice
+                  </Button>
+                </div>
+              ) : (
+                <div className={`flex justify-center`}>
+                  <Button icon="log-in-outline" color="info" onClick={joinRoom}>
+                    Join Room
+                  </Button>
+                </div>
+              )}
             </div>
           </section>
         )}
