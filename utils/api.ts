@@ -41,7 +41,7 @@ API.interceptors.request.use(
     // Do something before request is sent
     showLoading()
     config.headers.Authorization =
-      'Bearer ' + (process.browser && localStorage.getItem('token'))
+      'Bearer ' + (process.browser && localStorage.getItem('auth'))
 
     return config
   },
@@ -129,28 +129,35 @@ const getData = (url: string) => {
 // Socket.io is exposed as the `io` global.
 const socket = io('http://localhost:3030', {})
 
-socket.on('connect', () => {
-  if (process.browser) {
-    setTimeout(() => {
-      socket.emit(
-        'create',
-        'authentication',
-        {
-          strategy: 'jwt',
-          accessToken: localStorage.getItem('token'),
-        },
-        function (error, newAuthResult) {
-          console.log(newAuthResult)
-        }
-      )
-    }, 0)
-  }
-})
+// socket.on('connect', () => {
+//   if (process.browser) {
+//     setTimeout(() => {
+//       socket.emit(
+//         'create',
+//         'authentication',
+//         {
+//           strategy: 'jwt',
+//           accessToken: localStorage.getItem('auth'),
+//         },
+//         function (error, newAuthResult) {}
+//       )
+//     }, 0)
+//   }
+// })
 // @feathersjs/client is exposed as the `feathers` global.
-//@ts-ignore
+
+/**
+ * Feathers client app
+ * docs: https://docs.feathersjs.com/api/client.html#load-from-cdn-with-script
+ */
 const app = feathers()
-
+const auth = feathers.authentication
 app.configure(feathers.socketio(socket))
-app.configure(feathers.authentication())
+app.configure(auth())
 
+app.configure(
+  auth({
+    storageKey: 'auth',
+  })
+)
 export { API, NEXTJS_API, getData, app }

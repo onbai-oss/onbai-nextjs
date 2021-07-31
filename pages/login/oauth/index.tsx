@@ -11,18 +11,17 @@ export default function oauth({}: Props): ReactElement {
   const router = useRouter()
 
   useEffect(() => {
-    console.log(router.query)
+    console.log('🔍 oAuth checking...')
     const access_token = location.hash.split('#access_token=')[1]
+    // Set server cookie session
     NEXTJS_API.get('api/oauth?access_token=' + access_token)
       .then((r) => {
-        console.log(r)
-        localStorage.setItem('token', String(access_token))
         toast.success('Login success!')
         router.push(PAGES.DASHBOARD)
       })
       .catch((e) => {
         toast.error('Login failed!')
-        router.push('/')
+        router.push(PAGES.LANDING)
       })
   }, [])
   return <div></div>

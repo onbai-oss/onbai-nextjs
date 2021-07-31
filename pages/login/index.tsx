@@ -1,6 +1,6 @@
 import { BaseSyntheticEvent } from 'react'
 import Link from 'next/link'
-import { API, NEXTJS_API } from 'utils/api'
+import { app, NEXTJS_API } from 'utils/api'
 import { useRouter } from 'next/router'
 import { PAGES } from 'utils/constant'
 import Button from '@/components/base/Button'
@@ -13,34 +13,29 @@ const LoginForm = () => {
 
   const onSubmit = (e: BaseSyntheticEvent) => {
     e.preventDefault()
-    console.log('On Submit', e.target)
-    API.post('authentication', {
-      strategy: 'local',
-      email: e.target.email.value,
-      password: e.target.password.value,
-    })
-      .then((res) => {
-        if (res.status === 201) {
-          localStorage.setItem('token', res.data.accessToken)
-          return NEXTJS_API.post('api/login', {
-            user: res.data.user,
-          })
-        } else {
-          return new Promise((reslove) => reslove({}))
-        }
+    app
+      .authenticate({
+        strategy: 'local',
+        email: e.target.email.value,
+        password: e.target.password.value,
+      })
+      .then((data) => {
+        // For set cookie session
+        return NEXTJS_API.post('api/login', {
+          user: data.user,
+        })
       })
       .then((res: any) => {
-        console.log('Login res', res)
         if (res && res.data) {
+          toast.success('✨ Login success')
           router.push(PAGES.DASHBOARD)
-          toast.success('Login success')
         } else {
-          toast.error('Something went wrong! please try again.')
+          toast.error('💥 Something went wrong! please try again.')
         }
       })
       .catch((e) => {
-        console.error(e)
-        localStorage.removeItem('token')
+        // Show login page (potentially with `e.message`)
+        console.error('💥 Authentication error', e)
       })
   }
 

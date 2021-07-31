@@ -7,7 +7,7 @@ import Router from 'next/router'
 import LogoLink from './base/LogoLink'
 import { Modal } from './base/Modal'
 import toast from 'react-hot-toast'
-import { NEXTJS_API } from '@/utils/api'
+import { app, NEXTJS_API } from '@/utils/api'
 
 export interface INavLoggedInProps {
   isHideNew?: boolean
@@ -32,11 +32,17 @@ export function NavLoggedIn({ isHideNew, user, ...props }: INavLoggedInProps) {
 
   const onLogout = () => {
     NEXTJS_API.post('/api/logout').then((res) => {
-      console.log(res)
       if (res.data) {
-        localStorage.removeItem('token')
-        toast.success('Logout success')
-        Router.push('/')
+        app
+          .logout()
+          .then(() => {
+            toast.success('✨ Logout success.')
+            Router.push(PAGES.LANDING)
+          })
+          .catch((e) => {
+            console.error(e)
+            toast.error('💥 Logout error.')
+          })
       }
     })
   }

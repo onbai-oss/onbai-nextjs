@@ -1,10 +1,23 @@
+import { app } from '@/utils/api'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
+import { useEffect } from 'react'
 import { Toaster } from 'react-hot-toast'
 
 import '../styles/globals.css'
 
 function App({ Component, pageProps }: AppProps) {
+  useEffect(() => {
+    console.log('🥷 - 🥷 - 🥷')
+    app
+      .reAuthenticate()
+      .then(() => {
+        console.log('🌻 Logged!')
+      })
+      .catch(() => {
+        console.log('👀 Not login')
+      })
+  }, [])
   return (
     <>
       <Head>

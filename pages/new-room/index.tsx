@@ -22,6 +22,11 @@ export default function NewRoomPage({ user }) {
     const dataPost = {
       name: nameValue,
       password: hash,
+      users: {
+        [user.id]: {
+          role: 'host',
+        },
+      },
     }
     API.post(API_PATH.ROOM, dataPost).then((r) => {
       console.log(r)

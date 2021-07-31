@@ -14,23 +14,24 @@ import PleaseLogin from '@/components/PleaseLogin'
 import { Twemoji } from 'react-emoji-render'
 
 export default function RoomPage({ user }) {
+  // Init
   const router = useRouter()
   const { id } = router.query
   const [isShowDelete, setIsShowDelete] = useState(false)
   const [isLock, setIsLock] = useState(true)
   const [isCheckedLock, setIsCheckedLock] = useState(false)
 
-  const { data: room, error: errorRoom, isLoading: isLoadingRoom } = getData(
-    id ? `room/${id}` : ''
-  )
+  const [room, setRoom] = useState<any>({})
 
   const isAuthor = user?.id === room?.userId
 
+  const roomService = app.service(`room`)
+
+  // Methods
   const onDelete = () => {
     API.delete(PAGES.ROOM + `/${id}`).then((res) => {
       toast.success('Deleted!')
       setIsShowDelete(false)
-      router.push(PAGES.DASHBOARD)
     })
   }
 
@@ -38,12 +39,42 @@ export default function RoomPage({ user }) {
     toast.success('Wellcome you to room.')
   }
 
-  useEffect(() => {
-    if (errorRoom) {
-      router.push('/')
+  const onSubmitPass = (e) => {
+    e.preventDefault()
+    const isMatch = bcrypt.compareSync(e.target.password.value, room?.password)
+    setIsLock(!isMatch)
+    if (!isMatch) {
+      toast.error('Please enter correct key!')
+      e.target.password.value = ''
+    } else {
+      wellcomeToRoom()
     }
-  }, [errorRoom])
+  }
 
+  const joinRoom = async () => {
+    try {
+      let roomData = await roomService.patch(id, {
+        $set: { ['users.' + user.id]: { role: 'guest' } },
+      })
+      console.log(roomData)
+      toast.success('Success')
+    } catch (error) {
+      console.error(error)
+    }
+  }
+  const outRoom = async () => {
+    try {
+      let roomData = await roomService.patch(id, {
+        $unset: { ['users.' + user.id]: '' },
+      })
+      console.log(roomData)
+      toast.success('Success')
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  // Effects
   useEffect(() => {
     if (!room) return
     if (!isCheckedLock) {
@@ -61,22 +92,23 @@ export default function RoomPage({ user }) {
     }
   }, [room])
 
-  useEffect(() => {}, [])
+  useEffect(() => {
+    roomService.get(id).then((data) => {
+      setRoom(data)
+    })
 
-  const onSubmitPass = (e) => {
-    e.preventDefault()
-    const isMatch = bcrypt.compareSync(e.target.password.value, room?.password)
-    setIsLock(!isMatch)
-    if (!isMatch) {
-      toast.error('Please enter correct key!')
-      e.target.password.value = ''
-    } else {
-      wellcomeToRoom()
-    }
-  }
+    roomService.on('patched', (newData) => {
+      if (id === newData?.id) {
+        setRoom(newData)
+      }
+    })
 
-  const joinRoom = () => {}
-  const outRoom = () => {}
+    roomService.on('removed', (roomRemoved) => {
+      if (id === roomRemoved?.id) {
+        router.push(PAGES.DASHBOARD)
+      }
+    })
+  }, [])
 
   if (!user) {
     return <PleaseLogin />
@@ -159,7 +191,9 @@ export default function RoomPage({ user }) {
             </div>
 
             {/* list user waiting */}
-            <div></div>
+            <div className={`prose prose-sm my-2`}>
+              <pre>{JSON.stringify(room, null, 2)}</pre>
+            </div>
 
             <div>
               {isAuthor ? (
@@ -173,10 +207,25 @@ export default function RoomPage({ user }) {
                   </Button>
                 </div>
               ) : (
-                <div className={`flex justify-center`}>
-                  <Button icon="log-in-outline" color="info" onClick={joinRoom}>
-                    Join Room
-                  </Button>
+                <div>
+                  <div className={`flex justify-center my-2`}>
+                    <Button
+                      icon="log-in-outline"
+                      color="info"
+                      onClick={joinRoom}
+                    >
+                      Join Room
+                    </Button>
+                  </div>
+                  <div className={`flex justify-center my-2`}>
+                    <Button
+                      icon="log-in-outline"
+                      color="info"
+                      onClick={outRoom}
+                    >
+                      Leave Room
+                    </Button>
+                  </div>
                 </div>
               )}
             </div>
