@@ -4,7 +4,7 @@ import Button from '@/components/base/Button'
 import { useRouter } from 'next/router'
 import { API, app, getData } from '@/utils/api'
 import { Modal } from '@/components/base/Modal'
-import { PAGES } from '@/utils/constant'
+import { PAGES, ROOM } from '@/utils/constant'
 import toast from 'react-hot-toast'
 import Input from '@/components/base/Input'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
@@ -12,6 +12,7 @@ import bcrypt from 'bcryptjs'
 import { getPropsUserSever } from '@/utils/session'
 import PleaseLogin from '@/components/PleaseLogin'
 import { Twemoji } from 'react-emoji-render'
+import { pick } from 'lodash'
 
 export default function RoomPage({ user }) {
   // Init
@@ -54,7 +55,12 @@ export default function RoomPage({ user }) {
   const joinRoom = async () => {
     try {
       let roomData = await roomService.patch(id, {
-        $set: { ['users.' + user.id]: { role: 'guest' } },
+        $set: {
+          ['users.' + user.id]: {
+            role: 'guest',
+            info: pick(user, 'image', 'email', 'name'),
+          },
+        },
       })
       console.log(roomData)
       toast.success('Success')
@@ -66,6 +72,18 @@ export default function RoomPage({ user }) {
     try {
       let roomData = await roomService.patch(id, {
         $unset: { ['users.' + user.id]: '' },
+      })
+      console.log(roomData)
+      toast.success('Success')
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const startRoom = async () => {
+    try {
+      let roomData = await roomService.patch(id, {
+        status: ROOM.STATUS.PLAYING,
       })
       console.log(roomData)
       toast.success('Success')
@@ -108,6 +126,13 @@ export default function RoomPage({ user }) {
         router.push(PAGES.DASHBOARD)
       }
     })
+    /// Test
+    const query = { [`users.${user.id}.role`]: 'host' }
+    const collation = {}
+    roomService.find({ query }).then((r) => {
+      console.log(r)
+    })
+    //
   }, [])
 
   if (!user) {
@@ -118,7 +143,7 @@ export default function RoomPage({ user }) {
     <>
       <NavLoggedIn user={user} isHideNew />
 
-      <main className={``}>
+      <main className={`mb-4`}>
         {!isCheckedLock ? (
           <div className={`flex justify-center mt-4`}></div>
         ) : isLock ? (
@@ -191,7 +216,8 @@ export default function RoomPage({ user }) {
             </div>
 
             {/* list user waiting */}
-            <div className={`prose prose-sm my-2`}>
+            <div className={`prose prose-sm my-2 mx-auto`}>
+              {user?.id}
               <pre>{JSON.stringify(room, null, 2)}</pre>
             </div>
 
@@ -201,7 +227,7 @@ export default function RoomPage({ user }) {
                   <Button
                     icon="arrow-circle-right-outline"
                     color="info"
-                    onClick={joinRoom}
+                    onClick={startRoom}
                   >
                     Start practice
                   </Button>

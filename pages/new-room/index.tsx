@@ -4,11 +4,13 @@ import Input from '@/components/base/Input'
 import { NavLoggedIn } from '@/components/NavLoggedIn'
 import bcrypt from 'bcryptjs'
 import { API } from '@/utils/api'
-import { API_PATH, PAGES } from '@/utils/constant'
+import { API_PATH, PAGES, ROOM } from '@/utils/constant'
 import Router from 'next/router'
 import toast from 'react-hot-toast'
 import confetti from 'canvas-confetti'
 import { getPropsUserSever } from '@/utils/session'
+import { customAlphabet } from 'nanoid'
+import { pick } from 'lodash'
 
 export default function NewRoomPage({ user }) {
   const onSubmit = (e) => {
@@ -22,9 +24,16 @@ export default function NewRoomPage({ user }) {
     const dataPost = {
       name: nameValue,
       password: hash,
+      status: ROOM.STATUS.WAIT,
+      game: {
+        type: ROOM.TYPE.SOLO,
+        rule: null,
+      },
+      collections: [],
       users: {
         [user.id]: {
           role: 'host',
+          info: pick(user, 'image', 'email', 'name'),
         },
       },
     }
@@ -61,7 +70,7 @@ export default function NewRoomPage({ user }) {
           >
             <fieldset>
               <label htmlFor="name" className={`my-2 block font-semibold`}>
-                Name:
+                Name
               </label>
               <Input
                 icon="edit-2-outline"
@@ -72,12 +81,13 @@ export default function NewRoomPage({ user }) {
                 placeholder=""
                 autoFocus
                 autoComplete="off"
+                defaultValue={'room-' + customAlphabet('123456', 6)()}
               ></Input>
             </fieldset>
 
             <fieldset>
               <label htmlFor="password" className={`my-2 block font-semibold`}>
-                Password:
+                Password
               </label>
               <Input
                 icon="lock-outline"

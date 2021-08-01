@@ -23,3 +23,20 @@ export const API_PATH = {
   QUESTION: 'question',
   ROOM: 'room',
 }
+
+export const ROOM = {
+  STATUS: {
+    WAIT: 0,
+    PLAYING: 1,
+    END: 2,
+  },
+  ROLE: {
+    HOST: 0,
+    GUEST: 1,
+  },
+  TYPE: {
+    SOLO: 0,
+    TEAM: 1,
+    WATCH: 2,
+  },
+}
