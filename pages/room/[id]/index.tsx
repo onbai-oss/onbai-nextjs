@@ -13,6 +13,8 @@ import { getPropsUserSever } from '@/utils/session'
 import PleaseLogin from '@/components/PleaseLogin'
 import { Twemoji } from 'react-emoji-render'
 import { pick } from 'lodash'
+import UserList from '@/components/room/UserList'
+import RoomCreateConfig from '@/components/room/RoomCreateConfig'
 
 export default function RoomPage({ user }) {
   // Init
@@ -58,6 +60,7 @@ export default function RoomPage({ user }) {
         $set: {
           ['users.' + user.id]: {
             role: 'guest',
+            score: 0,
             info: pick(user, 'image', 'email', 'name'),
           },
         },
@@ -75,6 +78,17 @@ export default function RoomPage({ user }) {
       })
       console.log(roomData)
       toast.success('Success')
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const setScore = async () => {
+    try {
+      let roomData = await roomService.patch(id, {
+        $inc: { ['users.' + user.id + '.score']: 1 },
+      })
+      console.log(roomData)
     } catch (error) {
       console.error(error)
     }
@@ -144,6 +158,7 @@ export default function RoomPage({ user }) {
       <NavLoggedIn user={user} isHideNew />
 
       <main className={`mb-4`}>
+        {/* // Check lock */}
         {!isCheckedLock ? (
           <div className={`flex justify-center mt-4`}></div>
         ) : isLock ? (
@@ -180,6 +195,7 @@ export default function RoomPage({ user }) {
             </form>
           </section>
         ) : (
+          // ROOM page
           <section className={`container mx-auto`}>
             <div className={`h-24 p-2 flex justify-center items-center`}>
               <div className={`mr-1`}>
@@ -215,15 +231,12 @@ export default function RoomPage({ user }) {
               <hr />
             </div>
 
-            {/* list user waiting */}
-            <div className={`prose prose-sm my-2 mx-auto`}>
-              {user?.id}
-              <pre>{JSON.stringify(room, null, 2)}</pre>
-            </div>
+            <UserList users={room?.users} />
+            {isAuthor ? <RoomCreateConfig /> : null}
 
             <div>
               {isAuthor ? (
-                <div className={`flex justify-center`}>
+                <div className={`flex justify-center mt-4`}>
                   <Button
                     icon="arrow-circle-right-outline"
                     color="info"
@@ -252,11 +265,27 @@ export default function RoomPage({ user }) {
                       Leave Room
                     </Button>
                   </div>
+                  <div className={`flex justify-center my-2`}>
+                    <Button
+                      icon="log-in-outline"
+                      color="info"
+                      onClick={setScore}
+                    >
+                      set Score
+                    </Button>
+                  </div>
                 </div>
               )}
             </div>
           </section>
         )}
+
+        {/* DEBUG: */}
+        <summary className={` bottom-0 left-0 w-full`}>
+          <div className={`prose prose-sm my-2 mx-auto`}>
+            <pre>{JSON.stringify(room, null, 2)}</pre>
+          </div>
+        </summary>
       </main>
 
       <Modal isOpen={isShowDelete} closeModal={() => setIsShowDelete(false)}>

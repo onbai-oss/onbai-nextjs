@@ -33,9 +33,11 @@ export default function NewRoomPage({ user }) {
       users: {
         [user.id]: {
           role: 'host',
+          score: 0,
           info: pick(user, 'image', 'email', 'name'),
         },
       },
+      reaction: {},
     }
     API.post(API_PATH.ROOM, dataPost).then((r) => {
       console.log(r)

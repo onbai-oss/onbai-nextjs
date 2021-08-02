@@ -2,7 +2,7 @@ import axios, { AxiosInstance } from 'axios'
 import Router from 'next/router'
 import toast from 'react-hot-toast'
 import { PAGES } from './constant'
-import useSWR, { useSWRInfinite } from 'swr'
+import useSWR from 'swr'
 import io from 'socket.io-client'
 import feathers from '@feathersjs/client'
 
@@ -126,32 +126,16 @@ const getData = (url: string) => {
 }
 
 // Feathers
-// Socket.io is exposed as the `io` global.
-const socket = io('http://localhost:3030', {})
-
-// socket.on('connect', () => {
-//   if (process.browser) {
-//     setTimeout(() => {
-//       socket.emit(
-//         'create',
-//         'authentication',
-//         {
-//           strategy: 'jwt',
-//           accessToken: localStorage.getItem('auth'),
-//         },
-//         function (error, newAuthResult) {}
-//       )
-//     }, 0)
-//   }
-// })
-// @feathersjs/client is exposed as the `feathers` global.
-
 /**
  * Feathers client app
  * docs: https://docs.feathersjs.com/api/client.html#load-from-cdn-with-script
  */
 const app = feathers()
 const auth = feathers.authentication
+const socket = io(
+  process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000',
+  {}
+)
 app.configure(feathers.socketio(socket))
 app.configure(auth())
 

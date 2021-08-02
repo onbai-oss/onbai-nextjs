@@ -34,6 +34,7 @@ const LoginForm = () => {
         }
       })
       .catch((e) => {
+        toast.error('Authentication error')
         // Show login page (potentially with `e.message`)
         console.error('💥 Authentication error', e)
       })
