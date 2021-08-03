@@ -198,7 +198,7 @@ export default function RoomPage({ user }) {
           // ROOM page
           <section className={`container mx-auto`}>
             <div className={`h-24 p-2 flex justify-center items-center`}>
-              <div className={`mr-1`}>
+              <div className={`mr-1 `}>
                 <Twemoji text={room?.password ? '🔒' : '#'} />
               </div>
               <div>
@@ -232,19 +232,11 @@ export default function RoomPage({ user }) {
             </div>
 
             <UserList users={room?.users} />
-            {isAuthor ? <RoomCreateConfig /> : null}
+            {isAuthor ? <RoomCreateConfig user={user} /> : null}
 
             <div>
               {isAuthor ? (
-                <div className={`flex justify-center mt-4`}>
-                  <Button
-                    icon="arrow-circle-right-outline"
-                    color="info"
-                    onClick={startRoom}
-                  >
-                    Start practice
-                  </Button>
-                </div>
+                <div></div>
               ) : (
                 <div>
                   <div className={`flex justify-center my-2`}>
