@@ -6,6 +6,8 @@ import Input from '../base/Input'
 import CollectionPicker from '../CollectionPicker'
 import { roomContext } from './roomProvider'
 import { toArray } from 'lodash'
+import { app } from '@/utils/api'
+import { ROOM } from '@/utils/constant'
 
 interface Props {}
 
@@ -15,14 +17,37 @@ export default function RoomCreateConfig({}: Props): ReactElement {
   const listRoomUser = toArray(room.users)
 
   // Configs
-  const [collection, setCollection] = useState<any>([])
+  const [collections, setCollections] = useState<any>([])
   const [mode, setMode] = useState<any>(0)
-  const [rule, setRule] = useState<any>()
   const [time, setTime] = useState<any>(1)
   const [score, setScore] = useState<any>(10)
 
   // Modal
   const [isOpen, setIsOpen] = useState<any>(false)
+
+  const roomService = app.service(`room`)
+
+  const joinRoom = async () => {
+    try {
+      let roomData = await roomService.patch(room.id, {
+        status: ROOM.STATUS.PLAYING,
+        collections,
+        game: {
+          type: ROOM.TYPE.SOLO,
+          rule: {
+            mode,
+            score,
+            time,
+          },
+        },
+      })
+      console.log(roomData)
+      toast.success('Success')
+    } catch (error) {
+      console.error(error)
+    } finally {
+    }
+  }
 
   const onSubmit = (e) => {
     e.preventDefault()
@@ -31,6 +56,7 @@ export default function RoomCreateConfig({}: Props): ReactElement {
     document.getElementById('timer')?.blur()
     document.getElementById('score_goal')?.blur()
     window.scrollTo(0, 0)
+    joinRoom()
   }
 
   return (
@@ -39,8 +65,8 @@ export default function RoomCreateConfig({}: Props): ReactElement {
         onSubmit={onSubmit}
         className={`w-full sm:w-96 mx-auto px-4 sm:px-0 font-semibold mb-12 `}
       >
-        <div className={`border shadow rounded-md p-2 my-2`}>
-          <div className={`text-center mb-2 underline`}>1. Data</div>
+        <div className={`border shadow hover:shadow-md rounded-md p-2 my-2`}>
+          <div className={`text-left mb-2 underline`}>1. Data</div>
 
           <div className={`flex justify-center`}>
             <Button
@@ -52,9 +78,15 @@ export default function RoomCreateConfig({}: Props): ReactElement {
               Select collections
             </Button>
           </div>
+          {collections.length ? (
+            <div className={`mt-2`}>
+              <hr />
+            </div>
+          ) : null}
+
           <div className="mt-3 mb-1 flex justify-center">
             <div className={`whitespace-nowrap overflow-auto`}>
-              {collection.map((i) => (
+              {collections.map((i) => (
                 <div
                   key={i.id}
                   className={`shadow-md inline-block mx-1 bg-green-500 text-white px-2 rounded-md`}
@@ -66,8 +98,8 @@ export default function RoomCreateConfig({}: Props): ReactElement {
           </div>
         </div>
 
-        <div className={`border shadow rounded-md p-2 my-2`}>
-          <div className={`text-center mb-1 underline`}>2. Mode</div>
+        <div className={`border shadow hover:shadow-md rounded-md p-2 my-2`}>
+          <div className={`text-left mb-1 underline`}>2. Mode</div>
           <div className={`flex justify-center space-x-2`}>
             <label htmlFor="score">
               <input
@@ -103,42 +135,80 @@ export default function RoomCreateConfig({}: Props): ReactElement {
               All
             </label>
           </div>
+          <div className={`mt-2`}>
+            <hr />
+          </div>
           <div className={`p-2 grid grid-cols-1 grid-rows-1 gap-2 mt-1`}>
             {[0, 2].includes(mode) ? (
               <div className={``}>
-                <label className={``} htmlFor="score_goal">
-                  <div className={`mb-1`}>Score goal</div>
-                  <Input
-                    defaultValue="10"
-                    min="1"
-                    type="number"
-                    id="score_goal"
-                    name="score_goal"
-                  />
+                <label
+                  className={`flex justify-center items-center space-x-2`}
+                  htmlFor="score_goal"
+                >
+                  <div className={`mb-1`}>Goal: </div>
+                  <div className={`flex space-x-2 items-center `}>
+                    <div className="w-20">
+                      <Input
+                        value={score}
+                        onChange={(e) => setScore(+e.target.value)}
+                        min="1"
+                        type="number"
+                        id="score_goal"
+                        name="score_goal"
+                      />
+                    </div>
+                    <div>( point )</div>
+                  </div>
                 </label>
               </div>
             ) : null}
-            {mode === 2 ? <div>or</div> : null}
+            {mode === 2 ? <div className={`text-center`}> or </div> : null}
             {[1, 2].includes(mode) ? (
               <div className={``}>
-                <label htmlFor="timer">
-                  <div className={`mb-1`}>Timer (minute)</div>
-                  <Input
-                    defaultValue="5"
-                    min="1"
-                    type="number"
-                    id="timer"
-                    name="timer"
-                  />
+                <label
+                  className={`flex justify-center items-center space-x-2`}
+                  htmlFor="timer"
+                >
+                  <div className={`mb-1`}>Timer:</div>
+
+                  <div className={`flex space-x-2 items-center `}>
+                    <div className="w-20">
+                      <Input
+                        value={time}
+                        onChange={(e) => setTime(+e.target.value)}
+                        min="1"
+                        type="number"
+                        id="timer"
+                        name="timer"
+                      />
+                    </div>
+                    <div>( minute )</div>
+                  </div>
                 </label>
               </div>
             ) : null}
           </div>
         </div>
 
-        <div className={`flex justify-center mt-4 `}>
+        {/* List errors */}
+        <div className="my-4">
+          {!collections.length ? (
+            <div className={`text-center my-2 text-sm`}>
+              <span className={`text-red-500`}>*</span> Please select at least
+              one collection.
+            </div>
+          ) : null}
+          {listRoomUser.length < 2 ? (
+            <div className={`text-center my-2 text-sm`}>
+              <span className={`text-red-500`}>*</span> Please wait at least one
+              member join room.
+            </div>
+          ) : null}
+        </div>
+
+        <div className={`flex justify-center mt-3 `}>
           <Button
-            disabled={!collection.length || listRoomUser.length < 2}
+            disabled={!collections.length || listRoomUser.length < 2}
             icon="arrow-circle-right-outline"
             color="info"
             type="submit"
@@ -146,24 +216,12 @@ export default function RoomCreateConfig({}: Props): ReactElement {
             Start practice
           </Button>
         </div>
-        {!collection.length ? (
-          <div className={`text-center my-2 text-sm`}>
-            <span className={`text-red-500`}>*</span> Please select at least one
-            collection.
-          </div>
-        ) : null}
-        {listRoomUser.length < 2 ? (
-          <div className={`text-center my-2 text-sm`}>
-            <span className={`text-red-500`}>*</span> Please wait at least one
-            member join room.
-          </div>
-        ) : null}
       </form>
 
       <CollectionPicker
         isOpen={isOpen}
         onCloseModal={() => setIsOpen(false)}
-        onSelected={(list) => setCollection(list)}
+        onSelected={(list) => setCollections(list)}
       />
     </>
   )

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { NavLoggedIn } from '@/components/NavLoggedIn'
 import Button from '@/components/base/Button'
 import { useRouter } from 'next/router'
@@ -26,6 +26,8 @@ export default function RoomPage({ user }) {
   const [isShowDelete, setIsShowDelete] = useState(false)
   const [isLock, setIsLock] = useState(true)
   const [isCheckedLock, setIsCheckedLock] = useState(false)
+
+  const mountedRef = useRef(true)
 
   const [room, setRoom] = useState<any>({})
 
@@ -100,10 +102,12 @@ export default function RoomPage({ user }) {
 
   useEffect(() => {
     roomService.get(id).then((data) => {
+      if (!mountedRef.current) return null
       setRoom(data)
     })
 
     roomService.on('patched', (newData) => {
+      if (!mountedRef.current) return null
       if (id === newData?.id) {
         setRoom(newData)
       }
@@ -115,10 +119,13 @@ export default function RoomPage({ user }) {
       }
     })
     /// Test
-    const query = { [`users.${user?.id}.role`]: 'host' }
-    roomService.find({ query }).then((r) => {
-      console.log(r)
-    })
+    // const query = { [`users.${user?.id}.role`]: 'host' }
+    // roomService.find({ query }).then((r) => {
+    //   console.log(r)
+    // })
+    return () => {
+      mountedRef.current = false
+    }
     //
   }, [])
 
@@ -205,7 +212,7 @@ export default function RoomPage({ user }) {
               <div className={`my-4 p-2`}>
                 <hr />
               </div>
-              {room?.status == ROOM.STATUS.WAIT ? (
+              {room.status == ROOM.STATUS.WAIT ? (
                 <div>
                   <UserList users={room?.users} />
                   {isAuthor ? (

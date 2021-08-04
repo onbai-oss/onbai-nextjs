@@ -14,9 +14,9 @@ export default function RoomUserJoin({}: Props): ReactElement {
   const listRoomUser = toArray(room.users)
   const id = room.id
 
-  const roomService = app.service(`room`)
-
   const isInRoom = room.users ? Boolean(room.users[user?.id]) : false
+
+  const roomService = app.service(`room`)
 
   const joinRoom = async () => {
     try {
