@@ -15,6 +15,9 @@ import { pick } from 'lodash'
 import UserList from '@/components/room/UserList'
 import RoomCreateConfig from '@/components/room/RoomCreateConfig'
 import { getPropsUserSever } from '@/utils/session'
+import { RoomWrapper } from '@/components/room/roomProvider'
+import RoomUserJoin from '@/components/room/RoomUserJoin'
+import RoomSoloMode from '@/components/room/RoomSoloMode'
 
 export default function RoomPage({ user }) {
   // Init
@@ -51,35 +54,6 @@ export default function RoomPage({ user }) {
       e.target.password.value = ''
     } else {
       wellcomeToRoom()
-    }
-  }
-
-  const joinRoom = async () => {
-    try {
-      let roomData = await roomService.patch(id, {
-        $set: {
-          ['users.' + user?.id]: {
-            role: 'guest',
-            score: 0,
-            info: pick(user, 'image', 'email', 'name'),
-          },
-        },
-      })
-      console.log(roomData)
-      toast.success('Success')
-    } catch (error) {
-      console.error(error)
-    }
-  }
-  const outRoom = async () => {
-    try {
-      let roomData = await roomService.patch(id, {
-        $unset: { ['users.' + user?.id]: '' },
-      })
-      console.log(roomData)
-      toast.success('Success')
-    } catch (error) {
-      console.error(error)
     }
   }
 
@@ -142,7 +116,6 @@ export default function RoomPage({ user }) {
     })
     /// Test
     const query = { [`users.${user?.id}.role`]: 'host' }
-    const collation = {}
     roomService.find({ query }).then((r) => {
       console.log(r)
     })
@@ -196,87 +169,69 @@ export default function RoomPage({ user }) {
           </section>
         ) : (
           // ROOM page
-          <section className={`container mx-auto`}>
-            <div className={`h-24 p-2 flex justify-center items-center`}>
-              <div className={`mr-1 `}>
-                <Twemoji text={room?.password ? '🔒' : '#'} />
-              </div>
-              <div>
-                <h1 className={`text-2xl font-semibold`}>Room: {room?.name}</h1>
-              </div>
-            </div>
-            <div className={`flex justify-center my-2`}>
-              <div className={``}>
-                <div className={`flex items-center space-x-2 w-full`}>
-                  <div>
-                    <CopyToClipboard
-                      text={process.browser ? location.href : ''}
-                      onCopy={() => {
-                        toast.success('Copied to your clipboard!')
-                      }}
-                    >
-                      <Button icon="share-outline">Share </Button>
-                    </CopyToClipboard>
-                  </div>
-                  <div className={`${isAuthor ? '' : 'hidden'}`}>
-                    <Button
-                      onClick={() => setIsShowDelete(true)}
-                      icon="trash-outline"
-                    ></Button>
-                  </div>
+          <RoomWrapper value={room}>
+            <section className={`container mx-auto`}>
+              {/* Room info */}
+              <div className={`mt-4 p-2 flex justify-center items-center`}>
+                <div className={`mr-1 `}>
+                  <Twemoji text={room?.password ? '🔒' : '#'} />
                 </div>
-              </div>
-            </div>
-            <div className={`my-4 p-2`}>
-              <hr />
-            </div>
-
-            <UserList users={room?.users} />
-            {isAuthor ? <RoomCreateConfig /> : null}
-
-            <div>
-              {isAuthor ? (
-                <div></div>
-              ) : (
                 <div>
-                  <div className={`flex justify-center my-2`}>
-                    <Button
-                      icon="log-in-outline"
-                      color="info"
-                      onClick={joinRoom}
-                    >
-                      Join Room
-                    </Button>
-                  </div>
-                  <div className={`flex justify-center my-2`}>
-                    <Button
-                      icon="log-in-outline"
-                      color="info"
-                      onClick={outRoom}
-                    >
-                      Leave Room
-                    </Button>
-                  </div>
-                  <div className={`flex justify-center my-2`}>
-                    <Button
-                      icon="log-in-outline"
-                      color="info"
-                      onClick={setScore}
-                    >
-                      set Score
-                    </Button>
+                  <h1 className={`text-2xl font-semibold`}> {room?.name}</h1>
+                </div>
+              </div>
+              <div className={`flex justify-center my-2`}>
+                <div className={``}>
+                  <div className={`flex items-center space-x-2 w-full`}>
+                    <div>
+                      <CopyToClipboard
+                        text={process.browser ? location.href : ''}
+                        onCopy={() => {
+                          toast.success('Copied to your clipboard!')
+                        }}
+                      >
+                        <Button icon="share-outline">Share </Button>
+                      </CopyToClipboard>
+                    </div>
+                    <div className={`${isAuthor ? '' : 'hidden'}`}>
+                      <Button
+                        onClick={() => setIsShowDelete(true)}
+                        icon="trash-outline"
+                      ></Button>
+                    </div>
                   </div>
                 </div>
+              </div>
+              <div className={`my-4 p-2`}>
+                <hr />
+              </div>
+              {room?.status == ROOM.STATUS.WAIT ? (
+                <div>
+                  <UserList users={room?.users} />
+                  {isAuthor ? (
+                    <div>
+                      <RoomCreateConfig />
+                    </div>
+                  ) : (
+                    <div>
+                      <RoomUserJoin></RoomUserJoin>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <RoomSoloMode />
               )}
-            </div>
-          </section>
+            </section>
+          </RoomWrapper>
         )}
 
         {/* DEBUG: */}
-        <summary className={` bottom-0 left-0 w-full`}>
-          <div className={`prose prose-sm my-2 mx-auto`}>
+        <summary className={`fixed bottom-0 left-0 max-h-screen overflow-auto`}>
+          <details
+            className={`prose prose-sm bg-white hover:bg-black cursor-pointer text-white mx-auto`}
+          >
             <pre>{JSON.stringify(room, null, 2)}</pre>
-          </div>
+          </details>
         </summary>
       </main>
 
