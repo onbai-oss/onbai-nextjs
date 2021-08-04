@@ -16,7 +16,7 @@ export default function DashboardPage({ user }) {
 
   return (
     <>
-      <NavLoggedIn user={user} />
+      <NavLoggedIn />
       <main className={`mb-8`}>
         <section
           className={`h-32 font-semibold flex flex-col justify-center items-center
@@ -29,8 +29,8 @@ export default function DashboardPage({ user }) {
         </section>
 
         <RoomCard />
-        <RoomList user={user} />
-        <CollectionList user={user} />
+        <RoomList />
+        <CollectionList />
       </main>
     </>
   )

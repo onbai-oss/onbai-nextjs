@@ -1,12 +1,12 @@
 import { NavLoggedIn } from '@/components/NavLoggedIn'
 import { PAGES } from '@/utils/constant'
-import { getPropsUserSever } from '@/utils/session'
+
 import Link from 'next/link'
 
-export default function NewPage({ user }) {
+export default function NewPage({}) {
   return (
     <>
-      <NavLoggedIn user={user} isHideNew />
+      <NavLoggedIn isHideNew />
 
       <main>
         <div
@@ -51,4 +51,3 @@ export default function NewPage({ user }) {
     </>
   )
 }
-export const getServerSideProps = getPropsUserSever

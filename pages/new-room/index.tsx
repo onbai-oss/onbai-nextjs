@@ -8,9 +8,10 @@ import { API_PATH, PAGES, ROOM } from '@/utils/constant'
 import Router from 'next/router'
 import toast from 'react-hot-toast'
 import confetti from 'canvas-confetti'
-import { getPropsUserSever } from '@/utils/session'
+
 import { customAlphabet } from 'nanoid'
 import { pick } from 'lodash'
+import { getPropsUserSever } from '@/utils/session'
 
 export default function NewRoomPage({ user }) {
   const onSubmit = (e) => {
@@ -31,7 +32,7 @@ export default function NewRoomPage({ user }) {
       },
       collections: [],
       users: {
-        [user.id]: {
+        [user?.id]: {
           role: 'host',
           score: 0,
           info: pick(user, 'image', 'email', 'name'),
@@ -49,7 +50,7 @@ export default function NewRoomPage({ user }) {
 
   return (
     <>
-      <NavLoggedIn user={user} isHideNew />
+      <NavLoggedIn isHideNew />
       <main className={`mb-8`}>
         <div className={`mt-4 w-48 mx-auto`}>
           <img
@@ -116,5 +117,4 @@ export default function NewRoomPage({ user }) {
     </>
   )
 }
-
 export const getServerSideProps = getPropsUserSever

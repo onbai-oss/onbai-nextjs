@@ -1,14 +1,15 @@
 import React, { ReactElement, useState } from 'react'
 import toast from 'react-hot-toast'
+import { userContext } from '../auth/userProvider'
 import Button from '../base/Button'
 import Input from '../base/Input'
 import CollectionPicker from '../CollectionPicker'
 
-interface Props {
-  user
-}
+interface Props {}
 
-export default function RoomCreateConfig({ user }: Props): ReactElement {
+export default function RoomCreateConfig({}: Props): ReactElement {
+  const user = userContext()
+
   // Configs
   const [collection, setCollection] = useState<any>([])
   const [mode, setMode] = useState<any>(0)
@@ -150,7 +151,6 @@ export default function RoomCreateConfig({ user }: Props): ReactElement {
       </form>
 
       <CollectionPicker
-        user={user}
         isOpen={isOpen}
         onCloseModal={() => setIsOpen(false)}
         onSelected={(list) => setCollection(list)}

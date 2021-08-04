@@ -8,12 +8,13 @@ import Pagination from './base/Pagination'
 import CollectionLoader from './base/CollectionLoader'
 import GetDataError from './base/GetDataError'
 import Link from 'next/link'
+import { userContext } from './auth/userProvider'
 
-interface Props {
-  user
-}
+interface Props {}
 
-export default function CollectionList({ user }: Props): ReactElement {
+export default function CollectionList({}: Props): ReactElement {
+  const user = userContext()
+
   const [page, setPage] = useState(0)
   const [limit, setLimit] = useState(10)
   const [search, setSearch] = useState('')

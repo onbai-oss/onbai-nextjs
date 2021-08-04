@@ -81,7 +81,7 @@ export default function NewCollectionPage({ user }) {
 
   return (
     <>
-      <NavLoggedIn user={user} isHideNew />
+      <NavLoggedIn isHideNew />
 
       <main className={`mt-4 mb-12`}>
         <div

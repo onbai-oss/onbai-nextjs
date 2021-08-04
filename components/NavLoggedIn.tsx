@@ -8,13 +8,15 @@ import LogoLink from './base/LogoLink'
 import { Modal } from './base/Modal'
 import toast from 'react-hot-toast'
 import { app, NEXTJS_API } from '@/utils/api'
+import { userContext } from './auth/userProvider'
 
 export interface INavLoggedInProps {
   isHideNew?: boolean
-  user
 }
 
-export function NavLoggedIn({ isHideNew, user, ...props }: INavLoggedInProps) {
+export function NavLoggedIn({ isHideNew, ...props }: INavLoggedInProps) {
+  const user = userContext()
+
   useEffect(() => {
     // @ts-ignore
     eva && eva?.replace()

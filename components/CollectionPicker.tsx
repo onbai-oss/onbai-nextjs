@@ -9,19 +9,20 @@ import CollectionLoader from './base/CollectionLoader'
 import GetDataError from './base/GetDataError'
 import Link from 'next/link'
 import { Modal } from './base/Modal'
+import { userContext } from './auth/userProvider'
 interface Props {
-  user
   isOpen
   onCloseModal
   onSelected
 }
 
 export default function CollectionPicker({
-  user,
   isOpen,
   onCloseModal,
   onSelected,
 }: Props): ReactElement {
+  const user = userContext()
+
   const [page, setPage] = useState(0)
   const [limit, setLimit] = useState(10)
   const [search, setSearch] = useState('')
@@ -139,7 +140,7 @@ export default function CollectionPicker({
                   Apply
                 </Button>
               </div>
-              <div className={`flex mb-2 justify-center text-sm`}>
+              <div className={`flex mb-2 justify-center text-sm font-semibold`}>
                 {listSelected.length
                   ? `( ${listSelected.length} collections )`
                   : ''}

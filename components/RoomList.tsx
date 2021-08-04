@@ -8,13 +8,13 @@ import Pagination from './base/Pagination'
 import CollectionLoader from './base/CollectionLoader'
 import GetDataError from './base/GetDataError'
 import { Twemoji } from 'react-emoji-render'
-import { useEffect } from 'react'
+import { userContext } from './auth/userProvider'
 
-interface Props {
-  user
-}
+interface Props {}
 
-export default function RoomList({ user }: Props): ReactElement {
+export default function RoomList({}: Props): ReactElement {
+  const user = userContext()
+
   const router = useRouter()
 
   const [page, setPage] = useState(0)

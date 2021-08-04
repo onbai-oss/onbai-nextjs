@@ -1,10 +1,9 @@
 import { NavLoggedIn } from '@/components/NavLoggedIn'
-import { getPropsUserSever } from '@/utils/session'
 
-export default function NewGamePage({ user }) {
+export default function NewGamePage({}) {
   return (
     <>
-      <NavLoggedIn user={user} isHideNew />
+      <NavLoggedIn isHideNew />
 
       <main>
         <div
@@ -16,5 +15,3 @@ export default function NewGamePage({ user }) {
     </>
   )
 }
-
-export const getServerSideProps = getPropsUserSever

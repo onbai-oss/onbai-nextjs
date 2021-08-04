@@ -9,12 +9,12 @@ import toast from 'react-hot-toast'
 import Input from '@/components/base/Input'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import bcrypt from 'bcryptjs'
-import { getPropsUserSever } from '@/utils/session'
 import PleaseLogin from '@/components/PleaseLogin'
 import { Twemoji } from 'react-emoji-render'
 import { pick } from 'lodash'
 import UserList from '@/components/room/UserList'
 import RoomCreateConfig from '@/components/room/RoomCreateConfig'
+import { getPropsUserSever } from '@/utils/session'
 
 export default function RoomPage({ user }) {
   // Init
@@ -58,7 +58,7 @@ export default function RoomPage({ user }) {
     try {
       let roomData = await roomService.patch(id, {
         $set: {
-          ['users.' + user.id]: {
+          ['users.' + user?.id]: {
             role: 'guest',
             score: 0,
             info: pick(user, 'image', 'email', 'name'),
@@ -74,7 +74,7 @@ export default function RoomPage({ user }) {
   const outRoom = async () => {
     try {
       let roomData = await roomService.patch(id, {
-        $unset: { ['users.' + user.id]: '' },
+        $unset: { ['users.' + user?.id]: '' },
       })
       console.log(roomData)
       toast.success('Success')
@@ -86,7 +86,7 @@ export default function RoomPage({ user }) {
   const setScore = async () => {
     try {
       let roomData = await roomService.patch(id, {
-        $inc: { ['users.' + user.id + '.score']: 1 },
+        $inc: { ['users.' + user?.id + '.score']: 1 },
       })
       console.log(roomData)
     } catch (error) {
@@ -141,7 +141,7 @@ export default function RoomPage({ user }) {
       }
     })
     /// Test
-    const query = { [`users.${user.id}.role`]: 'host' }
+    const query = { [`users.${user?.id}.role`]: 'host' }
     const collation = {}
     roomService.find({ query }).then((r) => {
       console.log(r)
@@ -155,7 +155,7 @@ export default function RoomPage({ user }) {
 
   return (
     <>
-      <NavLoggedIn user={user} isHideNew />
+      <NavLoggedIn isHideNew />
 
       <main className={`mb-4`}>
         {/* // Check lock */}
@@ -232,7 +232,7 @@ export default function RoomPage({ user }) {
             </div>
 
             <UserList users={room?.users} />
-            {isAuthor ? <RoomCreateConfig user={user} /> : null}
+            {isAuthor ? <RoomCreateConfig /> : null}
 
             <div>
               {isAuthor ? (

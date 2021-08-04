@@ -1,20 +1,25 @@
+import { UserWrapper } from '@/components/auth/userProvider'
 import { app } from '@/utils/api'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
+import { useState } from 'react'
 import { useEffect } from 'react'
 import { Toaster } from 'react-hot-toast'
 
 import '../styles/globals.css'
 
 function App({ Component, pageProps }: AppProps) {
+  const [user, setUser] = useState<any>(undefined)
   useEffect(() => {
     console.log('🥷 - 🥷 - 🥷')
     app
       .reAuthenticate()
-      .then(() => {
-        console.log('🌻 Logged!')
+      .then((userData) => {
+        console.log('🌻 Logged!', userData)
+        setUser(userData.user)
       })
       .catch(() => {
+        setUser(null)
         console.log('👀 Not login')
       })
   }, [])
@@ -38,7 +43,9 @@ function App({ Component, pageProps }: AppProps) {
           crossOrigin="anonymous"
         ></script>
       </Head>
-      <Component {...pageProps} />
+      <UserWrapper value={user}>
+        <Component {...pageProps} />
+      </UserWrapper>
       <Toaster />
     </>
   )

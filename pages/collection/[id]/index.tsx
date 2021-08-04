@@ -6,12 +6,12 @@ import { NavLoggedIn } from '@/components/NavLoggedIn'
 import QuestionList from '@/components/QuestionList'
 import { API, getData } from '@/utils/api'
 import { PAGES } from '@/utils/constant'
-import { getPropsUserSever } from '@/utils/session'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { FormEventHandler, useState } from 'react'
 import toast from 'react-hot-toast'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
+import { getPropsUserSever } from '@/utils/session'
 
 export default function CollectionPage({ user }) {
   const router = useRouter()
@@ -57,7 +57,7 @@ export default function CollectionPage({ user }) {
 
   return (
     <>
-      <NavLoggedIn user={user} isHideNew />
+      <NavLoggedIn isHideNew />
       <main>
         <div className={`my-6`}>
           <div className={`w-32 mx-auto text-center `}>
@@ -194,5 +194,4 @@ export default function CollectionPage({ user }) {
     </>
   )
 }
-
 export const getServerSideProps = getPropsUserSever
