@@ -12,7 +12,7 @@ export function Modal({ isOpen, closeModal, children }: IModalProps) {
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
         as="div"
-        className="fixed inset-0 z-10 overflow-y-auto bg-opacity-5 bg-black"
+        className="fixed inset-0 z-10 overflow-y-auto bg-opacity-75 bg-white"
         onClose={closeModal}
       >
         <div className="min-h-screen px-2 sm:px-4 text-center">

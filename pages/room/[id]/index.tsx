@@ -70,21 +70,10 @@ export default function RoomPage({ user }) {
     }
   }
 
-  const startRoom = async () => {
-    try {
-      let roomData = await roomService.patch(id, {
-        status: ROOM.STATUS.PLAYING,
-      })
-      console.log(roomData)
-      toast.success('Success')
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
   // Effects
   useEffect(() => {
-    if (!room) return
+    // TODO: prevent guest
+    if (!room?.id) return
     if (!isCheckedLock) {
       if (user?.id === room?.userId) {
         setIsLock(false)
@@ -95,7 +84,6 @@ export default function RoomPage({ user }) {
           wellcomeToRoom()
         }
       }
-
       setIsCheckedLock(true)
     }
   }, [room])
@@ -178,43 +166,46 @@ export default function RoomPage({ user }) {
           // ROOM page
           <RoomWrapper value={room}>
             <section className={`container mx-auto`}>
-              {/* Room info */}
-              <div className={`mt-4 p-2 flex justify-center items-center`}>
-                <div className={`mr-1 `}>
-                  <Twemoji text={room?.password ? '🔒' : '#'} />
-                </div>
+              {room?.status == ROOM.STATUS.WAIT ? (
                 <div>
-                  <h1 className={`text-2xl font-semibold`}> {room?.name}</h1>
-                </div>
-              </div>
-              <div className={`flex justify-center my-2`}>
-                <div className={``}>
-                  <div className={`flex items-center space-x-2 w-full`}>
-                    <div>
-                      <CopyToClipboard
-                        text={process.browser ? location.href : ''}
-                        onCopy={() => {
-                          toast.success('Copied to your clipboard!')
-                        }}
-                      >
-                        <Button icon="share-outline">Share </Button>
-                      </CopyToClipboard>
+                  {/* Room info */}
+                  <div className={`mt-4 p-2 flex justify-center items-center`}>
+                    <div className={`mr-1 `}>
+                      <Twemoji text={room?.password ? '🔒' : '#'} />
                     </div>
-                    <div className={`${isAuthor ? '' : 'hidden'}`}>
-                      <Button
-                        onClick={() => setIsShowDelete(true)}
-                        icon="trash-outline"
-                      ></Button>
+                    <div>
+                      <h1 className={`text-2xl font-semibold`}>
+                        {' '}
+                        {room?.name}
+                      </h1>
                     </div>
                   </div>
-                </div>
-              </div>
-              <div className={`my-4 p-2`}>
-                <hr />
-              </div>
-              {room.status == ROOM.STATUS.WAIT ? (
-                <div>
-                  <UserList users={room?.users} />
+                  <div className={`flex justify-center my-2`}>
+                    <div className={``}>
+                      <div className={`flex items-center space-x-2 w-full`}>
+                        <div>
+                          <CopyToClipboard
+                            text={process.browser ? location.href : ''}
+                            onCopy={() => {
+                              toast.success('Copied to your clipboard!')
+                            }}
+                          >
+                            <Button icon="share-outline">Share </Button>
+                          </CopyToClipboard>
+                        </div>
+                        <div className={`${isAuthor ? '' : 'hidden'}`}>
+                          <Button
+                            onClick={() => setIsShowDelete(true)}
+                            icon="trash-outline"
+                          ></Button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className={`my-4 p-2`}>
+                    <hr />
+                  </div>
+                  <UserList />
                   {isAuthor ? (
                     <div>
                       <RoomCreateConfig />
@@ -225,9 +216,12 @@ export default function RoomPage({ user }) {
                     </div>
                   )}
                 </div>
-              ) : (
-                <RoomSoloMode />
-              )}
+              ) : null}
+              {/* // GAME */}
+              {/* SOLO */}
+              {room?.status == ROOM.STATUS.PLAYING ? (
+                <>{room?.game?.type == ROOM.TYPE.SOLO && <RoomSoloMode />}</>
+              ) : null}
             </section>
           </RoomWrapper>
         )}

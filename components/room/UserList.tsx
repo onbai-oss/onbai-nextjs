@@ -1,19 +1,20 @@
 import React, { ReactElement } from 'react'
 import { toArray } from 'lodash'
-interface Props {
-  users: any
-}
+import { roomContext } from './roomProvider'
+import { userContext } from '../auth/userProvider'
+interface Props {}
 
-export default function UserList({ users }: Props): ReactElement {
-  const data = toArray(users) // Array.from(new Array(2))
-  if (!users) {
+export default function UserList({}: Props): ReactElement {
+  const user = userContext()
+  const room = roomContext()
+  if (!room) {
     return <div>...</div>
   }
   return (
     <div>
       <div className="flex justify-center">
         <div className={`whitespace-nowrap overflow-auto px-2  `}>
-          {data.map(({ role, score, info }) => (
+          {toArray(room?.users).map(({ role, score, info }) => (
             <div
               key={info.email}
               className={`w-12 inline-block relative mx-2 m-2`}

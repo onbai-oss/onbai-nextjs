@@ -51,8 +51,6 @@ export default function RoomCreateConfig({}: Props): ReactElement {
 
   const onSubmit = (e) => {
     e.preventDefault()
-    console.log('Submit', e)
-    toast.success('Submit')
     document.getElementById('timer')?.blur()
     document.getElementById('score_goal')?.blur()
     window.scrollTo(0, 0)

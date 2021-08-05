@@ -52,7 +52,7 @@ export default function RoomUserJoin({}: Props): ReactElement {
       {isInRoom ? (
         <section>
           <div className={`text-center my-4 font-semibold`}>
-            <h1>Waiting for room start!</h1>
+            <h1 className={`animate-pulse`}>Waiting for room start...</h1>
           </div>
           <div className={`flex justify-center my-2`}>
             <Button icon="log-out-outline" color="warning" onClick={outRoom}>
