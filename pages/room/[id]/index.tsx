@@ -18,6 +18,7 @@ import { getPropsUserSever } from '@/utils/session'
 import { RoomWrapper } from '@/components/room/roomProvider'
 import RoomUserJoin from '@/components/room/RoomUserJoin'
 import RoomSoloMode from '@/components/room/RoomSoloMode'
+import RoomResult from '@/components/room/RoomResult'
 
 export default function RoomPage({ user }) {
   // Init
@@ -56,17 +57,6 @@ export default function RoomPage({ user }) {
       e.target.password.value = ''
     } else {
       wellcomeToRoom()
-    }
-  }
-
-  const setScore = async () => {
-    try {
-      let roomData = await roomService.patch(id, {
-        $inc: { ['users.' + user?.id + '.score']: 1 },
-      })
-      console.log(roomData)
-    } catch (error) {
-      console.error(error)
     }
   }
 
@@ -112,6 +102,8 @@ export default function RoomPage({ user }) {
     //   console.log(r)
     // })
     return () => {
+      roomService.removeListener('patched')
+      roomService.removeListener('removed')
       mountedRef.current = false
     }
     //
@@ -152,7 +144,7 @@ export default function RoomPage({ user }) {
                   icon="unlock-outline"
                   autoFocus
                   type="text"
-                  autoComplete="none"
+                  autoComplete="on"
                 ></Input>
               </div>
               <div className="flex justify-center">
@@ -166,6 +158,7 @@ export default function RoomPage({ user }) {
           // ROOM page
           <RoomWrapper value={room}>
             <section className={`container mx-auto`}>
+              {/* WAITING */}
               {room?.status == ROOM.STATUS.WAIT ? (
                 <div>
                   {/* Room info */}
@@ -217,11 +210,15 @@ export default function RoomPage({ user }) {
                   )}
                 </div>
               ) : null}
+
               {/* // GAME */}
               {/* SOLO */}
               {room?.status == ROOM.STATUS.PLAYING ? (
                 <>{room?.game?.type == ROOM.TYPE.SOLO && <RoomSoloMode />}</>
               ) : null}
+
+              {/* RESULT */}
+              {room?.status == ROOM.STATUS.END ? <RoomResult /> : null}
             </section>
           </RoomWrapper>
         )}

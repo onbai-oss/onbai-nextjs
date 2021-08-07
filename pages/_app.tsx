@@ -46,7 +46,31 @@ function App({ Component, pageProps }: AppProps) {
       <UserWrapper value={user}>
         <Component {...pageProps} />
       </UserWrapper>
-      <Toaster />
+
+      <Toaster
+        position="top-center"
+        reverseOrder={false}
+        gutter={8}
+        containerClassName=""
+        containerStyle={{}}
+        toastOptions={{
+          // Define default options
+          className: '',
+          duration: 1500,
+          style: {
+            background: '#fff',
+            color: '#1B324F',
+          },
+          // Default options for specific types
+          success: {
+            duration: 1500,
+            theme: {
+              primary: 'green',
+              secondary: 'black',
+            },
+          },
+        }}
+      />
     </>
   )
 }

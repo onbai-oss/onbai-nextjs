@@ -9,10 +9,13 @@ import {
 } from '@heroicons/react/outline'
 import { userContext } from '../auth/userProvider'
 import { roomContext } from './roomProvider'
-import { shuffle } from 'lodash'
+import { shuffle, drop, filter, chunk, get } from 'lodash'
 import { Twemoji } from 'react-emoji-render'
 
 import UserList from '@/components/room/UserList'
+import toast from 'react-hot-toast'
+import confetti from 'canvas-confetti'
+import { ROOM } from '@/utils/constant'
 
 interface Props {}
 
@@ -22,15 +25,63 @@ export default function RoomSoloMode({}: Props): ReactElement {
 
   const [listQuestion, setListQuestion] = useState<Array<any>>([])
   const [currentQuestion, setCurrentQuestion] = useState<any>({})
+  const [isWin, setIsWin] = useState(false)
 
   const collectionSevcice = app.service('collection')
+  const roomService = app.service('room')
   const questionSevice = app.service('question')
 
-  useEffect(() => {
-    console.log('solo', room)
-    const listCollectionID = room.collections.map((i) => i.id)
-    console.log(listCollectionID)
+  const setScore = async () => {
+    try {
+      await roomService.patch(room.id, {
+        $inc: { ['users.' + user?.id + '.score']: 1 },
+      })
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
+  const setWin = async () => {
+    try {
+      await roomService.patch(room.id, {
+        status: ROOM.STATUS.END,
+      })
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const makeQuestion = (list) => {
+    console.log('list', list)
+
+    const listRandom = shuffle(list)
+    const randomQuest = listRandom[0]
+    const listFake = chunk(
+      shuffle(filter(listRandom, (o) => o.id != randomQuest.id)),
+      2
+    )[0]
+    randomQuest['answers'] = shuffle([
+      { answer: randomQuest.answer, isCorrect: true },
+      ...listFake.map((i) => ({ answer: i.answer, isCorrect: false })),
+    ])
+
+    console.log('randomQuest', randomQuest)
+    setCurrentQuestion(randomQuest)
+    setListQuestion(listRandom)
+  }
+
+  const onAnswer = ({ isCorrect }) => {
+    if (isCorrect) {
+      toast.success('Correct!')
+      setScore()
+    } else {
+      toast.error('Wrong!')
+    }
+    makeQuestion(shuffle(listQuestion))
+  }
+
+  useEffect(() => {
+    const listCollectionID = room.collections.map((i) => i.id)
     questionSevice
       .find({
         query: {
@@ -40,13 +91,28 @@ export default function RoomSoloMode({}: Props): ReactElement {
         },
       })
       .then((res) => {
-        console.log(res)
-        setListQuestion(shuffle(res.data))
+        makeQuestion(res.data)
       })
       .catch((e) => {
         console.error(e)
       })
   }, [])
+
+  useEffect(() => {
+    // Check score
+    // TODO: check time
+    if (
+      get(room, `status`) == ROOM.STATUS.PLAYING &&
+      +get(room, `users.${user?.id}.score`) >= +get(room, `game.rule.score`)
+    ) {
+      console.log('Win')
+      setWin()
+      setIsWin(true)
+    } else {
+      console.log('Not win')
+    }
+  }, [room])
+
   return (
     <>
       <div className={`mt-2 p-2 flex justify-center items-center`}>
@@ -63,7 +129,7 @@ export default function RoomSoloMode({}: Props): ReactElement {
       >
         {/* <ClockIcon width="20" /> */}
         <FlagIcon width="20" />
-        <div>Correct: 0/10 </div>
+        <div>Goal: 10 correct answer </div>
       </div>
 
       <div className={`mt-2`}>
@@ -74,51 +140,46 @@ export default function RoomSoloMode({}: Props): ReactElement {
       </div>
 
       {/* Question Choice */}
-      <div className={`mt-2 mb-8 p-2 max-w-xl mx-auto`}>
+      <div className={`mt-2 mb-12 p-2 max-w-xl mx-auto`}>
         <div
           className={`my-2 text-blue-500 font-semibold flex items-center space-x-1`}
         >
           <QuestionMarkCircleIcon className={``} width="20" />
-          <div>Question 1:</div>
+          <div>Question </div>
         </div>
         <div className={`mx-4 my-3`}>
-          <div>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel
-            suscipit dicta accusantium tempore veniam commodi harum. Assumenda
-            at qui, nesciunt ex repellendus accusamus mollitia reiciendis
-            deleniti adipisci quas repudiandae illum libero harum aliquam
-            doloremque vitae laudantium dolorum et ducimus ipsam? Quam, sint
-            explicabo iusto laboriosam recusandae alias ipsam similique nulla.
-          </div>
+          <div
+            dangerouslySetInnerHTML={{ __html: currentQuestion?.question }}
+            className={`prose`}
+          ></div>
         </div>
         <div>
-          <div className={`my-3 `}>
+          <div className={`mt-5 mb-2`}>
             <div
               className={`font-semibold text-blue-500 flex items-center space-x-1 w-full`}
             >
               <AnnotationIcon width="20"></AnnotationIcon>
-              <div className={`flex-1`}>Select answer:</div>
+              <div className={`flex-1`}>Select answer</div>
             </div>
           </div>
 
           <div className={`mx-4`}>
-            <button
-              className={`p-3 my-3 w-full text-left shadow-md hover:shadow-xl border-2 border-gray-300 hover:border-blue-300 rounded-md`}
-            >
-              <div>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              </div>
-            </button>
-            <button
-              className={`p-3 my-3 w-full text-left shadow-md hover:shadow-xl border-2 border-gray-300 hover:border-blue-300 rounded-md`}
-            >
-              <div>eccc</div>
-            </button>
-            <button
-              className={`p-3 my-3 w-full text-left shadow-md hover:shadow-xl border-2 border-gray-300 hover:border-blue-300 rounded-md`}
-            >
-              <div>eccc</div>
-            </button>
+            {/* List answer */}
+            {currentQuestion?.answers &&
+              currentQuestion?.answers.map((i, k) => (
+                <button
+                  onClick={() => onAnswer(i)}
+                  key={k}
+                  className={`p-3 my-3 w-full text-left  border-2 border-gray-400 hover:border-blue-500 rounded-md `}
+                >
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: i.answer,
+                    }}
+                    className={`prose`}
+                  ></div>
+                </button>
+              ))}
           </div>
         </div>
       </div>
