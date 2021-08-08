@@ -5,8 +5,13 @@ import Head from 'next/head'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { Toaster } from 'react-hot-toast'
-
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
+import duration from 'dayjs/plugin/duration'
 import '../styles/globals.css'
+
+dayjs.extend(relativeTime)
+dayjs.extend(duration)
 
 function App({ Component, pageProps }: AppProps) {
   const [user, setUser] = useState<any>(undefined)

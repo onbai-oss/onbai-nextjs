@@ -169,11 +169,9 @@ export default function CollectionPage({ user }) {
           <div className={` text-2xl font-semibold`}>
             <h1>Are you sure? It can't revert.</h1>
           </div>
-
-          <div>
-            <img src="/dinoc.png" alt="" />
+          <div className={`w-64 mx-auto`}>
+            <img className={`w-full`} src="/dinoc.png" alt="" />
           </div>
-
           <div className={`flex`}>
             <div className="mr-2">
               <Button

@@ -9,23 +9,29 @@ import {
 } from '@heroicons/react/outline'
 import { userContext } from '../auth/userProvider'
 import { roomContext } from './roomProvider'
-import { shuffle, drop, filter, chunk, get } from 'lodash'
+import { shuffle, filter, chunk, get } from 'lodash'
 import { Twemoji } from 'react-emoji-render'
 
 import UserList from '@/components/room/UserList'
 import toast from 'react-hot-toast'
 import confetti from 'canvas-confetti'
 import { ROOM } from '@/utils/constant'
+import Button from '../base/Button'
+import { useInterval } from 'react-use'
+import dayjs from 'dayjs'
 
 interface Props {}
 
 export default function RoomSoloMode({}: Props): ReactElement {
   const user = userContext()
   const room = roomContext()
+  const roomRule = room?.game?.rule
+  const isAuthor = user?.id === room?.userId
 
   const [listQuestion, setListQuestion] = useState<Array<any>>([])
   const [currentQuestion, setCurrentQuestion] = useState<any>({})
-  const [isWin, setIsWin] = useState(false)
+
+  const [timer, setTimer] = useState('--:--')
 
   const collectionSevcice = app.service('collection')
   const roomService = app.service('room')
@@ -41,11 +47,12 @@ export default function RoomSoloMode({}: Props): ReactElement {
     }
   }
 
-  const setWin = async () => {
+  const endGame = async () => {
     try {
       await roomService.patch(room.id, {
         status: ROOM.STATUS.END,
       })
+      confetti()
     } catch (error) {
       console.error(error)
     }
@@ -80,6 +87,15 @@ export default function RoomSoloMode({}: Props): ReactElement {
     makeQuestion(shuffle(listQuestion))
   }
 
+  const deleteRoom = async () => {
+    try {
+      await roomService.remove(room.id)
+      toast.success('Deleted!')
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   useEffect(() => {
     const listCollectionID = room.collections.map((i) => i.id)
     questionSevice
@@ -98,20 +114,47 @@ export default function RoomSoloMode({}: Props): ReactElement {
       })
   }, [])
 
-  useEffect(() => {
-    // Check score
-    // TODO: check time
-    if (
-      get(room, `status`) == ROOM.STATUS.PLAYING &&
-      +get(room, `users.${user?.id}.score`) >= +get(room, `game.rule.score`)
-    ) {
-      console.log('Win')
-      setWin()
-      setIsWin(true)
+  const checkTimeUp = () => {
+    const current = dayjs()
+    const endTime = dayjs(get(room, `game.endTime`))
+    const diff = dayjs.duration(endTime.diff(current)).format('mm:ss')
+    if (current.isAfter(endTime)) {
+      setTimer('Time up.')
+      endGame()
     } else {
-      console.log('Not win')
+      setTimer(diff)
+    }
+  }
+
+  useEffect(() => {
+    // check time
+    const userScore = +get(room, `users.${user?.id}.score`)
+    const ruleScore = +get(room, `game.rule.score`)
+    const ruleMode = +get(room, `game.rule.mode`)
+
+    if (
+      [ROOM.RULE.TIMER, ROOM.RULE.ALL].includes(ruleMode) &&
+      get(room, `status`) == ROOM.STATUS.PLAYING
+    ) {
+      checkTimeUp()
+    }
+
+    // check score
+    if (
+      [ROOM.RULE.SCORE, ROOM.RULE.ALL].includes(ruleMode) &&
+      get(room, `status`) == ROOM.STATUS.PLAYING &&
+      userScore >= ruleScore
+    ) {
+      endGame()
     }
   }, [room])
+
+  useInterval(() => {
+    const ruleMode = +get(room, `game.rule.mode`)
+    if ([ROOM.RULE.TIMER, ROOM.RULE.ALL].includes(ruleMode)) {
+      checkTimeUp()
+    }
+  }, 1000)
 
   return (
     <>
@@ -127,9 +170,36 @@ export default function RoomSoloMode({}: Props): ReactElement {
       <div
         className={`flex justify-center items-center font-semibold space-x-1.5`}
       >
-        {/* <ClockIcon width="20" /> */}
-        <FlagIcon width="20" />
-        <div>Goal: 10 correct answer </div>
+        {roomRule.mode == ROOM.RULE.SCORE ? (
+          <>
+            <FlagIcon width="20" />
+            <div>Goal: {roomRule.score} correct answer </div>
+          </>
+        ) : null}
+
+        {roomRule.mode == ROOM.RULE.TIMER ? (
+          <>
+            <ClockIcon width="20" />
+            <div>{timer}</div>
+          </>
+        ) : null}
+
+        {roomRule.mode == ROOM.RULE.ALL ? (
+          <div>
+            <div
+              className={`flex justify-center items-center font-semibold space-x-1.5 mb-1`}
+            >
+              <FlagIcon width="20" />
+              <div>Goal: {roomRule.score} correct answer </div>
+            </div>
+            <div
+              className={`flex justify-center items-center font-semibold space-x-1.5`}
+            >
+              <ClockIcon width="20" />
+              <div>{timer}</div>
+            </div>
+          </div>
+        ) : null}
       </div>
 
       <div className={`mt-2`}>
@@ -182,6 +252,19 @@ export default function RoomSoloMode({}: Props): ReactElement {
               ))}
           </div>
         </div>
+
+        {isAuthor ? (
+          <div>
+            <div className={`my-4`}>
+              <hr />
+            </div>
+            <div className={`flex my-2 justify-center`}>
+              <Button onClick={deleteRoom} icon="trash-outline" color="warning">
+                Delete room
+              </Button>
+            </div>
+          </div>
+        ) : null}
       </div>
     </>
   )

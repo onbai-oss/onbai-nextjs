@@ -39,4 +39,9 @@ export const ROOM = {
     TEAM: 1,
     WATCH: 2,
   },
+  RULE: {
+    SCORE: 0,
+    TIMER: 1,
+    ALL: 2,
+  },
 }

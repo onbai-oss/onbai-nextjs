@@ -5,15 +5,22 @@ export interface IModalProps {
   isOpen: boolean
   closeModal: () => any
   children: JSX.Element
+  initialFocus?
 }
 
-export function Modal({ isOpen, closeModal, children }: IModalProps) {
+export function Modal({
+  isOpen,
+  closeModal,
+  children,
+  initialFocus,
+}: IModalProps) {
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
         as="div"
         className="fixed inset-0 z-10 overflow-y-auto bg-opacity-75 bg-white"
         onClose={closeModal}
+        initialFocus={initialFocus}
       >
         <div className="min-h-screen px-2 sm:px-4 text-center">
           <Transition.Child as={Fragment}>
