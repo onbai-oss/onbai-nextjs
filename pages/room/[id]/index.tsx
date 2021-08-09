@@ -27,6 +27,7 @@ export default function RoomPage({ user }) {
   const [isShowDelete, setIsShowDelete] = useState(false)
   const [isLock, setIsLock] = useState(true)
   const [isCheckedLock, setIsCheckedLock] = useState(false)
+  const [isLoaded, setIsLoaded] = useState(true)
 
   const mountedRef = useRef(true)
 
@@ -35,6 +36,11 @@ export default function RoomPage({ user }) {
   const isAuthor = user?.id === room?.userId
 
   const roomService = app.service(`room`)
+
+  const isGuestPlaying =
+    room?.users &&
+    room?.status === ROOM.STATUS.PLAYING &&
+    !room?.users[user?.id]
 
   // Methods
   const onDelete = () => {
@@ -62,8 +68,10 @@ export default function RoomPage({ user }) {
 
   // Effects
   useEffect(() => {
-    // TODO: prevent guest
     if (!room?.id) return
+    if (room?.id) {
+      setIsLoaded(false)
+    }
     if (!isCheckedLock) {
       if (user?.id === room?.userId) {
         setIsLock(false)
@@ -111,6 +119,32 @@ export default function RoomPage({ user }) {
 
   if (!user) {
     return <PleaseLogin />
+  }
+
+  if (isLoaded) {
+    return (
+      <div>
+        <NavLoggedIn isHideNew />
+      </div>
+    )
+  }
+
+  if (isGuestPlaying) {
+    return (
+      <div>
+        <NavLoggedIn isHideNew />
+        <div className={`mt-4 p-2 flex justify-center items-center`}>
+          <div className={`mr-1 `}>
+            <Twemoji text={room?.password ? '🔒' : '#'} />
+          </div>
+          <div>
+            <h1 className={`text-2xl font-semibold`}> {room?.name}</h1>
+          </div>
+        </div>
+
+        <div className={`text-center animate-pulse`}>Playing...</div>
+      </div>
+    )
   }
 
   return (

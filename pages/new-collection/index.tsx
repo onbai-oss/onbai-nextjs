@@ -44,7 +44,6 @@ export default function NewCollectionPage({ user }) {
   const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault()
     console.log('submit', e)
-    // TODO: call api
     const data = {
       title,
       desc,

@@ -149,12 +149,14 @@ export default function RoomSoloMode({}: Props): ReactElement {
     }
   }, [room])
 
-  useInterval(() => {
-    const ruleMode = +get(room, `game.rule.mode`)
-    if ([ROOM.RULE.TIMER, ROOM.RULE.ALL].includes(ruleMode)) {
+  useInterval(
+    () => {
       checkTimeUp()
-    }
-  }, 1000)
+    },
+    [ROOM.RULE.TIMER, ROOM.RULE.ALL].includes(+get(room, `game.rule.mode`))
+      ? 1000
+      : null
+  )
 
   return (
     <>

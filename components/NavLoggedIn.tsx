@@ -59,12 +59,12 @@ export function NavLoggedIn({ isHideNew, ...props }: INavLoggedInProps) {
         `}
       >
         <LogoLink linkTo={PAGES.DASHBOARD}></LogoLink>
-        <div className={`flex `}>
+        <div className={`flex items-center`}>
           {isHideNew ? null : (
             // fixed bottom-12 right-6 sm:static
             <div className={``}>
               <Link href={PAGES.NEW_COLLECION}>
-                <Button icon="plus">New</Button>
+                <button className={`hover:underline`}>New</button>
               </Link>
             </div>
           )}

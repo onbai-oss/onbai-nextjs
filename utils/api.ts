@@ -64,7 +64,6 @@ API.interceptors.response.use(
     hideLoading()
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
-    // TODO: refactor check auth
     if (
       error?.response?.status === 401 &&
       error?.response?.data?.message !== 'Invalid login'
