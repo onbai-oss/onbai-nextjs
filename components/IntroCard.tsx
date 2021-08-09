@@ -5,7 +5,7 @@ import Button from './base/Button'
 
 interface Props {}
 
-export default function RoomCard({}: Props): ReactElement {
+export default function IntroCard({}: Props): ReactElement {
   return (
     <section className={`container mx-auto mb-6`}>
       <div>
@@ -14,12 +14,12 @@ export default function RoomCard({}: Props): ReactElement {
         </div>
       </div>
       <div className={`text-center p-2 mb-2 font-semibold`}>
-        Create a live room and start learning with your friend.
+        Have a nice day.
       </div>
       <div className={`flex justify-center`}>
-        <Link href={PAGES.NEW_ROOM}>
+        <Link href={PAGES.NEW}>
           <Button icon="plus" color="info">
-            Create room
+            New
           </Button>
         </Link>
       </div>

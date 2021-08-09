@@ -2,7 +2,6 @@ import { getData } from '@/utils/api'
 import { PAGES } from '@/utils/constant'
 import React, { ReactElement, useState } from 'react'
 import Button from './base/Button'
-import CollectionIcon from './base/CollectionIcon'
 import Input from './base/Input'
 import Pagination from './base/Pagination'
 import CollectionLoader from './base/CollectionLoader'
@@ -10,6 +9,7 @@ import GetDataError from './base/GetDataError'
 import Link from 'next/link'
 import { Modal } from './base/Modal'
 import { userContext } from './auth/userProvider'
+import { Twemoji } from 'react-emoji-render'
 interface Props {
   isOpen
   onCloseModal
@@ -93,7 +93,7 @@ export default function CollectionPicker({
           {!isLoading && !error && listCollection?.data?.length ? (
             <>
               <div
-                className={`flex container mx-auto justify-center my-3 px-4`}
+                className={`flex container mx-auto justify-center mb-3 px-4`}
               >
                 <Pagination
                   page={page}
@@ -104,7 +104,7 @@ export default function CollectionPicker({
               </div>
 
               <section
-                className={`container mx-auto px-4 grid grid-rows-1 grid-cols-1 gap-3`}
+                className={`container mx-auto  grid grid-rows-1 grid-cols-1 gap-3`}
               >
                 {listCollection.data.map((i, index) => (
                   <div key={index}>
@@ -112,18 +112,18 @@ export default function CollectionPicker({
                       onClick={() => toggleSelect(i)}
                       className={`border-2 ${
                         listSelected.find((f) => f.id === i.id)
-                          ? 'border-green-500 bg-green-500 text-white'
+                          ? 'border-blue-500 '
                           : ''
                       } border-solid w-full text-center p-1 rounded-md shadow-md hover:shadow-lg `}
                     >
-                      {/* <div className={`w-32 mx-auto`}>
-                        <CollectionIcon fill={i.color} icon={i.icon} />
-                      </div> */}
                       <div
                         title={i.title}
-                        className={` font-semibold sm:truncate `}
+                        className={`flex space-x-2 px-2 items-center font-semibold`}
                       >
-                        {i.title}
+                        <div className={`flex-none text-lg`}>
+                          <Twemoji text={i.icon} />
+                        </div>
+                        <div className={`truncate`}>{i.title}</div>
                       </div>
                     </button>
                   </div>

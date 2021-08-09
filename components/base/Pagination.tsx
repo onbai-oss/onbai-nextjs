@@ -47,7 +47,7 @@ export default function Pagination({
           <div className={`mr-4 flex items-center justify-center`}>
             <select
               onChange={onSelectChange}
-              className={`p-2 bg-transparent`}
+              className={`p-2 bg-transparent `}
               name="page"
               id="page-select"
               value={page}

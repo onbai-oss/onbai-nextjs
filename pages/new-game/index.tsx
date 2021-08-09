@@ -3,7 +3,7 @@ import { NavLoggedIn } from '@/components/NavLoggedIn'
 export default function NewGamePage({}) {
   return (
     <>
-      <NavLoggedIn isHideNew />
+      <NavLoggedIn />
 
       <main>
         <div

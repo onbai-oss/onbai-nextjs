@@ -124,7 +124,8 @@ export default function RoomPage({ user }) {
   if (isLoaded) {
     return (
       <div>
-        <NavLoggedIn isHideNew />
+        <NavLoggedIn />
+        <div className={`min-h-screen`}></div>
       </div>
     )
   }
@@ -132,7 +133,7 @@ export default function RoomPage({ user }) {
   if (isGuestPlaying) {
     return (
       <div>
-        <NavLoggedIn isHideNew />
+        <NavLoggedIn />
         <div className={`mt-4 p-2 flex justify-center items-center`}>
           <div className={`mr-1 `}>
             <Twemoji text={room?.password ? '🔒' : '#'} />
@@ -142,14 +143,14 @@ export default function RoomPage({ user }) {
           </div>
         </div>
 
-        <div className={`text-center animate-pulse`}>Playing...</div>
+        <div className={` text-center animate-pulse`}>Playing...</div>
       </div>
     )
   }
 
   return (
     <>
-      <NavLoggedIn isHideNew />
+      <NavLoggedIn />
 
       <main className={`mb-4`}>
         {/* // Check lock */}

@@ -50,7 +50,7 @@ export default function NewRoomPage({ user }) {
 
   return (
     <>
-      <NavLoggedIn isHideNew />
+      <NavLoggedIn />
       <main className={`mb-8`}>
         <div className={`mt-4 w-48 mx-auto`}>
           <img

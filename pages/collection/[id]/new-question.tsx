@@ -105,7 +105,7 @@ export default function NewQuiz({ user }) {
 
   return (
     <>
-      <NavLoggedIn isHideNew />
+      <NavLoggedIn />
 
       <main className={`mb-8 `}>
         <div

@@ -10,11 +10,9 @@ import toast from 'react-hot-toast'
 import { app, NEXTJS_API } from '@/utils/api'
 import { userContext } from './auth/userProvider'
 
-export interface INavLoggedInProps {
-  isHideNew?: boolean
-}
+export interface INavLoggedInProps {}
 
-export function NavLoggedIn({ isHideNew, ...props }: INavLoggedInProps) {
+export function NavLoggedIn({ ...props }: INavLoggedInProps) {
   const user = userContext()
 
   useEffect(() => {
@@ -60,15 +58,6 @@ export function NavLoggedIn({ isHideNew, ...props }: INavLoggedInProps) {
       >
         <LogoLink linkTo={PAGES.DASHBOARD}></LogoLink>
         <div className={`flex items-center`}>
-          {isHideNew ? null : (
-            // fixed bottom-12 right-6 sm:static
-            <div className={``}>
-              <Link href={PAGES.NEW_COLLECION}>
-                <button className={`hover:underline`}>New</button>
-              </Link>
-            </div>
-          )}
-
           <button
             onClick={openModal}
             className={`ml-2 rounded border-2 px-2 border-solid border-transparent hover:border-gray-700`}

@@ -2,13 +2,13 @@ import { getData } from '@/utils/api'
 import { PAGES } from '@/utils/constant'
 import React, { ReactElement, useState } from 'react'
 import Button from './base/Button'
-import CollectionIcon from './base/CollectionIcon'
 import Input from './base/Input'
 import Pagination from './base/Pagination'
 import CollectionLoader from './base/CollectionLoader'
 import GetDataError from './base/GetDataError'
 import Link from 'next/link'
 import { userContext } from './auth/userProvider'
+import { Twemoji } from 'react-emoji-render'
 
 interface Props {}
 
@@ -69,14 +69,14 @@ export default function CollectionList({}: Props): ReactElement {
                   <button
                     className={`border-2 border-solid focus:ring-1 ring-gray-600 ring-offset-2 w-full text-center p-4 rounded-md shadow-md hover:shadow-xl `}
                   >
-                    <div className={`w-32 mx-auto`}>
-                      <CollectionIcon fill={i.color} icon={i.icon} />
-                    </div>
                     <div
                       title={i.title}
-                      className={`mt-2 font-semibold text-xl sm:truncate `}
+                      className={`mt-2 flex items-center justify-center space-x-2 font-semibold text-xl `}
                     >
-                      {i.title}
+                      <div>
+                        <Twemoji text={i.icon} />
+                      </div>
+                      <div className={`truncate`}>{i.title}</div>
                     </div>
                   </button>
                 </Link>

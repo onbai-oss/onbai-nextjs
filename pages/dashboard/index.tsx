@@ -1,11 +1,11 @@
-import RoomCard from '@/components/RoomCard'
+import IntroCard from '@/components/IntroCard'
 import RoomList from '@/components/RoomList'
 import CollectionList from '@/components/CollectionList'
 import { NavLoggedIn } from '@/components/NavLoggedIn'
 import { getPropsUserSever } from '@/utils/session'
 import PleaseLogin from '@/components/PleaseLogin'
 import { useEffect } from 'react'
-import { app } from '@/utils/api'
+import { Tab } from '@headlessui/react'
 
 export default function DashboardPage({ user }) {
   useEffect(() => {}, [])
@@ -18,18 +18,14 @@ export default function DashboardPage({ user }) {
     <>
       <NavLoggedIn />
       <main className={`mb-8`}>
-        <section
-          className={`h-32 font-semibold flex flex-col justify-center items-center
-          bg-gradient-to-r from-green-600 to-green-500
-          `}
-        >
-          <div className={`my-4 text-white text-2xl`}>
-            Wellcome {user?.name}
-          </div>
-        </section>
-
-        <RoomCard />
+        <IntroCard />
+        <div className={`p-4`}>
+          <hr />
+        </div>
         <RoomList />
+        <div className={`p-4`}>
+          <hr />
+        </div>
         <CollectionList />
       </main>
     </>

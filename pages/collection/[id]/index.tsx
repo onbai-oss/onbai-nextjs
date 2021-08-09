@@ -1,5 +1,4 @@
 import Button from '@/components/base/Button'
-import CollectionIcon from '@/components/base/CollectionIcon'
 import Input from '@/components/base/Input'
 import { Modal } from '@/components/base/Modal'
 import { NavLoggedIn } from '@/components/NavLoggedIn'
@@ -12,6 +11,7 @@ import { FormEventHandler, useState } from 'react'
 import toast from 'react-hot-toast'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { getPropsUserSever } from '@/utils/session'
+import { Twemoji } from 'react-emoji-render'
 
 export default function CollectionPage({ user }) {
   const router = useRouter()
@@ -20,8 +20,6 @@ export default function CollectionPage({ user }) {
   const [isShowDelete, setIsShowDelete] = useState(false)
   const [isShowAddQuiz, setIsShowAddQuiz] = useState(false)
 
-  const [bookColor, setBookColor] = useState('#0F9B6E')
-  const [emoji, setEmoji] = useState('')
   const [numberCreate, setNumberCreate] = useState<number>(10)
 
   const {
@@ -57,14 +55,14 @@ export default function CollectionPage({ user }) {
 
   return (
     <>
-      <NavLoggedIn isHideNew />
+      <NavLoggedIn />
       <main>
         <div className={`my-6`}>
-          <div className={`w-32 mx-auto text-center `}>
-            <CollectionIcon fill={collection?.color} icon={collection?.icon} />
-          </div>
-          <div className={`text-center mt-3 text-2xl font-semibold`}>
-            {collection?.title}
+          <div
+            className={`flex justify-center items-center space-x-2 mt-3 text-2xl font-semibold`}
+          >
+            <Twemoji text={collection?.icon ? collection?.icon : ''} />
+            <div>{collection?.title}</div>
           </div>
           <div className={`text-center mt-1  font-semibold`}>
             {collection?.desc}
@@ -118,7 +116,7 @@ export default function CollectionPage({ user }) {
           </div>
         </div>
 
-        <div className={`my-4`}>
+        <div className={`p-4`}>
           <hr />
         </div>
 
