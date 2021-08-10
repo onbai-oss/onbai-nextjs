@@ -58,12 +58,12 @@ export default function DashboardPage({ user }) {
               </Tab>
             </Tab.List>
             <Tab.Panels>
-              <Tab.Panel>
+              <Tab.Panel className={`focus:outline-none`}>
                 <div>
                   <RoomList />
                 </div>
               </Tab.Panel>
-              <Tab.Panel>
+              <Tab.Panel className={`focus:outline-none`}>
                 <CollectionList />
               </Tab.Panel>
             </Tab.Panels>

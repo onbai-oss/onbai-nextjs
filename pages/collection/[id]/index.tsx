@@ -72,12 +72,18 @@ export default function CollectionPage({ user }) {
           <div className={`mt-4 ${!isAuthor && 'hidden'}`}>
             <div className={`flex justify-center my-2`}>
               <div className={`mr-2`}>
-                <Button
-                  onClick={() => setIsShowAddQuiz(true)}
-                  title="Add new question"
-                  icon="plus-outline"
-                  color="primary"
-                ></Button>
+                <CopyToClipboard
+                  text={process.browser ? location.href : ''}
+                  onCopy={() => {
+                    toast.success('Copied to your clipboard!')
+                  }}
+                >
+                  <Button
+                    title="Add new question"
+                    icon="share-outline"
+                    color="primary"
+                  ></Button>
+                </CopyToClipboard>
               </div>
               <div className={`mr-2`}>
                 <Link href={PAGES.EDIT_COLLECION + `/${id}`}>
@@ -99,20 +105,14 @@ export default function CollectionPage({ user }) {
 
           <div className={`flex justify-center my-4`}>
             <div className={`mr-2`}>
-              <CopyToClipboard
-                text={process.browser ? location.href : ''}
-                onCopy={() => {
-                  toast.success('Copied to your clipboard!')
-                }}
+              <Button
+                onClick={() => setIsShowAddQuiz(true)}
+                title="Edit collecion"
+                icon="plus-outline"
+                color="primary-outline"
               >
-                <Button
-                  title="Edit collecion"
-                  icon="share-outline"
-                  color="primary-outline"
-                >
-                  Share
-                </Button>
-              </CopyToClipboard>
+                New question
+              </Button>
             </div>
           </div>
         </div>
