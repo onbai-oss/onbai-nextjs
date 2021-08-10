@@ -83,7 +83,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       ${
         !disabled && color.includes('text')
           ? outline
-            ? 'text-gray-600 bg-white border-gray-600'
+            ? 'text-gray-600 bg-white border-white shadow-md'
             : 'bg-gray-600 text-white'
           : ''
       }

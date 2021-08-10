@@ -28,7 +28,8 @@ const LoginForm = () => {
       .then((res: any) => {
         if (res && res.data) {
           toast.success('✨ Login success')
-          router.push(PAGES.DASHBOARD)
+          // for reload user context
+          location.pathname = PAGES.DASHBOARD
         } else {
           toast.error('💥 Something went wrong! please try again.')
         }

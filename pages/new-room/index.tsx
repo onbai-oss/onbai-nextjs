@@ -73,7 +73,10 @@ export default function NewRoomPage({ user }) {
             className={` px-4 w-full sm:w-96 mx-auto flex flex-col `}
           >
             <fieldset>
-              <label htmlFor="name" className={`my-2 block font-semibold`}>
+              <label
+                htmlFor="name"
+                className={`my-2 block font-semibold cursor-pointer`}
+              >
                 Name
               </label>
               <Input
@@ -90,7 +93,10 @@ export default function NewRoomPage({ user }) {
             </fieldset>
 
             <fieldset>
-              <label htmlFor="password" className={`my-2 block font-semibold`}>
+              <label
+                htmlFor="password"
+                className={`my-2 block font-semibold cursor-pointer`}
+              >
                 Password
               </label>
               <Input
@@ -103,7 +109,7 @@ export default function NewRoomPage({ user }) {
               ></Input>
             </fieldset>
 
-            <fieldset className={`mt-4 flex justify-center`}>
+            <fieldset className={`mt-6 flex justify-center`}>
               <Button
                 color="info"
                 icon="arrow-circle-right-outline"

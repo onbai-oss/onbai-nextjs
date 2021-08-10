@@ -107,7 +107,7 @@ export default function NewCollectionPage({ user }) {
                 onClick={() => setOpenModalEmoji(true)}
                 title="Click to change icon"
               >
-                <span className={`text-2xl`}>
+                <span className={``}>
                   <Twemoji text={emoji} />{' '}
                 </span>
               </Button>
@@ -133,7 +133,7 @@ export default function NewCollectionPage({ user }) {
               onChange={(e) => setTitle(e.target.value)}
             ></Input>
           </fieldset>
-          <fieldset className={`mt-4 grid grid-cols-1 grid-rows-1`}>
+          <fieldset className={`mt-6 grid grid-cols-1 grid-rows-1`}>
             <Button
               color="info"
               type="submit"

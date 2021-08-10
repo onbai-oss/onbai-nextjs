@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <>
       <NavUnlogin />
-      <main className={`min-h-screen`}>
+      <main className={`min-h-screen `}>
         <div
           className={`h-64 text-2xl text-white font-semibold flex flex-col justify-center items-center
           bg-gradient-to-r from-green-600 to-green-500
@@ -33,7 +33,7 @@ export default function Home() {
           />
         </div>
       </main>
-      <Footer></Footer>
+      <Footer className={`mb-20 sm:mb-0`}></Footer>
     </>
   )
 }
