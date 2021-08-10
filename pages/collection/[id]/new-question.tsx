@@ -11,6 +11,7 @@ import toast from 'react-hot-toast'
 import { Modal } from '@/components/base/Modal'
 import confetti from 'canvas-confetti'
 import { getPropsUserSever } from '@/utils/session'
+import Footer from '@/components/base/Footer'
 
 export default function NewQuiz({ user }) {
   const router = useRouter()
@@ -107,7 +108,7 @@ export default function NewQuiz({ user }) {
     <>
       <NavLoggedIn />
 
-      <main className={`mb-8 `}>
+      <main className={`min-h-screen`}>
         <div
           className={`h-32 font-semibold flex flex-col justify-center items-center bg-gradient-to-r from-green-600 to-green-500`}
         >
@@ -221,6 +222,8 @@ export default function NewQuiz({ user }) {
           </div>
         </div>
       </Modal>
+
+      <Footer></Footer>
     </>
   )
 }

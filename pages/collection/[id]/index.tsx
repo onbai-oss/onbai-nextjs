@@ -12,6 +12,7 @@ import toast from 'react-hot-toast'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { getPropsUserSever } from '@/utils/session'
 import { Twemoji } from 'react-emoji-render'
+import Footer from '@/components/base/Footer'
 
 export default function CollectionPage({ user }) {
   const router = useRouter()
@@ -56,7 +57,7 @@ export default function CollectionPage({ user }) {
   return (
     <>
       <NavLoggedIn />
-      <main>
+      <main className={`min-h-screen`}>
         <div className={`my-6`}>
           <div
             className={`flex justify-center items-center space-x-2 mt-3 text-2xl font-semibold`}
@@ -187,6 +188,8 @@ export default function CollectionPage({ user }) {
           </div>
         </div>
       </Modal>
+
+      <Footer></Footer>
     </>
   )
 }

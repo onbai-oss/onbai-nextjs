@@ -1,4 +1,5 @@
 import Button from '@/components/base/Button'
+import Footer from '@/components/base/Footer'
 import { NavUnlogin } from '@/components/NavUnlogin'
 import { PAGES } from '@/utils/constant'
 import Link from 'next/link'
@@ -9,7 +10,7 @@ export default function Home() {
   return (
     <>
       <NavUnlogin />
-      <main className={` `}>
+      <main className={`min-h-screen`}>
         <div
           className={`h-64 text-2xl text-white font-semibold flex flex-col justify-center items-center
           bg-gradient-to-r from-green-600 to-green-500
@@ -31,16 +32,8 @@ export default function Home() {
             alt="cover"
           />
         </div>
-
-        <footer
-          className={`p-10 text-center text-white font-semibold
-          bg-gradient-to-r from-green-600 to-green-500
-          `}
-        >
-          <p>✨ Onbai.app - {new Date().getFullYear()} ✨</p>
-          <p>✍️ Wish You All the Best. 🍀</p>
-        </footer>
       </main>
+      <Footer></Footer>
     </>
   )
 }

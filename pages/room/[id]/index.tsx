@@ -19,6 +19,7 @@ import { RoomWrapper } from '@/components/room/roomProvider'
 import RoomUserJoin from '@/components/room/RoomUserJoin'
 import RoomSoloMode from '@/components/room/RoomSoloMode'
 import RoomResult from '@/components/room/RoomResult'
+import Footer from '@/components/base/Footer'
 
 export default function RoomPage({ user }) {
   // Init
@@ -152,7 +153,7 @@ export default function RoomPage({ user }) {
     <>
       <NavLoggedIn />
 
-      <main className={`mb-4`}>
+      <main className={`min-h-screen`}>
         {/* // Check lock */}
         {!isCheckedLock ? (
           <div className={`flex justify-center mt-4`}></div>
@@ -293,6 +294,8 @@ export default function RoomPage({ user }) {
           </div>
         </div>
       </Modal>
+
+      <Footer></Footer>
     </>
   )
 }

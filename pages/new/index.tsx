@@ -1,3 +1,4 @@
+import Footer from '@/components/base/Footer'
 import { NavLoggedIn } from '@/components/NavLoggedIn'
 import { PAGES } from '@/utils/constant'
 
@@ -9,7 +10,7 @@ export default function NewPage({}) {
     <>
       <NavLoggedIn />
 
-      <main>
+      <main className={`min-h-screen`}>
         <div
           className={`h-32 font-semibold flex flex-col justify-center items-center
           bg-gradient-to-r from-blue-600 to-blue-400
@@ -27,7 +28,7 @@ export default function NewPage({}) {
         </div>
 
         <div className={``}>
-          <div className={`min-h-screen p-4 flex flex-col items-center mb-8 `}>
+          <div className={` p-4 flex flex-col items-center mb-8 `}>
             <Link href={PAGES.NEW_COLLECION}>
               <button
                 className={`w-60 my-2 text-center border-2 border-gray-500 border-solid p-4 rounded-md hover:border-blue-500`}
@@ -46,7 +47,7 @@ export default function NewPage({}) {
             <Link href={PAGES.NEW_ROOM}>
               <button
                 className={`
-            w-60 my-2  text-center border-2 border-gray-500 border-solid p-4
+            w-60 my-2 text-center border-2 border-gray-500 border-solid p-4
             rounded-md  hover:border-blue-500
              `}
               >
@@ -64,6 +65,7 @@ export default function NewPage({}) {
           </div>
         </div>
       </main>
+      <Footer></Footer>
     </>
   )
 }

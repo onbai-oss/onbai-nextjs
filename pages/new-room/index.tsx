@@ -12,6 +12,7 @@ import confetti from 'canvas-confetti'
 import { customAlphabet } from 'nanoid'
 import { pick } from 'lodash'
 import { getPropsUserSever } from '@/utils/session'
+import Footer from '@/components/base/Footer'
 
 export default function NewRoomPage({ user }) {
   const onSubmit = (e) => {
@@ -51,7 +52,7 @@ export default function NewRoomPage({ user }) {
   return (
     <>
       <NavLoggedIn />
-      <main className={`mb-8`}>
+      <main className={`min-h-screen`}>
         <div className={`mt-4 w-48 mx-auto`}>
           <img
             className={`w-full`}
@@ -114,6 +115,7 @@ export default function NewRoomPage({ user }) {
           </form>
         </section>
       </main>
+      <Footer></Footer>
     </>
   )
 }

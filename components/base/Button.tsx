@@ -43,7 +43,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       ${className ? className : ''}
       appearance-none cursor-pointer outline-none 
       px-4 py-2.5 font-semibold rounded 
-      focus:ring-2 ring-gray-900 ring-offset-2
+      focus:ring-1 ring-gray-600 ring-offset-2
       hover:shadow-md 
       ${
         disabled

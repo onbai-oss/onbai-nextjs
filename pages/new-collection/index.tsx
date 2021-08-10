@@ -14,6 +14,7 @@ import { PAGES } from '@/utils/constant'
 import { getPropsUserSever } from '@/utils/session'
 import { shuffle } from 'lodash'
 import PleaseLogin from '@/components/PleaseLogin'
+import Footer from '@/components/base/Footer'
 
 export default function NewCollectionPage({ user }) {
   const router = useRouter()
@@ -75,7 +76,7 @@ export default function NewCollectionPage({ user }) {
     <>
       <NavLoggedIn />
 
-      <main className={`mt-4 mb-12`}>
+      <main className={`my-4 min-h-screen`}>
         <div
           className={`
             font-semibold flex flex-col justify-center items-center 
@@ -166,6 +167,7 @@ export default function NewCollectionPage({ user }) {
           </div>
         </div>
       </Modal>
+      <Footer></Footer>
     </>
   )
 }

@@ -1,3 +1,4 @@
+import Footer from '@/components/base/Footer'
 import { NavLoggedIn } from '@/components/NavLoggedIn'
 import React, { ReactElement } from 'react'
 
@@ -391,6 +392,8 @@ export default function intex({}: Props): ReactElement {
           </p>
         </div>
       </section>
+
+      <Footer></Footer>
     </div>
   )
 }

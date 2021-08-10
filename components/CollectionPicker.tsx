@@ -10,18 +10,29 @@ import Link from 'next/link'
 import { Modal } from './base/Modal'
 import { userContext } from './auth/userProvider'
 import { Twemoji } from 'react-emoji-render'
-import { CheckCircleIcon } from '@heroicons/react/solid'
+import {
+  CheckCircleIcon,
+  CheckIcon,
+  SelectorIcon,
+} from '@heroicons/react/solid'
+import { Listbox } from '@headlessui/react'
 interface Props {
   isOpen
   onCloseModal
   onSelected
 }
+const listSort = [
+  { name: 'Newst', value: '-1' },
+  { name: 'Oldest', value: '1' },
+]
 
 export default function CollectionPicker({
   isOpen,
   onCloseModal,
   onSelected,
 }: Props): ReactElement {
+  const [selected, setSelected] = useState(listSort[0])
+
   const user = userContext()
 
   const [page, setPage] = useState(0)
@@ -32,7 +43,7 @@ export default function CollectionPicker({
 
   const paginateQuery = `&$skip=${
     page * limit
-  }&$limit=${limit}&title[$search]=${search}`
+  }&$limit=${limit}&title[$search]=${search}&$sort[createdAt]=${selected.value}`
   const { data: listCollection, error, isLoading } = getData(
     user?.id ? `collection?userId=${user?.id}${paginateQuery}` : ''
   )
@@ -66,9 +77,51 @@ export default function CollectionPicker({
           <section
             className={`mb-2 mt-4 container mx-auto flex flex-col sm:flex-row justify-between items-center`}
           >
-            <h1 className={`font-semibold text-xl`}>
+            {/* <h1 className={`font-semibold text-xl`}>
               {listCollection?.total} collections
-            </h1>
+            </h1> */}
+            <div>
+              <Listbox value={selected} onChange={setSelected}>
+                <div className="relative">
+                  <Listbox.Button className="cursor-pointer font-semibold relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md focus:outline-none  ">
+                    <span className="block truncate">
+                      Sort: {selected.name}
+                    </span>
+                    <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                      <SelectorIcon className="w-5 h-5 text-gray-600" />
+                    </span>
+                  </Listbox.Button>
+                  <Listbox.Options className="absolute z-10 w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none ">
+                    {listSort.map((person, personIdx) => (
+                      <Listbox.Option
+                        key={personIdx}
+                        className={({ active }) =>
+                          `${
+                            active ? 'bg-blue-50' : ''
+                          }  font-semibold cursor-pointer select-none relative py-2 pl-10 pr-4 `
+                        }
+                        value={person}
+                      >
+                        {({ selected, active }) => (
+                          <>
+                            <span className={`block truncate font-semibold`}>
+                              {person.name}
+                            </span>
+                            {selected ? (
+                              <span
+                                className={`absolute inset-y-0 left-0 flex items-center pl-3 `}
+                              >
+                                <CheckIcon className="w-5 h-5" />
+                              </span>
+                            ) : null}
+                          </>
+                        )}
+                      </Listbox.Option>
+                    ))}
+                  </Listbox.Options>
+                </div>
+              </Listbox>
+            </div>
             <form onSubmit={onSearch} className={`my-2 w-full sm:w-auto`}>
               <Input
                 name="search"

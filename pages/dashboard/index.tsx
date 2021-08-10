@@ -7,6 +7,7 @@ import PleaseLogin from '@/components/PleaseLogin'
 import { useEffect } from 'react'
 import { Tab } from '@headlessui/react'
 import { ROOM } from '@/utils/constant'
+import Footer from '@/components/base/Footer'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -24,8 +25,7 @@ export default function DashboardPage({ user }) {
       <NavLoggedIn />
       <main className={`mb-8 min-h-screen`}>
         <IntroCard />
-
-        <div className="w-full my-4 sm:px-0">
+        <div className="w-full my-6 sm:px-0">
           <Tab.Group>
             <Tab.List
               className={`max-w-md mx-2 sm:mx-auto flex justify-center p-2 space-x-1 bg-blue-50 rounded-xl`}
@@ -59,7 +59,9 @@ export default function DashboardPage({ user }) {
             </Tab.List>
             <Tab.Panels>
               <Tab.Panel>
-                <RoomList />
+                <div>
+                  <RoomList />
+                </div>
               </Tab.Panel>
               <Tab.Panel>
                 <CollectionList />
@@ -68,6 +70,7 @@ export default function DashboardPage({ user }) {
           </Tab.Group>
         </div>
       </main>
+      <Footer></Footer>
     </>
   )
 }

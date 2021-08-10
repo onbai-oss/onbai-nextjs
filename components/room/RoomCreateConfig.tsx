@@ -18,7 +18,7 @@ export default function RoomCreateConfig({}: Props): ReactElement {
 
   // Configs
   const [collections, setCollections] = useState<any>([])
-  const [mode, setMode] = useState<any>(0)
+  const [mode, setMode] = useState<any>(ROOM.RULE.SCORE)
   const [time, setTime] = useState<any>(1)
   const [score, setScore] = useState<any>(10)
 
@@ -104,9 +104,9 @@ export default function RoomCreateConfig({}: Props): ReactElement {
                 type="radio"
                 name="mode"
                 id="score"
-                value={0}
-                onChange={(e) => setMode(+e.target.value)}
-                checked={mode == 0}
+                value={ROOM.RULE.SCORE}
+                onChange={(e) => setMode(e.target.value)}
+                checked={mode == ROOM.RULE.SCORE}
               />{' '}
               Score
             </label>
@@ -115,9 +115,9 @@ export default function RoomCreateConfig({}: Props): ReactElement {
                 type="radio"
                 name="mode"
                 id="time"
-                value={1}
-                onChange={(e) => setMode(+e.target.value)}
-                checked={mode == 1}
+                value={ROOM.RULE.TIMER}
+                onChange={(e) => setMode(e.target.value)}
+                checked={mode == ROOM.RULE.TIMER}
               />{' '}
               Time
             </label>
@@ -126,9 +126,9 @@ export default function RoomCreateConfig({}: Props): ReactElement {
                 type="radio"
                 name="mode"
                 id="all"
-                value={2}
-                onChange={(e) => setMode(+e.target.value)}
-                checked={mode == 2}
+                value={ROOM.RULE.ALL}
+                onChange={(e) => setMode(e.target.value)}
+                checked={mode == ROOM.RULE.ALL}
               />{' '}
               All
             </label>
@@ -160,7 +160,7 @@ export default function RoomCreateConfig({}: Props): ReactElement {
                 </label>
               </div>
             ) : null}
-            {mode === 2 ? <div className={`text-center`}> or </div> : null}
+            {mode === 2 ? <div className={`text-center mr-4`}> or </div> : null}
             {[1, 2].includes(mode) ? (
               <div className={``}>
                 <label
