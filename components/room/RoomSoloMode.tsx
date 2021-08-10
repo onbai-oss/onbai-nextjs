@@ -130,7 +130,7 @@ export default function RoomSoloMode({}: Props): ReactElement {
     // check time
     const userScore = +get(room, `users.${user?.id}.score`)
     const ruleScore = +get(room, `game.rule.score`)
-    const ruleMode = +get(room, `game.rule.mode`)
+    const ruleMode = get(room, `game.rule.mode`)
 
     if (
       [ROOM.RULE.TIMER, ROOM.RULE.ALL].includes(ruleMode) &&
@@ -153,7 +153,7 @@ export default function RoomSoloMode({}: Props): ReactElement {
     () => {
       checkTimeUp()
     },
-    [ROOM.RULE.TIMER, ROOM.RULE.ALL].includes(+get(room, `game.rule.mode`))
+    [ROOM.RULE.TIMER, ROOM.RULE.ALL].includes(get(room, `game.rule.mode`))
       ? 1000
       : null
   )

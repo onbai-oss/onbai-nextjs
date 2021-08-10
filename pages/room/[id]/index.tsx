@@ -194,7 +194,7 @@ export default function RoomPage({ user }) {
           <RoomWrapper value={room}>
             <section className={`container mx-auto`}>
               {/* WAITING */}
-              {room?.status == ROOM.STATUS.WAIT ? (
+              {room?.status === ROOM.STATUS.WAIT ? (
                 <div>
                   {/* Room info */}
                   <div className={`mt-4 p-2 flex justify-center items-center`}>
@@ -248,12 +248,12 @@ export default function RoomPage({ user }) {
 
               {/* // GAME */}
               {/* SOLO */}
-              {room?.status == ROOM.STATUS.PLAYING ? (
-                <>{room?.game?.type == ROOM.TYPE.SOLO && <RoomSoloMode />}</>
+              {room?.status === ROOM.STATUS.PLAYING ? (
+                <>{room?.game?.type === ROOM.TYPE.SOLO && <RoomSoloMode />}</>
               ) : null}
 
               {/* RESULT */}
-              {room?.status == ROOM.STATUS.END ? <RoomResult /> : null}
+              {room?.status === ROOM.STATUS.END ? <RoomResult /> : null}
             </section>
           </RoomWrapper>
         )}

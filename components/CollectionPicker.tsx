@@ -10,6 +10,7 @@ import Link from 'next/link'
 import { Modal } from './base/Modal'
 import { userContext } from './auth/userProvider'
 import { Twemoji } from 'react-emoji-render'
+import { CheckCircleIcon } from '@heroicons/react/solid'
 interface Props {
   isOpen
   onCloseModal
@@ -111,20 +112,31 @@ export default function CollectionPicker({
                     <button
                       onClick={() => toggleSelect(i)}
                       className={`border-2 ${
-                        listSelected.find((f) => f.id === i.id)
-                          ? 'border-blue-500 '
-                          : ''
-                      } border-solid w-full text-center p-1 rounded-md shadow-md hover:shadow-lg `}
+                        listSelected.find((f) => f.id === i.id) ? ' ' : ''
+                      } border-solid w-full block relative text-center p-1 rounded-md shadow-md hover:shadow-lg `}
                     >
-                      <div
+                      <span
                         title={i.title}
-                        className={`flex space-x-2 px-2 items-center font-semibold`}
+                        className={`flex w-full h-full space-x-2 px-2 py-1 items-center font-semibold`}
                       >
                         <div className={`flex-none text-lg`}>
                           <Twemoji text={i.icon} />
                         </div>
                         <div className={`truncate`}>{i.title}</div>
-                      </div>
+
+                        <div
+                          className={`${
+                            listSelected.find((f) => f.id === i.id)
+                              ? ''
+                              : 'hidden'
+                          } absolute top-0 right-1 bg-white p-1`}
+                        >
+                          <CheckCircleIcon
+                            width="30"
+                            className={`text-green-600`}
+                          ></CheckCircleIcon>
+                        </div>
+                      </span>
                     </button>
                   </div>
                 ))}

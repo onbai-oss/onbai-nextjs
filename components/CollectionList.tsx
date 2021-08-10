@@ -35,15 +35,15 @@ export default function CollectionList({}: Props): ReactElement {
       <section
         className={`px-4 py-4 container mx-auto flex flex-col sm:flex-row justify-between items-center`}
       >
-        <h1 className={`font-semibold text-xl`}>
-          {listCollection?.total} collections
+        <h1 className={`font-semibold my-4 text-xl`}>
+          Your have {listCollection?.total} collections
         </h1>
         <form onSubmit={onSearch} className={`my-2 w-full sm:w-auto`}>
           <Input
             name="search"
             icon="search-outline"
             type="search"
-            placeholder="search title..."
+            placeholder="search..."
             onChange={(e) => setSearch(e.target.value)}
             defaultValue={search}
           ></Input>
@@ -67,11 +67,11 @@ export default function CollectionList({}: Props): ReactElement {
               <div key={index}>
                 <Link href={PAGES.COLLECTION + `/${i.id}`}>
                   <button
-                    className={`border-2 border-solid focus:ring-1 ring-gray-600 ring-offset-2 w-full text-center p-4 rounded-md shadow-md hover:shadow-xl `}
+                    className={`border-2 border-solid focus:ring-1 ring-gray-600 ring-offset-2 w-full text-center p-4 rounded-md shadow-md hover:shadow-lg `}
                   >
                     <div
                       title={i.title}
-                      className={`mt-2 flex items-center justify-center space-x-2 font-semibold text-xl `}
+                      className={`flex items-center justify-center space-x-2 font-semibold text-xl `}
                     >
                       <div>
                         <Twemoji text={i.icon} />

@@ -87,7 +87,7 @@ export default function RoomCreateConfig({}: Props): ReactElement {
               {collections.map((i) => (
                 <div
                   key={i.id}
-                  className={`shadow-md inline-block mx-1 bg-green-500 text-white px-2 rounded-md`}
+                  className={`shadow-md inline-block mx-1 bg-gray-500 text-white p-2 rounded-md text-sm`}
                 >
                   {i.title}
                 </div>

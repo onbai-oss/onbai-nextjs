@@ -1,6 +1,5 @@
 import Button from '@/components/base/Button'
 import Input from '@/components/base/Input'
-import Textarea from '@/components/base/Textarea'
 import { useRouter } from 'next/router'
 import { NavLoggedIn } from '@/components/NavLoggedIn'
 import { FormEventHandler, useState, useEffect } from 'react'
@@ -13,6 +12,8 @@ import 'emoji-mart/css/emoji-mart.css'
 import { API } from '@/utils/api'
 import { PAGES } from '@/utils/constant'
 import { getPropsUserSever } from '@/utils/session'
+import { shuffle } from 'lodash'
+import PleaseLogin from '@/components/PleaseLogin'
 
 export default function NewCollectionPage({ user }) {
   const router = useRouter()
@@ -62,9 +63,13 @@ export default function NewCollectionPage({ user }) {
         setEmoji(icon)
       })
     } else {
-      setEmoji('🍀')
+      setEmoji(shuffle(['📔', '📒', '📕', '📗', '📘', '📙'])[0])
     }
   }, [isEdit])
+
+  if (!user) {
+    return <PleaseLogin />
+  }
 
   return (
     <>
@@ -87,11 +92,15 @@ export default function NewCollectionPage({ user }) {
           className={`px-4 w-full sm:w-96 mx-auto flex flex-col `}
         >
           <fieldset>
-            <label htmlFor="desc" className={`my-2 block font-semibold `}>
+            <label
+              htmlFor="icon"
+              className={`my-2 block font-semibold cursor-pointer`}
+            >
               Icon:
             </label>
             <div className={`grid`}>
               <Button
+                id="icon"
                 type="button"
                 color="text-outline"
                 onClick={() => setOpenModalEmoji(true)}
@@ -104,7 +113,10 @@ export default function NewCollectionPage({ user }) {
             </div>
           </fieldset>
           <fieldset>
-            <label htmlFor="name" className={`my-2 block font-semibold`}>
+            <label
+              htmlFor="name"
+              className={`my-2 block font-semibold cursor-pointer`}
+            >
               Title:
             </label>
             <Input
@@ -120,21 +132,6 @@ export default function NewCollectionPage({ user }) {
               onChange={(e) => setTitle(e.target.value)}
             ></Input>
           </fieldset>
-          <fieldset>
-            <label htmlFor="desc" className={`my-2 block font-semibold`}>
-              Description:
-            </label>
-            <Textarea
-              rows={4}
-              name="desc"
-              id="desc"
-              placeholder=""
-              autoComplete="off"
-              value={desc}
-              onChange={(e) => setDesc(e.target.value)}
-            />
-          </fieldset>
-
           <fieldset className={`mt-4 grid grid-cols-1 grid-rows-1`}>
             <Button
               color="info"

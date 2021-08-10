@@ -26,7 +26,7 @@ export default function NewPage({}) {
           </div>
         </div>
 
-        <div className={`animate__animated animate__fadeInUp animate__faster `}>
+        <div className={``}>
           <div className={`min-h-screen p-4 flex flex-col items-center mb-8 `}>
             <Link href={PAGES.NEW_COLLECION}>
               <button

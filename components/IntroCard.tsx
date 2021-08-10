@@ -7,18 +7,20 @@ interface Props {}
 
 export default function IntroCard({}: Props): ReactElement {
   return (
-    <section className={`container mx-auto mb-6`}>
+    <section className={`container mx-auto `}>
       <div>
-        <div className=" p-2 w-52 mx-auto">
+        <div className=" p-2 w-40 mx-auto">
           <img className={`w-full`} src="/hot.svg" alt="" />
         </div>
       </div>
-      <div className={`text-center p-2 mb-2 font-semibold`}>
-        Have a nice day.
+      <div className={`text-center p-2  font-semibold`}>
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatum,
+        consequatur!
       </div>
-      <div className={`flex justify-center`}>
+      <div></div>
+      <div className={`flex mt-2 mb-6 justify-center`}>
         <Link href={PAGES.NEW}>
-          <Button icon="plus" color="info">
+          <Button icon="plus" color="primary">
             New
           </Button>
         </Link>

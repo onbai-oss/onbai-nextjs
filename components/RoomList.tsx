@@ -9,6 +9,7 @@ import CollectionLoader from './base/CollectionLoader'
 import GetDataError from './base/GetDataError'
 import { Twemoji } from 'react-emoji-render'
 import { userContext } from './auth/userProvider'
+import Button from './base/Button'
 
 interface Props {}
 
@@ -34,11 +35,11 @@ export default function RoomList({}: Props): ReactElement {
   }
 
   return (
-    <section className={`container mx-auto px-4 `}>
+    <section className={`container mx-auto px-4 py-4`}>
       <div
         className={`flex flex-col sm:flex-row justify-between items-center mb-4`}
       >
-        <div className={` font-semibold my-4 text-xl`}>
+        <div className={`font-semibold my-4 text-xl`}>
           {rooms?.total || '0'} rooms
         </div>
         <form onSubmit={onSearch} className={`my-2 w-full sm:w-auto`}>
@@ -46,7 +47,7 @@ export default function RoomList({}: Props): ReactElement {
             name="search"
             icon="search-outline"
             type="search"
-            placeholder="search room..."
+            placeholder="search..."
             onChange={(e) => setSearch(e.target.value)}
             defaultValue={search}
           ></Input>
@@ -75,15 +76,21 @@ export default function RoomList({}: Props): ReactElement {
           </div>
         ) : (
           <div className={`text-center`}>
-            <figure>
+            <figure className={`w-32 mx-auto`}>
               <img
-                width="175"
-                className={`mx-auto`}
+                className={`w-full`}
                 src="/nodata_flower.png"
                 alt="no data"
               />
             </figure>
             <div className={`mt-4 font-semibold`}>No rooms found.</div>
+            <div className={`mt-4 flex justify-center`}>
+              <Link href={PAGES.NEW_ROOM}>
+                <Button color="info-outline" icon="plus-outline">
+                  Create new room
+                </Button>
+              </Link>
+            </div>
           </div>
         )}
 

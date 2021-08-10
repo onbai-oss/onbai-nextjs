@@ -85,7 +85,11 @@ const LoginForm = () => {
       </div>
 
       <fieldset className={`mt-2`}>
-        <Button icon="arrow-circle-right-outline" type="submit">
+        <Button
+          className={`block w-full`}
+          icon="arrow-circle-right-outline"
+          type="submit"
+        >
           Login
         </Button>
       </fieldset>

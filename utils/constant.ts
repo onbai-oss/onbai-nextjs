@@ -26,22 +26,22 @@ export const API_PATH = {
 
 export const ROOM = {
   STATUS: {
-    WAIT: 0,
-    PLAYING: 1,
-    END: 2,
+    WAIT: 'wait',
+    PLAYING: 'playing',
+    END: 'end',
   },
   ROLE: {
-    HOST: 0,
-    GUEST: 1,
+    HOST: 'host',
+    GUEST: 'guest',
   },
   TYPE: {
-    SOLO: 0,
-    TEAM: 1,
-    WATCH: 2,
+    SOLO: 'solo',
+    TEAM: 'team',
+    WATCH: 'watch',
   },
   RULE: {
-    SCORE: 0,
-    TIMER: 1,
-    ALL: 2,
+    SCORE: 'score',
+    TIMER: 'time',
+    ALL: 'all',
   },
 }

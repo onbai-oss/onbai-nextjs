@@ -1,5 +1,4 @@
 import { BaseSyntheticEvent } from 'react'
-import Link from 'next/link'
 import { API } from 'utils/api'
 import { useRouter } from 'next/router'
 import { PAGES } from 'utils/constant'
@@ -62,7 +61,11 @@ const LoginForm = () => {
       </fieldset>
 
       <fieldset className={`mt-4`}>
-        <Button icon="arrow-circle-right-outline" type="submit">
+        <Button
+          className={`block w-full`}
+          icon="arrow-circle-right-outline"
+          type="submit"
+        >
           Create account
         </Button>
       </fieldset>
