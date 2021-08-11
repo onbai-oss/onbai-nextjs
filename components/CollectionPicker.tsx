@@ -74,14 +74,14 @@ export default function CollectionPicker({
     <div>
       <Modal isOpen={isOpen} closeModal={onCloseModal}>
         <div>
-          <div className={`font-semibold text-xl`}>Select collections</div>
+          <div className={`font-semibold text-2xl `}>Select collections:</div>
           <section
             className={`mb-2 mt-4 container mx-auto flex flex-col sm:flex-row justify-between items-center`}
           >
             {/* <h1 className={`font-semibold text-xl`}>
               {listCollection?.total} collections
             </h1> */}
-            <div>
+            <div className={`mr-4`}>
               <Listbox value={selected} onChange={setSelected}>
                 <div className="relative">
                   <Listbox.Button className="cursor-pointer font-semibold relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md focus:outline-none  ">
@@ -123,7 +123,7 @@ export default function CollectionPicker({
                 </div>
               </Listbox>
             </div>
-            <form onSubmit={onSearch} className={`my-2 w-full sm:w-auto`}>
+            <form onSubmit={onSearch} className={`my-2 flex-1`}>
               <Input
                 name="search"
                 icon="search-outline"
@@ -147,19 +147,8 @@ export default function CollectionPicker({
           {/* List Collection */}
           {!isLoading && !error && listCollection?.data?.length ? (
             <>
-              <div
-                className={`flex container mx-auto justify-center mb-3 px-4`}
-              >
-                <Pagination
-                  page={page}
-                  total={listCollection.total}
-                  limit={listCollection.limit}
-                  onPageChange={setPage}
-                />
-              </div>
-
               <section
-                className={`container mx-auto grid grid-rows-1 grid-cols-1 gap-3`}
+                className={`container mx-auto grid grid-rows-1 grid-cols-2 gap-2.5`}
               >
                 {listCollection.data.map((i, index) => (
                   <div key={index}>
@@ -167,7 +156,7 @@ export default function CollectionPicker({
                       onClick={() => toggleSelect(i)}
                       className={`border-2 ${
                         listSelected.find((f) => f.id === i.id) ? ' ' : ''
-                      } border-solid w-full block relative text-center p-1 rounded-md shadow-md hover:shadow-lg `}
+                      } border-solid w-full block relative text-center p-1 rounded-md shadow hover:shadow-md `}
                     >
                       <span
                         title={i.title}
@@ -195,18 +184,27 @@ export default function CollectionPicker({
                   </div>
                 ))}
               </section>
+              <div className={`flex container mx-auto justify-end mt-3 `}>
+                <Pagination
+                  page={page}
+                  total={listCollection.total}
+                  limit={listCollection.limit}
+                  onPageChange={setPage}
+                />
+              </div>
 
-              <div className={`mt-6 mb-2 flex justify-center space-x-2`}>
+              <div className={`mt-4 mb-2 flex justify-center space-x-2`}>
                 <Button
                   disabled={!listSelected.length}
                   onClick={onApply}
                   icon="attach-2-outline"
                   color="info"
+                  className={`w-full`}
                 >
                   Apply {listSelected.length ? `(${listSelected.length})` : ''}
                 </Button>
               </div>
-              {/* {listSelected.length ? (
+              {listSelected.length ? (
                 <div>
                   <div className={`my-4`}>
                     <hr />
@@ -221,7 +219,7 @@ export default function CollectionPicker({
                     </Button>
                   </div>
                 </div>
-              ) : null} */}
+              ) : null}
             </>
           ) : null}
 

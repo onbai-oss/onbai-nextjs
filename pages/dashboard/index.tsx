@@ -41,7 +41,7 @@ export default function DashboardPage({ user }) {
                   )
                 }
               >
-                Rooms
+                Collections
               </Tab>
               <Tab
                 className={({ selected }) =>
@@ -54,17 +54,17 @@ export default function DashboardPage({ user }) {
                   )
                 }
               >
-                Collections
+                Rooms
               </Tab>
             </Tab.List>
             <Tab.Panels>
               <Tab.Panel className={`focus:outline-none`}>
+                <CollectionList />
+              </Tab.Panel>
+              <Tab.Panel className={`focus:outline-none`}>
                 <div>
                   <RoomList />
                 </div>
-              </Tab.Panel>
-              <Tab.Panel className={`focus:outline-none`}>
-                <CollectionList />
               </Tab.Panel>
             </Tab.Panels>
           </Tab.Group>

@@ -18,7 +18,7 @@ export default function Pagination({
   )
 
   const btnClass = `
-  mx-1 border border-gray-300 shadow rounded-md bg-gray-50 py-2 px-4 text-sm 
+  mx-1 border border-gray-300 shadow rounded-md bg-white py-2 px-4 text-sm font-semibold
   hover:shadow-md hover:bg-blue-500 hover:text-white flex justify-center items-center 
   `
 
@@ -44,10 +44,10 @@ export default function Pagination({
     <section className={``}>
       {Math.ceil(total / limit) > 1 ? (
         <div className={`flex items-center`}>
-          <div className={`mr-4 flex items-center justify-center`}>
+          <div className={`mr-2 flex items-center justify-center`}>
             <select
               onChange={onSelectChange}
-              className={`p-2 bg-transparent `}
+              className={`p-2 bg-transparent font-semibold`}
               name="page"
               id="page-select"
               value={page}

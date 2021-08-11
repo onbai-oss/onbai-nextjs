@@ -87,16 +87,18 @@ export default function RoomCreateConfig({}: Props): ReactElement {
             <hr />
           </div>
           <div className={`text-center mb-1 text-sm `}>
-            Share link to invite your friend
-          </div>
-          <div className={`my-2 text-sm text-blue-400`}>
             <CopyToClipboard
               text={process.browser ? location.href : ''}
               onCopy={() => {
                 toast.success('Copied to your clipboard!')
               }}
             >
-              <Input readOnly defaultValue={location.href}></Input>
+              <button
+                type="button"
+                className={`font-semibold py-2 px-4 border rounded-md focus:text-blue-500`}
+              >
+                Click to copy link
+              </button>
             </CopyToClipboard>
           </div>
         </div>
@@ -243,7 +245,12 @@ export default function RoomCreateConfig({}: Props): ReactElement {
         </div>
 
         <div className={`flex justify-center mt-6 `}>
-          <Button icon="arrow-circle-right-outline" color="info" type="submit">
+          <Button
+            className={`block w-full`}
+            icon="arrow-circle-right-outline"
+            color="info"
+            type="submit"
+          >
             Start practice
           </Button>
         </div>
