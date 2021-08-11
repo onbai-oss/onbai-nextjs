@@ -8,6 +8,10 @@ import { roomContext } from './roomProvider'
 import { toArray } from 'lodash'
 import { app } from '@/utils/api'
 import { ROOM } from '@/utils/constant'
+import UserList from '@/components/room/UserList'
+import { CopyToClipboard } from 'react-copy-to-clipboard'
+import { Twemoji } from 'react-emoji-render'
+import { useEffect } from 'react'
 
 interface Props {}
 
@@ -51,11 +55,23 @@ export default function RoomCreateConfig({}: Props): ReactElement {
 
   const onSubmit = (e) => {
     e.preventDefault()
+
+    if (!collections.length) {
+      setIsOpen(true)
+      return
+    }
     document.getElementById('timer')?.blur()
     document.getElementById('score_goal')?.blur()
     window.scrollTo(0, 0)
     joinRoom()
   }
+
+  useEffect(() => {
+    if (!collections.length) {
+      setIsOpen(true)
+      return
+    }
+  }, [])
 
   return (
     <>
@@ -63,9 +79,31 @@ export default function RoomCreateConfig({}: Props): ReactElement {
         onSubmit={onSubmit}
         className={`w-full sm:w-96 mx-auto px-4 sm:px-0 font-semibold mb-12 `}
       >
+        {/* Users */}
         <div className={`border shadow hover:shadow-md rounded-md p-2 my-2`}>
-          <div className={`text-left mb-2 underline`}>1. Data</div>
+          <div className={`text-left  `}>Users:</div>
+          <UserList />
+          <div className={`mb-4`}>
+            <hr />
+          </div>
+          <div className={`text-center mb-1 text-sm `}>
+            Share link to invite your friend
+          </div>
+          <div className={`my-2 text-sm text-blue-400`}>
+            <CopyToClipboard
+              text={process.browser ? location.href : ''}
+              onCopy={() => {
+                toast.success('Copied to your clipboard!')
+              }}
+            >
+              <Input readOnly defaultValue={location.href}></Input>
+            </CopyToClipboard>
+          </div>
+        </div>
 
+        {/* Collections */}
+        <div className={`border shadow hover:shadow-md rounded-md p-2 my-2`}>
+          <div className={`text-left `}>Data:</div>
           <div className={`flex justify-center`}>
             <Button
               onClick={() => setIsOpen(true)}
@@ -77,27 +115,39 @@ export default function RoomCreateConfig({}: Props): ReactElement {
             </Button>
           </div>
           {collections.length ? (
-            <div className={`mt-2`}>
-              <hr />
-            </div>
-          ) : null}
-
-          <div className="mt-3 mb-1 flex justify-center">
-            <div className={`whitespace-nowrap overflow-auto`}>
-              {collections.map((i) => (
-                <div
-                  key={i.id}
-                  className={`shadow-md inline-block mx-1 bg-gray-500 text-white p-2 rounded-md text-sm`}
-                >
-                  {i.title}
+            <div>
+              <div className={`my-2 `}>
+                <hr />
+              </div>
+              <div className="mt-3 mb-1 flex justify-center">
+                <div className={`whitespace-nowrap overflow-auto`}>
+                  {collections.map((i) => (
+                    <div
+                      key={i.id}
+                      className={`inline-block mx-1 bg-white p-2 border rounded-md text-sm`}
+                    >
+                      <div className={`flex items-center space-x-2`}>
+                        <div>
+                          <Twemoji text={i?.icon}></Twemoji>
+                        </div>
+                        <div>{i?.title}</div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </div>
             </div>
-          </div>
+          ) : (
+            <div className={`text-center mt-2 text-sm`}>
+              <span className={`text-red-500`}>*</span> Please select at least
+              one collection.
+            </div>
+          )}
         </div>
 
+        {/* Modes */}
         <div className={`border shadow hover:shadow-md rounded-md p-2 my-2`}>
-          <div className={`text-left mb-1 underline`}>2. Mode</div>
+          <div className={`text-left  `}>Mode:</div>
           <div className={`flex justify-center space-x-2`}>
             <label htmlFor="score">
               <input
@@ -137,7 +187,7 @@ export default function RoomCreateConfig({}: Props): ReactElement {
             <hr />
           </div>
           <div className={`p-2 grid grid-cols-1 grid-rows-1 gap-2 mt-1`}>
-            {[0, 2].includes(mode) ? (
+            {[ROOM.RULE.SCORE, ROOM.RULE.ALL].includes(mode) ? (
               <div className={``}>
                 <label
                   className={`flex justify-center items-center space-x-2`}
@@ -160,8 +210,12 @@ export default function RoomCreateConfig({}: Props): ReactElement {
                 </label>
               </div>
             ) : null}
-            {mode === 2 ? <div className={`text-center mr-4`}> or </div> : null}
-            {[1, 2].includes(mode) ? (
+
+            {mode === ROOM.RULE.ALL ? (
+              <div className={`text-center mr-4`}> or </div>
+            ) : null}
+
+            {[ROOM.RULE.TIMER, ROOM.RULE.ALL].includes(mode) ? (
               <div className={``}>
                 <label
                   className={`flex justify-center items-center space-x-2`}
@@ -188,29 +242,8 @@ export default function RoomCreateConfig({}: Props): ReactElement {
           </div>
         </div>
 
-        {/* List errors */}
-        <div className="my-4">
-          {!collections.length ? (
-            <div className={`text-center my-2 text-sm`}>
-              <span className={`text-red-500`}>*</span> Please select at least
-              one collection.
-            </div>
-          ) : null}
-          {listRoomUser.length < 2 ? (
-            <div className={`text-center my-2 text-sm`}>
-              <span className={`text-red-500`}>*</span> Please wait at least one
-              member join room.
-            </div>
-          ) : null}
-        </div>
-
-        <div className={`flex justify-center mt-3 `}>
-          <Button
-            disabled={!collections.length || listRoomUser.length < 2}
-            icon="arrow-circle-right-outline"
-            color="info"
-            type="submit"
-          >
+        <div className={`flex justify-center mt-6 `}>
+          <Button icon="arrow-circle-right-outline" color="info" type="submit">
             Start practice
           </Button>
         </div>

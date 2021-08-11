@@ -234,13 +234,13 @@ export default function RoomPage({ user }) {
                   <div className={`my-4 p-2`}>
                     <hr />
                   </div>
-                  <UserList />
                   {isAuthor ? (
-                    <div>
+                    <div className={`mb-40 sm:mb-0`}>
                       <RoomCreateConfig />
                     </div>
                   ) : (
                     <div>
+                      <UserList />
                       <RoomUserJoin></RoomUserJoin>
                     </div>
                   )}

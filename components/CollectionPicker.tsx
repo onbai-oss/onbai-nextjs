@@ -74,6 +74,7 @@ export default function CollectionPicker({
     <div>
       <Modal isOpen={isOpen} closeModal={onCloseModal}>
         <div>
+          <div className={`font-semibold text-xl`}>Select collections</div>
           <section
             className={`mb-2 mt-4 container mx-auto flex flex-col sm:flex-row justify-between items-center`}
           >
@@ -158,7 +159,7 @@ export default function CollectionPicker({
               </div>
 
               <section
-                className={`container mx-auto  grid grid-rows-1 grid-cols-1 gap-3`}
+                className={`container mx-auto grid grid-rows-1 grid-cols-1 gap-3`}
               >
                 {listCollection.data.map((i, index) => (
                   <div key={index}>
@@ -195,27 +196,22 @@ export default function CollectionPicker({
                 ))}
               </section>
 
-              <div className={`mt-6 mb-2 flex justify-center`}>
+              <div className={`mt-6 mb-2 flex justify-center space-x-2`}>
                 <Button
                   disabled={!listSelected.length}
                   onClick={onApply}
-                  icon="arrow-circle-right-outline"
+                  icon="attach-2-outline"
                   color="info"
                 >
-                  Apply
+                  Apply {listSelected.length ? `(${listSelected.length})` : ''}
                 </Button>
               </div>
-              <div className={`flex mb-2 justify-center text-sm font-semibold`}>
-                {listSelected.length
-                  ? `( ${listSelected.length} collections )`
-                  : ''}
-              </div>
-              {listSelected.length ? (
+              {/* {listSelected.length ? (
                 <div>
-                  <div>
+                  <div className={`my-4`}>
                     <hr />
                   </div>
-                  <div className={`mt-4 mb-0 flex justify-center`}>
+                  <div className={` mb-0 flex justify-center`}>
                     <Button
                       color="info-outline"
                       onClick={onClear}
@@ -225,7 +221,7 @@ export default function CollectionPicker({
                     </Button>
                   </div>
                 </div>
-              ) : null}
+              ) : null} */}
             </>
           ) : null}
 

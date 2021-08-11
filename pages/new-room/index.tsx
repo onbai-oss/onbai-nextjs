@@ -13,11 +13,13 @@ import { customAlphabet } from 'nanoid'
 import { pick } from 'lodash'
 import { getPropsUserSever } from '@/utils/session'
 import Footer from '@/components/base/Footer'
+import { Disclosure } from '@headlessui/react'
+import { ChevronDownIcon } from '@heroicons/react/solid'
 
 export default function NewRoomPage({ user }) {
   const onSubmit = (e) => {
     e.preventDefault()
-    const passValue = e.target?.password.value
+    const passValue = e.target?.password?.value
     const nameValue = e.target?.name.value
     const salt = bcrypt.genSaltSync(10)
     const hash = passValue ? bcrypt.hashSync(passValue, salt) : null
@@ -52,7 +54,7 @@ export default function NewRoomPage({ user }) {
   return (
     <>
       <NavLoggedIn />
-      <main className={`min-h-screen`}>
+      <main className={`min-h-screen mb-24 sm:mb-0`}>
         <div className={`mt-4 w-48 mx-auto`}>
           <img
             className={`w-full`}
@@ -77,7 +79,7 @@ export default function NewRoomPage({ user }) {
                 htmlFor="name"
                 className={`my-2 block font-semibold cursor-pointer`}
               >
-                Name
+                Name:
               </label>
               <Input
                 icon="edit-2-outline"
@@ -89,23 +91,6 @@ export default function NewRoomPage({ user }) {
                 autoFocus
                 autoComplete="off"
                 defaultValue={'room-' + customAlphabet('123456', 6)()}
-              ></Input>
-            </fieldset>
-
-            <fieldset>
-              <label
-                htmlFor="password"
-                className={`my-2 block font-semibold cursor-pointer`}
-              >
-                Password
-              </label>
-              <Input
-                icon="lock-outline"
-                type="text"
-                name="password"
-                id="password"
-                placeholder=""
-                autoComplete="off"
               ></Input>
             </fieldset>
 

@@ -2,10 +2,11 @@ import React, { useEffect } from 'react'
 
 interface IInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   icon?: string
+  className?
 }
 
 const Input: React.FC<IInputProps> = (props) => {
-  const { disabled, icon } = props
+  const { disabled, icon, className } = props
 
   useEffect(() => {
     if (icon) {
@@ -27,6 +28,7 @@ const Input: React.FC<IInputProps> = (props) => {
 
       <input
         className={`
+        ${className}
         appearance-none cursor-pointer outline-none
          pr-3 py-2 font-semibold rounded w-full
          focus:ring-1 ring-gray-600 ring-offset-2
@@ -34,7 +36,6 @@ const Input: React.FC<IInputProps> = (props) => {
         ${icon ? 'pl-10' : 'pl-3'}
         ${disabled ? 'cursor-not-allowed text-gray-300' : ''}
         ${disabled ? 'border-gray-300' : 'border-gray-600'}
-
       `}
         {...props}
       ></input>
