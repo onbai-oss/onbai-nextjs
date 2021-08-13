@@ -153,7 +153,7 @@ export default function RoomPage({ user }) {
     <>
       <NavLoggedIn />
 
-      <main className={`min-h-screen`}>
+      <main className={`min-h-screen mb-24 `}>
         {/* // Check lock */}
         {!isCheckedLock ? (
           <div className={`flex justify-center mt-4`}></div>
@@ -232,7 +232,9 @@ export default function RoomPage({ user }) {
                     </div>
                   </div>
                   <div className={`my-4 p-2`}>
-                    <hr />
+                    <div
+                      className={`border-t-2 border-gray-300 border-dashed container mx-auto`}
+                    ></div>
                   </div>
                   {isAuthor ? (
                     <div className={`mb-40 sm:mb-0`}>

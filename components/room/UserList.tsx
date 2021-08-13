@@ -2,6 +2,7 @@ import React, { ReactElement } from 'react'
 import { toArray } from 'lodash'
 import { roomContext } from './roomProvider'
 import { userContext } from '../auth/userProvider'
+import { ROOM } from '@/utils/constant'
 interface Props {}
 
 export default function UserList({}: Props): ReactElement {
@@ -22,17 +23,22 @@ export default function UserList({}: Props): ReactElement {
                 className={`w-full rounded-full shadow-md`}
                 draggable="false"
               />
-              <div
-                className={`text-sm font-semibold absolute -top-1.5 -right-1.5 text-center shadow-md w-5 rounded-full bg-blue-500 text-white`}
-              >
-                {score}
-              </div>
-              {/* <div className={`w-2.5 h-2.5 absolute -bottom-0.5 -right-0.5 `}>
-                <span className="flex h-2.5 w-2.5">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-50"></span>
-                  <span className="h-2.5 w-2.5 relative inline-flex rounded-full bg-green-400"></span>
-                </span>
-              </div> */}
+              {room?.status === ROOM.STATUS.PLAYING ? (
+                <div>
+                  <div
+                    className={`text-sm font-semibold absolute -top-1.5 -right-1.5 text-center shadow-md w-5 rounded-full bg-blue-500 text-white`}
+                  >
+                    {score}
+                  </div>
+                </div>
+              ) : (
+                <div className={`w-2.5 h-2.5 absolute -bottom-0.5 -right-0.5 `}>
+                  <span className="flex h-2.5 w-2.5">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-50"></span>
+                    <span className="h-2.5 w-2.5 relative inline-flex rounded-full bg-green-400"></span>
+                  </span>
+                </div>
+              )}
             </div>
           ))}
         </div>

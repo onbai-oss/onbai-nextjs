@@ -40,9 +40,9 @@ export default function CollectionList({}: Props): ReactElement {
     e.target.search.blur()
   }
   return (
-    <div>
-      <section
-        className={`px-4 py-4 container mx-auto flex flex-col sm:flex-row justify-between items-center`}
+    <section className={`py-4`}>
+      <div
+        className={`px-4 container mx-auto flex flex-col sm:flex-row justify-between items-center`}
       >
         <h1 className={`font-semibold my-4 text-xl`}>
           {listCollection?.total} collections
@@ -97,7 +97,7 @@ export default function CollectionList({}: Props): ReactElement {
             ></Input>
           </form>
         </div>
-      </section>
+      </div>
 
       {/* Loading */}
       {isLoading ? (
@@ -109,8 +109,8 @@ export default function CollectionList({}: Props): ReactElement {
       {/* List Collection */}
       {!isLoading && !error && listCollection?.data?.length ? (
         <>
-          <section
-            className={`container mx-auto px-4 grid grid-rows-1 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5  gap-4`}
+          <div
+            className={`mt-2 sm:mt-0 container mx-auto px-4 grid grid-rows-1 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-3`}
           >
             {listCollection.data.map((i, index) => (
               <div key={index}>
@@ -131,7 +131,7 @@ export default function CollectionList({}: Props): ReactElement {
                 </Link>
               </div>
             ))}
-          </section>
+          </div>
           <div className={`flex container mx-auto justify-end my-6 px-4`}>
             <Pagination
               page={page}
@@ -170,6 +170,6 @@ export default function CollectionList({}: Props): ReactElement {
       ) : null}
 
       {!isLoading && error ? <GetDataError /> : null}
-    </div>
+    </section>
   )
 }

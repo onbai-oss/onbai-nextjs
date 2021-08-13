@@ -61,7 +61,7 @@ export default function QuestionList({
     <>
       <section className={`container mx-auto px-4 mb-6`}>
         <div
-          className={`flex flex-col sm:flex-row justify-between items-center mb-4`}
+          className={`flex flex-col sm:flex-row justify-between items-center `}
         >
           <div className={` font-semibold my-4`}>
             {questions?.total || '0'} questions

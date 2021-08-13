@@ -74,9 +74,11 @@ export default function CollectionPicker({
     <div>
       <Modal isOpen={isOpen} closeModal={onCloseModal}>
         <div>
-          <div className={`font-semibold text-2xl `}>Select collections:</div>
+          <div className={`font-semibold text-2xl text-center`}>
+            Select collections
+          </div>
           <section
-            className={`mb-2 mt-4 container mx-auto flex flex-col sm:flex-row justify-between items-center`}
+            className={`mb-2 mt-2 container mx-auto flex flex-col sm:flex-row justify-between items-center`}
           >
             {/* <h1 className={`font-semibold text-xl`}>
               {listCollection?.total} collections

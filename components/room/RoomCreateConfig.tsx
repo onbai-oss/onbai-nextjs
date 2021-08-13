@@ -81,7 +81,7 @@ export default function RoomCreateConfig({}: Props): ReactElement {
       >
         {/* Users */}
         <div className={`border shadow hover:shadow-md rounded-md p-2 my-2`}>
-          <div className={`text-left  `}>Users:</div>
+          <div className={`text-left  `}>1. Users:</div>
           <UserList />
           <div className={`mb-4`}>
             <hr />
@@ -95,7 +95,7 @@ export default function RoomCreateConfig({}: Props): ReactElement {
             >
               <button
                 type="button"
-                className={`font-semibold py-2 px-4 border rounded-md focus:text-blue-500`}
+                className={`font-semibold py-1 text-sm  px-4 border rounded-md focus:text-blue-500`}
               >
                 Click to copy link
               </button>
@@ -105,7 +105,7 @@ export default function RoomCreateConfig({}: Props): ReactElement {
 
         {/* Collections */}
         <div className={`border shadow hover:shadow-md rounded-md p-2 my-2`}>
-          <div className={`text-left `}>Data:</div>
+          <div className={`text-left `}>2. Data:</div>
           <div className={`flex justify-center`}>
             <Button
               onClick={() => setIsOpen(true)}
@@ -118,7 +118,7 @@ export default function RoomCreateConfig({}: Props): ReactElement {
           </div>
           {collections.length ? (
             <div>
-              <div className={`my-2 `}>
+              <div className={`my-2`}>
                 <hr />
               </div>
               <div className="mt-3 mb-1 flex justify-center">
@@ -149,7 +149,7 @@ export default function RoomCreateConfig({}: Props): ReactElement {
 
         {/* Modes */}
         <div className={`border shadow hover:shadow-md rounded-md p-2 my-2`}>
-          <div className={`text-left  `}>Mode:</div>
+          <div className={`text-left  `}>3. Mode:</div>
           <div className={`flex justify-center space-x-2`}>
             <label htmlFor="score">
               <input

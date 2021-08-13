@@ -51,7 +51,7 @@ export default function RoomList({}: Props): ReactElement {
   return (
     <section className={`container mx-auto px-4 py-4`}>
       <div
-        className={`flex flex-col sm:flex-row justify-between items-center mb-4`}
+        className={`flex flex-col sm:flex-row justify-between items-center `}
       >
         <div className={`font-semibold my-4 text-xl`}>
           {rooms?.total || '0'} rooms
@@ -111,12 +111,12 @@ export default function RoomList({}: Props): ReactElement {
       <div>
         {!isLoadingRoom && !errorRooms && rooms?.data?.length ? (
           <div
-            className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  grid-rows-1 gap-4`}
+            className={`mt-2 sm:mt-0 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  grid-rows-1 gap-4`}
           >
             {rooms.data?.map((i) => (
               <Link href={PAGES.ROOM + `/${i.id}`} key={i.id}>
                 <button
-                  className={`appearance-none relative px-4 py-6 w-full block rounded-md shadow hover:shadow-md border-2 border-solid focus:ring-1 ring-gray-600 ring-offset-2`}
+                  className={`appearance-none relative px-4 py-2 w-full block rounded-md shadow hover:shadow-md border-2 border-solid focus:ring-1 ring-gray-600 ring-offset-2`}
                 >
                   {i?.status == ROOM.STATUS.PLAYING ? (
                     <div title="Playing" className={`absolute top-1 right-1`}>
@@ -156,7 +156,7 @@ export default function RoomList({}: Props): ReactElement {
           </div>
         ) : (
           <div className={`text-center`}>
-            <figure className={`w-32 mx-auto`}>
+            <figure className={`w-24 mx-auto`}>
               <img
                 className={`w-full`}
                 src="/nodata_flower.png"

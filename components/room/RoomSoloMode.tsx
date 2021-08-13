@@ -6,6 +6,7 @@ import {
   AnnotationIcon,
   FlagIcon,
   ClockIcon,
+  CogIcon,
 } from '@heroicons/react/outline'
 import { userContext } from '../auth/userProvider'
 import { roomContext } from './roomProvider'
@@ -19,6 +20,7 @@ import { ROOM } from '@/utils/constant'
 import Button from '../base/Button'
 import { useInterval } from 'react-use'
 import dayjs from 'dayjs'
+import { Disclosure } from '@headlessui/react'
 
 interface Props {}
 
@@ -30,6 +32,9 @@ export default function RoomSoloMode({}: Props): ReactElement {
 
   const [listQuestion, setListQuestion] = useState<Array<any>>([])
   const [currentQuestion, setCurrentQuestion] = useState<any>({})
+  const [isShowResult, setIsShowResult] = useState(false)
+  const [isShowGenQuiz, setIsShowGenQuiz] = useState(false)
+  const [isCorrect, setIsCorrect] = useState(false)
 
   const [timer, setTimer] = useState('--:--')
 
@@ -77,13 +82,22 @@ export default function RoomSoloMode({}: Props): ReactElement {
     setListQuestion(listRandom)
   }
 
-  const onAnswer = ({ isCorrect }) => {
+  const wait = (t: number) => new Promise((r) => setTimeout(() => r(t), t))
+
+  const onAnswer = async ({ isCorrect }) => {
+    setIsShowResult(true)
+    setIsCorrect(isCorrect)
     if (isCorrect) {
-      toast.success('Correct!')
       setScore()
-    } else {
-      toast.error('Wrong!')
     }
+  }
+
+  const nextQuestion = async () => {
+    window.scrollTo(0, 0)
+    setIsShowResult(false)
+    setIsShowGenQuiz(true)
+    await wait(500)
+    setIsShowGenQuiz(false)
     makeQuestion(shuffle(listQuestion))
   }
 
@@ -158,6 +172,23 @@ export default function RoomSoloMode({}: Props): ReactElement {
       : null
   )
 
+  const correctAnswer =
+    currentQuestion?.answers &&
+    currentQuestion?.answers
+      .filter((i) => i.isCorrect)
+      .map((i, k) => (
+        <div
+          key={k}
+          className={`p-3 my-3 w-full text-left border-2 border-gray-400 rounded-md `}
+        >
+          <div
+            dangerouslySetInnerHTML={{
+              __html: i.answer,
+            }}
+            className={`prose`}
+          ></div>
+        </div>
+      ))
   return (
     <>
       <div className={`mt-2 p-2 flex justify-center items-center`}>
@@ -208,66 +239,158 @@ export default function RoomSoloMode({}: Props): ReactElement {
         <UserList />
       </div>
       <div className={`my-2`}>
-        <hr />
+        <div
+          className={`border-t-2 border-gray-300 border-dashed container mx-auto`}
+        ></div>
       </div>
 
       {/* Question Choice */}
-      <div className={`mt-2 mb-12 p-2 max-w-xl mx-auto`}>
-        <div
-          className={`my-2 text-blue-500 font-semibold flex items-center space-x-1`}
-        >
-          <QuestionMarkCircleIcon className={``} width="20" />
-          <div>Question </div>
-        </div>
-        <div className={`mx-4 my-3`}>
+      <div className="px-2">
+        <section className={`mt-4 mb-12 p-2 max-w-xl mx-auto paper relative`}>
           <div
-            dangerouslySetInnerHTML={{ __html: currentQuestion?.question }}
-            className={`prose`}
-          ></div>
-        </div>
-        <div>
-          <div className={`mt-5 mb-2`}>
-            <div
-              className={`font-semibold text-blue-500 flex items-center space-x-1 w-full`}
-            >
-              <AnnotationIcon width="20"></AnnotationIcon>
-              <div className={`flex-1`}>Select answer</div>
-            </div>
+            className={`my-2 text-blue-500 font-semibold flex items-center space-x-1`}
+          >
+            <QuestionMarkCircleIcon className={``} width="20" />
+            <div>Question </div>
           </div>
-
-          <div className={`mx-4`}>
-            {/* List answer */}
-            {currentQuestion?.answers &&
-              currentQuestion?.answers.map((i, k) => (
-                <button
-                  onClick={() => onAnswer(i)}
-                  key={k}
-                  className={`p-3 my-3 w-full text-left  border-2 border-gray-400 hover:border-blue-500 rounded-md `}
-                >
+          <div className={`mx-4 my-3`}>
+            {isShowGenQuiz ? (
+              <div className={`flex justify-center`}>
+                <div className={`w-full`}>
+                  <div></div>
                   <div
-                    dangerouslySetInnerHTML={{
-                      __html: i.answer,
-                    }}
-                    className={`prose`}
+                    className={`px-3 py-6 my-3 w-full bg-gray-200 animate-pulse rounded`}
                   ></div>
-                </button>
-              ))}
+                  <div
+                    className={`px-3 py-3 my-3 w-full bg-gray-200 animate-pulse rounded`}
+                  ></div>
+                  <div
+                    className={`px-3 py-2 my-3 w-full bg-gray-200 animate-pulse rounded`}
+                  ></div>
+                </div>
+              </div>
+            ) : (
+              <div
+                dangerouslySetInnerHTML={{ __html: currentQuestion?.question }}
+                className={`prose`}
+              ></div>
+            )}
           </div>
-        </div>
-
-        {isAuthor ? (
           <div>
-            <div className={`my-4`}>
-              <hr />
+            <div className={`mt-5 mb-2`}>
+              <div
+                className={`font-semibold text-blue-500 flex items-center space-x-1 w-full`}
+              >
+                <AnnotationIcon width="20"></AnnotationIcon>
+                <div className={`flex-1`}>Choose the correct answer</div>
+              </div>
             </div>
-            <div className={`flex my-2 justify-center`}>
-              <Button onClick={deleteRoom} icon="trash-outline" color="warning">
-                Delete room
-              </Button>
+            <div className={`mx-4 relative`}>
+              {/* List answer */}
+              {!isShowGenQuiz &&
+                !isShowResult &&
+                currentQuestion?.answers &&
+                currentQuestion?.answers.map((i, k) => (
+                  <button
+                    onClick={() => onAnswer(i)}
+                    key={k}
+                    className={`p-3 my-3 w-full text-left border-2 border-gray-400 sm:hover:border-blue-500 rounded-md `}
+                  >
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: i.answer,
+                      }}
+                      className={`prose`}
+                    ></div>
+                  </button>
+                ))}
+
+              {isShowGenQuiz && (
+                <div>
+                  <div
+                    className={`px-3 py-2 my-3 w-full bg-gray-200 animate-pulse rounded`}
+                  ></div>
+                  <div
+                    className={`px-3 py-2 my-3 w-full bg-gray-200 animate-pulse rounded`}
+                  ></div>
+                  <div
+                    className={`px-3 py-2 my-3 w-full bg-gray-200 animate-pulse rounded`}
+                  ></div>
+                </div>
+              )}
+
+              {isShowResult && (
+                <div>
+                  {isCorrect ? (
+                    <div className={`p-2 text-center `}>
+                      <div className={`text-green-500 text-xl font-semibold`}>
+                        Yay! it correct!
+                      </div>
+                      {correctAnswer}
+                    </div>
+                  ) : (
+                    <div className={`p-2 text-center `}>
+                      <div
+                        className={`text-yellow-500 text-xl font-semibold mb-2`}
+                      >
+                        Opps! it not correct.
+                      </div>
+
+                      <div className={`font-semibold text-gray-500`}>
+                        The correct answer
+                      </div>
+                      {correctAnswer}
+                    </div>
+                  )}
+
+                  <div className={`flex justify-center mb-4`}>
+                    <div
+                      className={`animate__animated animate__fadeIn animate__faster `}
+                    >
+                      <Button
+                        type="button"
+                        id="btn-focus"
+                        onClick={nextQuestion}
+                        color="info"
+                        icon="arrow-forward-outline"
+                      >
+                        Next question
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
-        ) : null}
+        </section>
       </div>
+
+      {isAuthor ? (
+        <div className={`my-4`}>
+          <Disclosure>
+            <Disclosure.Button className="py-2 flex justify-center w-full">
+              <CogIcon
+                width="24"
+                className={`text-gray-500 hover:opacity-75`}
+              />
+            </Disclosure.Button>
+            <Disclosure.Panel>
+              <div>
+                <div className={`border-t-2 border-dashed mb-4`}></div>
+                <div className={`flex my-2 justify-center`}>
+                  <Button
+                    onClick={deleteRoom}
+                    icon="trash-outline"
+                    color="warning"
+                  >
+                    Delete room
+                  </Button>
+                </div>
+              </div>
+            </Disclosure.Panel>
+          </Disclosure>
+        </div>
+      ) : null}
     </>
   )
 }
