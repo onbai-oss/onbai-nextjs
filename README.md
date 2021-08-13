@@ -32,3 +32,16 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## ENV
+
+Example `env.local`:
+
+```bash
+NEXT_PUBLIC_API_URL = "http://192.168.1.97:3030/"
+NEXT_PUBLIC_NEXT_API_URL = "http://192.168.1.97:3000/api/"
+SESSION_KEY = "complex_password_at_least_32_characters_long"
+SESSION_COOKIE_NAME = "onbai_user"
+NEXT_PUBLIC_APP_VERSION=$npm_package_version
+NEXT_PUBLIC_OAUTH_URL="http://localhost:3030/oauth"
+```
