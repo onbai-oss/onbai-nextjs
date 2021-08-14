@@ -7,7 +7,6 @@ import { app } from '@/utils/api'
 import toast from 'react-hot-toast'
 import router from 'next/router'
 import { PAGES } from '@/utils/constant'
-import { Twemoji } from 'react-emoji-render'
 import Link from 'next/link'
 import { Modal } from '../base/Modal'
 import dayjs from 'dayjs'
@@ -48,9 +47,6 @@ export default function RoomResult({}: Props): ReactElement {
       <div className={`mb-12`}>
         <div className={``}>
           <div className={`mt-2 p-2 flex justify-center items-center`}>
-            <div className={`mr-1 `}>
-              <Twemoji text={room?.password ? '🔒' : '#'} />
-            </div>
             <div>
               <h1 className={`text-2xl font-semibold`}> {room?.name}</h1>
             </div>

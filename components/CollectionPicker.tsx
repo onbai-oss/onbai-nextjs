@@ -9,7 +9,6 @@ import GetDataError from './base/GetDataError'
 import Link from 'next/link'
 import { Modal } from './base/Modal'
 import { userContext } from './auth/userProvider'
-import { Twemoji } from 'react-emoji-render'
 import {
   CheckCircleIcon,
   CheckIcon,
@@ -164,9 +163,6 @@ export default function CollectionPicker({
                         title={i.title}
                         className={`flex w-full h-full space-x-2 px-2 py-1 items-center font-semibold`}
                       >
-                        <div className={`flex-none text-lg`}>
-                          <Twemoji text={i.icon} />
-                        </div>
                         <div className={`truncate`}>{i.title}</div>
 
                         <div

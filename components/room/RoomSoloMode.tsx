@@ -11,8 +11,6 @@ import {
 import { userContext } from '../auth/userProvider'
 import { roomContext } from './roomProvider'
 import { shuffle, filter, chunk, get } from 'lodash-es'
-import { Twemoji } from 'react-emoji-render'
-
 import UserList from '@/components/room/UserList'
 import toast from 'react-hot-toast'
 import confetti from 'canvas-confetti'
@@ -192,9 +190,6 @@ export default function RoomSoloMode({}: Props): ReactElement {
   return (
     <>
       <div className={`mt-2 p-2 flex justify-center items-center`}>
-        <div className={`mr-1 `}>
-          <Twemoji text={room?.password ? '🔒' : '#'} />
-        </div>
         <div>
           <h1 className={`text-2xl font-semibold`}> {room?.name}</h1>
         </div>

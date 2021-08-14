@@ -8,7 +8,6 @@ import CollectionLoader from './base/CollectionLoader'
 import GetDataError from './base/GetDataError'
 import Link from 'next/link'
 import { userContext } from './auth/userProvider'
-import { Twemoji } from 'react-emoji-render'
 import { Listbox } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 
@@ -122,9 +121,6 @@ export default function CollectionList({}: Props): ReactElement {
                       title={i.title}
                       className={`flex items-center justify-center space-x-2 font-semibold text-xl `}
                     >
-                      <div>
-                        <Twemoji text={i.icon} />
-                      </div>
                       <div className={`truncate`}>{i.title}</div>
                     </div>
                   </button>

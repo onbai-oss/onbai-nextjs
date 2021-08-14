@@ -11,7 +11,6 @@ import { FormEventHandler, useState } from 'react'
 import toast from 'react-hot-toast'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { getPropsUserSever } from '@/utils/session'
-import { Twemoji } from 'react-emoji-render'
 import Footer from '@/components/base/Footer'
 
 export default function CollectionPage({ user }) {
@@ -62,7 +61,6 @@ export default function CollectionPage({ user }) {
           <div
             className={`flex justify-center items-center space-x-2 mt-3 text-2xl font-semibold`}
           >
-            <Twemoji text={collection?.icon ? collection?.icon : ''} />
             <div>{collection?.title}</div>
           </div>
           <div className={`text-center mt-1  font-semibold`}>

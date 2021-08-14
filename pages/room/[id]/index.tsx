@@ -9,7 +9,6 @@ import toast from 'react-hot-toast'
 import Input from '@/components/base/Input'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import PleaseLogin from '@/components/PleaseLogin'
-import { Twemoji } from 'react-emoji-render'
 import UserList from '@/components/room/UserList'
 import RoomCreateConfig from '@/components/room/RoomCreateConfig'
 import { getPropsUserSever } from '@/utils/session'
@@ -134,9 +133,6 @@ export default function RoomPage({ user }) {
       <div>
         <NavLoggedIn />
         <div className={`mt-4 p-2 flex justify-center items-center`}>
-          <div className={`mr-1 `}>
-            <Twemoji text={room?.password ? '🔒' : '#'} />
-          </div>
           <div>
             <h1 className={`text-2xl font-semibold`}> {room?.name}</h1>
           </div>
@@ -197,9 +193,6 @@ export default function RoomPage({ user }) {
                 <div>
                   {/* Room info */}
                   <div className={`mt-4 p-2 flex justify-center items-center`}>
-                    <div className={`mr-1 `}>
-                      <Twemoji text={room?.password ? '🔒' : '#'} />
-                    </div>
                     <div>
                       <h1 className={`text-2xl font-semibold`}>
                         {' '}

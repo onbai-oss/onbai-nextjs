@@ -10,7 +10,6 @@ import { app } from '@/utils/api'
 import { ROOM } from '@/utils/constant'
 import UserList from '@/components/room/UserList'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
-import { Twemoji } from 'react-emoji-render'
 import { useEffect } from 'react'
 
 interface Props {}
@@ -129,9 +128,6 @@ export default function RoomCreateConfig({}: Props): ReactElement {
                       className={`inline-block mx-1 bg-white p-2 border rounded-md text-sm`}
                     >
                       <div className={`flex items-center space-x-2`}>
-                        <div>
-                          <Twemoji text={i?.icon}></Twemoji>
-                        </div>
                         <div>{i?.title}</div>
                       </div>
                     </div>

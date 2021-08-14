@@ -7,9 +7,7 @@ import Input from './base/Input'
 import Pagination from './base/Pagination'
 import CollectionLoader from './base/CollectionLoader'
 import GetDataError from './base/GetDataError'
-import { Twemoji } from 'react-emoji-render'
 import { userContext } from './auth/userProvider'
-import Button from './base/Button'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 
@@ -111,7 +109,7 @@ export default function RoomList({}: Props): ReactElement {
       <div>
         {!isLoadingRoom && !errorRooms && rooms?.data?.length ? (
           <div
-            className={`mt-2 sm:mt-0 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  grid-rows-1 gap-4`}
+            className={`mt-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  grid-rows-1 gap-4`}
           >
             {rooms.data?.map((i) => (
               <Link href={PAGES.ROOM + `/${i.id}`} key={i.id}>
@@ -145,9 +143,6 @@ export default function RoomList({}: Props): ReactElement {
                   ) : null}
 
                   <div className={`flex space-x-1 items-center font-semibold`}>
-                    <div>
-                      <Twemoji text={i?.password ? '🔒' : '#'} />
-                    </div>
                     <div className={`truncate`}>{i?.name}</div>
                   </div>
                 </button>
