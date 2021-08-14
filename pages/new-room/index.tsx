@@ -1,28 +1,22 @@
-import { useState } from 'react'
 import Button from '@/components/base/Button'
 import Input from '@/components/base/Input'
 import { NavLoggedIn } from '@/components/NavLoggedIn'
-import bcrypt from 'bcryptjs'
 import { API } from '@/utils/api'
 import { API_PATH, PAGES, ROOM } from '@/utils/constant'
 import Router from 'next/router'
 import toast from 'react-hot-toast'
 import confetti from 'canvas-confetti'
-
 import { customAlphabet } from 'nanoid'
-import { pick } from 'lodash'
+import { pick } from 'lodash-es'
 import { getPropsUserSever } from '@/utils/session'
 import Footer from '@/components/base/Footer'
-import { Disclosure } from '@headlessui/react'
-import { ChevronDownIcon } from '@heroicons/react/solid'
 
 export default function NewRoomPage({ user }) {
   const onSubmit = (e) => {
     e.preventDefault()
     const passValue = e.target?.password?.value
     const nameValue = e.target?.name.value
-    const salt = bcrypt.genSaltSync(10)
-    const hash = passValue ? bcrypt.hashSync(passValue, salt) : null
+    const hash = passValue ? passValue : null
 
     console.log('submit', e, hash)
     const dataPost = {

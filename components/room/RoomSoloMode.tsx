@@ -10,7 +10,7 @@ import {
 } from '@heroicons/react/outline'
 import { userContext } from '../auth/userProvider'
 import { roomContext } from './roomProvider'
-import { shuffle, filter, chunk, get } from 'lodash'
+import { shuffle, filter, chunk, get } from 'lodash-es'
 import { Twemoji } from 'react-emoji-render'
 
 import UserList from '@/components/room/UserList'

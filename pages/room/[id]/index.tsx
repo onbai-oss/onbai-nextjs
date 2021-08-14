@@ -2,16 +2,14 @@ import { useEffect, useRef, useState } from 'react'
 import { NavLoggedIn } from '@/components/NavLoggedIn'
 import Button from '@/components/base/Button'
 import { useRouter } from 'next/router'
-import { API, app, getData } from '@/utils/api'
+import { API, app } from '@/utils/api'
 import { Modal } from '@/components/base/Modal'
 import { PAGES, ROOM } from '@/utils/constant'
 import toast from 'react-hot-toast'
 import Input from '@/components/base/Input'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
-import bcrypt from 'bcryptjs'
 import PleaseLogin from '@/components/PleaseLogin'
 import { Twemoji } from 'react-emoji-render'
-import { pick } from 'lodash'
 import UserList from '@/components/room/UserList'
 import RoomCreateConfig from '@/components/room/RoomCreateConfig'
 import { getPropsUserSever } from '@/utils/session'
@@ -57,7 +55,7 @@ export default function RoomPage({ user }) {
 
   const onSubmitPass = (e) => {
     e.preventDefault()
-    const isMatch = bcrypt.compareSync(e.target.password.value, room?.password)
+    const isMatch = e.target.password.value === room?.password
     setIsLock(!isMatch)
     if (!isMatch) {
       toast.error('Please enter correct key!')

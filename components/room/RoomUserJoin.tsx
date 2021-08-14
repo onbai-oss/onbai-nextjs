@@ -1,5 +1,5 @@
 import { app } from '@/utils/api'
-import { pick, toArray } from 'lodash'
+import { pick, toArray } from 'lodash-es'
 import React, { ReactElement } from 'react'
 import toast from 'react-hot-toast'
 import { userContext } from '../auth/userProvider'
