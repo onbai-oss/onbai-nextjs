@@ -28,3 +28,5 @@ const customSelectStyles = {
     },
   }),
 }
+
+export { customSelectStyles }
