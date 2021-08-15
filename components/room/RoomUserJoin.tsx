@@ -29,7 +29,6 @@ export default function RoomUserJoin({}: Props): ReactElement {
           },
         },
       })
-      console.log(roomData)
       toast.success('Success')
     } catch (error) {
       console.error(error)

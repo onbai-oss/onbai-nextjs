@@ -32,7 +32,7 @@ export default function RoomCreateConfig({}: Props): ReactElement {
 
   const joinRoom = async () => {
     try {
-      let roomData = await roomService.patch(room.id, {
+      await roomService.patch(room.id, {
         status: ROOM.STATUS.PLAYING,
         collections,
         game: {
@@ -44,7 +44,6 @@ export default function RoomCreateConfig({}: Props): ReactElement {
           },
         },
       })
-      console.log(roomData)
       toast.success('Success')
     } catch (error) {
       console.error(error)

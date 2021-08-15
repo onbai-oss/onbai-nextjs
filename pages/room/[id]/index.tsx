@@ -102,11 +102,7 @@ export default function RoomPage({ user }) {
         router.push(PAGES.DASHBOARD)
       }
     })
-    /// Test
-    // const query = { [`users.${user?.id}.role`]: 'host' }
-    // roomService.find({ query }).then((r) => {
-    //   console.log(r)
-    // })
+
     return () => {
       roomService.removeListener('patched')
       roomService.removeListener('removed')

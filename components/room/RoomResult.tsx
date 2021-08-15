@@ -22,21 +22,12 @@ export default function RoomResult({}: Props): ReactElement {
 
   const listUser = toArray(room?.users)
 
-  const collectionSevcice = app.service('collection')
   const roomService = app.service('room')
 
   const deleteRoom = async () => {
     try {
       await roomService.remove(room.id)
       toast.success('Deleted!')
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
-  const newRoom = async () => {
-    try {
-      router.push(PAGES.NEW_ROOM)
     } catch (error) {
       console.error(error)
     }

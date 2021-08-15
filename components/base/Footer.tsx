@@ -28,7 +28,7 @@ export default function Footer({ className }: Props): ReactElement {
             id=""
           >
             <option value="en">English</option>
-            <option value="vi">Vietnam</option>
+            {/* <option value="vi">Vietnam</option> */}
           </select>
         </div>
       </div>

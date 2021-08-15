@@ -12,14 +12,12 @@ const LoginForm = () => {
 
   const onSubmit = (e: BaseSyntheticEvent) => {
     e.preventDefault()
-    console.log('On Submit', e.target)
     API.post('users', {
       strategy: 'local',
       email: e.target.email.value,
       password: e.target.password.value,
     })
       .then((res) => {
-        console.log(res)
         toast.success('Your account has created!')
         router.push(PAGES.LOGIN)
       })

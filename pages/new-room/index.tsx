@@ -18,7 +18,6 @@ export default function NewRoomPage({ user }) {
     const nameValue = e.target?.name.value
     const hash = passValue ? passValue : null
 
-    console.log('submit', e, hash)
     const dataPost = {
       name: nameValue,
       password: hash,
@@ -38,7 +37,6 @@ export default function NewRoomPage({ user }) {
       reaction: {},
     }
     API.post(API_PATH.ROOM, dataPost).then((r) => {
-      console.log(r)
       toast.success('Room created!')
       confetti()
       Router.push(PAGES.ROOM + `/${r.data.id}`)
@@ -49,7 +47,7 @@ export default function NewRoomPage({ user }) {
     <>
       <NavLoggedIn />
       <main className={`min-h-screen mb-24 sm:mb-0`}>
-        <div className={`mt-4 w-48 mx-auto`}>
+        <div className={`mt-4 w-40 mx-auto`}>
           <img
             className={`w-full`}
             src="/rainbow.svg"
@@ -73,7 +71,7 @@ export default function NewRoomPage({ user }) {
                 htmlFor="name"
                 className={`my-2 block font-semibold cursor-pointer`}
               >
-                Name:
+                Name
               </label>
               <Input
                 icon="edit-2-outline"

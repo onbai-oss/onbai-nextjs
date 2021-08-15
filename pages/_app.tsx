@@ -16,7 +16,6 @@ dayjs.extend(duration)
 function App({ Component, pageProps }: AppProps) {
   const [user, setUser] = useState<any>(undefined)
   useEffect(() => {
-    console.log('🥷 - 🥷 - 🥷')
     app
       .reAuthenticate()
       .then((userData) => {

@@ -38,7 +38,6 @@ export default function NewQuiz({ user }) {
   useEffect(() => {
     if (questionID) {
       API.get(PAGES.QUESTION + `/${questionID}`).then((res) => {
-        console.log('questionID', res, questionEditor)
         const { answer, hint, explain, question } = res.data
 
         questionEditor?.commands?.setContent(question)
@@ -72,8 +71,6 @@ export default function NewQuiz({ user }) {
       PAGES.QUESTION + (questionID ? `/${questionID}` : ''),
       dataAPI
     ).then((res) => {
-      console.log(res)
-
       if (questionID) {
         toast.success('Updated!')
         router.back()

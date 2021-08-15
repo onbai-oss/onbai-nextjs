@@ -11,7 +11,6 @@ export default function oauth({}: Props): ReactElement {
   const router = useRouter()
 
   useEffect(() => {
-    console.log('🔍 oAuth checking...')
     const access_token = location.hash.split('#access_token=')[1]
     // Set server cookie session
     NEXTJS_API.get('api/oauth?access_token=' + access_token)

@@ -64,8 +64,16 @@ export default function NewCollectionPage({ user }) {
             font-semibold flex flex-col justify-center items-center 
           `}
         >
-          {/* bg-gradient-to-r from-green-600 to-green-500 */}
-          <div className={`my-4 text-2xl`}>
+          <div className={`mt-4 w-40 mx-auto`}>
+            <img
+              className={`w-full`}
+              src="/nature.svg"
+              draggable="false"
+              alt="new room"
+            />
+          </div>
+
+          <div className={`my-2 text-2xl`}>
             {isEdit ? 'Edit' : 'New'} collection{' '}
           </div>
         </div>
@@ -79,7 +87,7 @@ export default function NewCollectionPage({ user }) {
               htmlFor="name"
               className={`my-2 block font-semibold cursor-pointer`}
             >
-              Title:
+              Name
             </label>
             <Input
               icon="edit-2-outline"

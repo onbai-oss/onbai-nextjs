@@ -62,8 +62,6 @@ export default function RoomSoloMode({}: Props): ReactElement {
   }
 
   const makeQuestion = (list) => {
-    console.log('list', list)
-
     const listRandom = shuffle(list)
     const randomQuest = listRandom[0]
     const listFake = chunk(
@@ -75,7 +73,6 @@ export default function RoomSoloMode({}: Props): ReactElement {
       ...listFake.map((i) => ({ answer: i.answer, isCorrect: false })),
     ])
 
-    console.log('randomQuest', randomQuest)
     setCurrentQuestion(randomQuest)
     setListQuestion(listRandom)
   }
@@ -94,7 +91,7 @@ export default function RoomSoloMode({}: Props): ReactElement {
     window.scrollTo(0, 0)
     setIsShowResult(false)
     setIsShowGenQuiz(true)
-    await wait(500)
+    await wait(350)
     setIsShowGenQuiz(false)
     makeQuestion(shuffle(listQuestion))
   }

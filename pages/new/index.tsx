@@ -19,7 +19,7 @@ export default function NewPage({}) {
           <div
             className={`my-4 text-white text-2xl flex space-x-2 items-center`}
           >
-            <div>What you want create</div>
+            <div>✨ What you want create</div>
           </div>
         </div>
 

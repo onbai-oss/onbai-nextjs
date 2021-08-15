@@ -199,7 +199,7 @@ export default function CollectionPicker({
                   color="info"
                   className={`w-full`}
                 >
-                  Apply {listSelected.length ? `(${listSelected.length})` : ''}
+                  Select {listSelected.length ? `(${listSelected.length})` : ''}
                 </Button>
               </div>
               {listSelected.length ? (

@@ -9,20 +9,14 @@ import LogoLink from '@/components/base/LogoLink'
 
 const LoginForm = () => {
   const router = useRouter()
-
-  const onChange = (e: BaseSyntheticEvent) => {
-    console.log('-> on change', e.target.value)
-  }
   const onSubmit = (e: BaseSyntheticEvent) => {
     e.preventDefault()
-    console.log('On Submit', e.target)
     API.post('authentication', {
       strategy: 'local',
       email: e.target.email.value,
       password: e.target.password.value,
     })
-      .then((res) => {
-        console.log(res)
+      .then(() => {
         router.push(PAGES.DASHBOARD)
       })
       .catch((e) => {
