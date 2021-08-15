@@ -1,10 +1,7 @@
 import Button from '@/components/base/Button'
 import Footer from '@/components/base/Footer'
 import { NavUnlogin } from '@/components/NavUnlogin'
-import { PAGES } from '@/utils/constant'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
-import { useEffect } from 'react'
 
 export default function Home() {
   return (

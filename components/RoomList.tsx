@@ -109,12 +109,12 @@ export default function RoomList({}: Props): ReactElement {
       <div>
         {!isLoadingRoom && !errorRooms && rooms?.data?.length ? (
           <div
-            className={`mt-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  grid-rows-1 gap-4`}
+            className={`my-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  grid-rows-1 gap-4`}
           >
             {rooms.data?.map((i) => (
               <Link href={PAGES.ROOM + `/${i.id}`} key={i.id}>
                 <button
-                  className={`appearance-none relative px-4 py-2 w-full block rounded-md shadow hover:shadow-md border-2 border-solid focus:ring-1 ring-gray-600 ring-offset-2`}
+                  className={`appearance-none relative px-4 py-2 w-full block rounded-md shadow hover:shadow-md border-2 border-solid focus:ring-1 ring-gray-600 ring-offset-2 hover:text-blue-500`}
                 >
                   {i?.status == ROOM.STATUS.PLAYING ? (
                     <div title="Playing" className={`absolute top-1 right-1`}>

@@ -38,7 +38,7 @@ export function Modal({
                 className={`absolute top-1.5 right-1 appearance-none bg-transparent border-none outline-none`}
               >
                 <XCircleIcon
-                  className={`hover:opacity-75`}
+                  className={`hover:opacity-75 text-gray-600`}
                   width="28"
                 ></XCircleIcon>
               </button>

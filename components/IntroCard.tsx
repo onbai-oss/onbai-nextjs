@@ -5,25 +5,60 @@ import Button from './base/Button'
 import { Menu } from '@headlessui/react'
 import { Modal } from './base/Modal'
 import { FolderAddIcon, UserGroupIcon } from '@heroicons/react/solid'
+import { shuffle } from 'lodash-es'
+import { useEffect } from 'react'
 
 interface Props {}
 
 export default function IntroCard({}: Props): ReactElement {
   const [isShowModal, setIsShowModal] = useState(false)
+  const [quote, setQuote] = useState({
+    quote: '',
+    author: '',
+  })
+  const listQuote = [
+    {
+      quote: 'The only thing we have to fear is fear itself',
+      author: 'Franklin D. Roosevelt',
+    },
+    {
+      quote: 'The truth will set you free.',
+      author: 'the Bible.',
+    },
+    {
+      quote: 'A rose by any other name would smell as sweet.',
+      author: 'William Shakespeare',
+    },
+    {
+      quote: 'I think therefore I am.	',
+      author: 'Rene Descartes	',
+    },
+  ]
+
+  useEffect(() => {
+    setQuote(shuffle(listQuote)[0])
+  }, [])
 
   return (
     <>
       <section className={`container mx-auto `}>
         <div>
-          <div className=" p-2 w-40 mx-auto">
+          <div className=" p-2 w-44 mx-auto">
             <img className={`w-full`} src="/hot.svg" alt="" />
           </div>
         </div>
-        <div className={`text-center p-2  font-semibold`}>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatum,
-          consequatur!
+        <div className={`text-center p-2 font-semibold `}>
+          <i>"{quote.quote}"</i>
+          <br />{' '}
+          <span className={`text-sm text-blue-500`}>
+            <a
+              target="_blank"
+              href={`https://www.google.com/search?q=` + quote.author}
+            >
+              {quote.author}
+            </a>
+          </span>
         </div>
-        <div></div>
         <div className={`flex mt-2 mb-6 justify-center`}>
           <Button
             onClick={() => setIsShowModal(true)}

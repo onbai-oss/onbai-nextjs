@@ -115,7 +115,7 @@ export default function CollectionList({}: Props): ReactElement {
               <div key={index}>
                 <Link href={PAGES.COLLECTION + `/${i.id}`}>
                   <button
-                    className={`border-2 border-solid focus:ring-1 ring-gray-600 ring-offset-2 w-full text-center p-4 rounded-md shadow-md hover:shadow-lg `}
+                    className={`border-2 border-solid focus:ring-1 ring-gray-600 ring-offset-2 w-full text-center p-4 rounded-md shadow-md hover:shadow-lg hover:text-blue-500`}
                   >
                     <div
                       title={i.title}
