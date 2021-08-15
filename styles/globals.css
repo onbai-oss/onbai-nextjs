@@ -8,9 +8,9 @@
   body {
     color: #1b324f;
   }
-  html {
+  /* html {
     scroll-behavior: smooth;
-  }
+  } */
 }
 
 .tiptap-custom-menubar button {
