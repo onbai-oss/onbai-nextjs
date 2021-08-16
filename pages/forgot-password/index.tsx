@@ -1,7 +1,6 @@
 import { BaseSyntheticEvent } from 'react'
-import Link from 'next/link'
 import { API } from 'utils/api'
-import { useRouter } from 'next/router'
+import { Router, useRouter } from 'next/router'
 import { PAGES } from 'utils/constant'
 import Button from '@/components/base/Button'
 import Input from '@/components/base/Input'
@@ -11,17 +10,7 @@ const LoginForm = () => {
   const router = useRouter()
   const onSubmit = (e: BaseSyntheticEvent) => {
     e.preventDefault()
-    API.post('authentication', {
-      strategy: 'local',
-      email: e.target.email.value,
-      password: e.target.password.value,
-    })
-      .then(() => {
-        router.push(PAGES.DASHBOARD)
-      })
-      .catch((e) => {
-        console.error(e)
-      })
+    router.push('/')
   }
 
   return (

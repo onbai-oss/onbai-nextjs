@@ -42,12 +42,7 @@ export default function IntroCard({}: Props): ReactElement {
   return (
     <>
       <section className={`container mx-auto `}>
-        <div>
-          <div className=" p-2 w-44 mx-auto">
-            <img className={`w-full`} src="/hot.svg" alt="" />
-          </div>
-        </div>
-        <div className={`text-center p-2 font-semibold `}>
+        <div className={`text-center p-4 font-semibold `}>
           <i>"{quote.quote}"</i>
           <br />{' '}
           <span className={`text-sm text-blue-500`}>
@@ -58,6 +53,11 @@ export default function IntroCard({}: Props): ReactElement {
               {quote.author}
             </a>
           </span>
+        </div>
+        <div>
+          <div className="w-44 mx-auto">
+            <img className={`w-full`} src="/hot.svg" alt="" />
+          </div>
         </div>
         <div className={`flex mt-2 mb-6 justify-center`}>
           <Button
