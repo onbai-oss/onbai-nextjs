@@ -1,4 +1,8 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Onbai Next.js
+
+![GitHub branch checks state](https://img.shields.io/github/checks-status/001123/onbai-nextjs-dev/main?style=for-the-badge)
+![Lines of code](https://img.shields.io/tokei/lines/github/001123/onbai-nextjs-dev?style=for-the-badge)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/001123/onbai-nextjs-dev?style=for-the-badge)
 
 ## Getting Started
 
@@ -6,8 +10,6 @@ First, run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
 ```
 
 ## Learn More

@@ -5,7 +5,6 @@ export const PAGES = {
   LOGIN: '/login',
   SIGNUP: '/signup',
   FORGOT_PASSWORD: '/forgot-password',
-  NEW: '/new',
   COLLECTION: '/collection',
   NEW_COLLECION: '/new-collection',
   EDIT_COLLECION: '/edit-collection',
@@ -14,6 +13,7 @@ export const PAGES = {
   EDIT_QUESTION: '/edit-question',
   NEW_ROOM: '/new-room',
   ROOM: '/room',
+  TERM: '/term',
 }
 
 export const API_PATH = {
