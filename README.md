@@ -39,9 +39,7 @@ Example `env.local`:
 
 ```bash
 NEXT_PUBLIC_API_URL = "http://192.168.1.97:3030/"
-NEXT_PUBLIC_NEXT_API_URL = "http://192.168.1.97:3000/api/"
 SESSION_KEY = "complex_password_at_least_32_characters_long"
 SESSION_COOKIE_NAME = "onbai_user"
-NEXT_PUBLIC_APP_VERSION=$npm_package_version
 NEXT_PUBLIC_OAUTH_URL="http://localhost:3030/oauth"
 ```

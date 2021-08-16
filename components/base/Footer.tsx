@@ -13,10 +13,14 @@ export default function Footer({ className }: Props): ReactElement {
         <div className={`text-sm`}>
           <a
             className={`hover:underline`}
-            href="https://github.com/onbai-oss/onbai-nextjs"
+            href={
+              'https://github.com/001123/onbai-nextjs-dev/commit/' +
+              process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA
+            }
             target="_blank"
           >
-            ✤ Onbai.app (version: {process.env.NEXT_PUBLIC_APP_VERSION})
+            ✤ Onbai.app (SHA:{' '}
+            {process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA || 'dev'})
           </a>
           <div className={``}> Free online education tools.</div>
         </div>
