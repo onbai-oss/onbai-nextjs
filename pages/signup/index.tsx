@@ -82,7 +82,7 @@ export default function SignUpPage() {
             </div>
             <LoginForm />
 
-            <div className={`my-6`}>
+            {/* <div className={`my-6`}>
               <hr />
             </div>
 
@@ -94,7 +94,7 @@ export default function SignUpPage() {
               <Button icon="facebook" color="info">
                 Signup with Facebook
               </Button>
-            </div>
+            </div> */}
           </div>
         </div>
 

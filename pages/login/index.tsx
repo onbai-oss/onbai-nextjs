@@ -55,6 +55,7 @@ const LoginForm = () => {
           placeholder=""
           required
           autoComplete="email"
+          defaultValue="demo@onbai.online"
         ></Input>
       </fieldset>
 
@@ -70,6 +71,7 @@ const LoginForm = () => {
           placeholder=""
           required
           autoComplete="on"
+          defaultValue="demo"
         ></Input>
       </fieldset>
 
@@ -117,7 +119,7 @@ export default function LoginPage() {
             </div>
 
             <div className={`my-4 grid grid-cols-1 grid-rows-1 gap-4`}>
-              <a
+              {/* <a
                 href={process.env.NEXT_PUBLIC_OAUTH_URL + '/google'}
                 className={`grid`}
               >
@@ -132,7 +134,7 @@ export default function LoginPage() {
                 <Button icon="facebook" color="info">
                   Login with Facebook
                 </Button>
-              </a>
+              </a> */}
               <a href={PAGES.SIGNUP} className={`grid`}>
                 <Button icon="email-outline" color="primary-outline">
                   Signup with email
