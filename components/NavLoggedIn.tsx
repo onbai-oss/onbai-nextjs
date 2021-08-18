@@ -31,13 +31,13 @@ export function NavLoggedIn({ ...props }: INavLoggedInProps) {
   }
 
   const onLogout = () => {
-    NEXTJS_API.post('/api/logout').then((res) => {
+    NEXTJS_API.post('api/logout').then((res) => {
       if (res.data) {
         app
           .logout()
           .then(() => {
             toast.success('✨ Logout success.')
-            Router.push(PAGES.LANDING)
+            location.pathname = '/'
           })
           .catch((e) => {
             console.error(e)

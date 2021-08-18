@@ -17,12 +17,6 @@ export function NavUnlogin(props: INavUnloginProps) {
     >
       <div className={`flex items-center`}>
         <LogoLink />
-        <img
-          className={`ml-3`}
-          src="https://www.countryflags.io/vn/flat/48.png"
-          alt="lang"
-          draggable="false"
-        />
       </div>
       <div
         className={`fixed bottom-0 left-0 w-screen p-4 border-t-2 bg-white

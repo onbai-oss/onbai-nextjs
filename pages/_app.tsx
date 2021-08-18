@@ -9,7 +9,6 @@ import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import duration from 'dayjs/plugin/duration'
 import '../styles/globals.css'
-
 dayjs.extend(relativeTime)
 dayjs.extend(duration)
 
@@ -46,7 +45,13 @@ function App({ Component, pageProps }: AppProps) {
           integrity="sha256-gjzS0a/05vKcbfZH+V+l5VEXWSzMhddz6x5swhlhjtY="
           crossOrigin="anonymous"
         ></script>
+        <link
+          type="text/css"
+          rel="stylesheet"
+          href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css"
+        />
       </Head>
+
       <UserWrapper value={user}>
         <Component {...pageProps} />
       </UserWrapper>
