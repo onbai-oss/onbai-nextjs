@@ -135,113 +135,98 @@ export default function CollectionPicker({
             </form>
           </section>
 
-          {/* Loading */}
-          {isLoading ? (
-            <section className={`flex justify-center`}>
-              <CollectionLoader uniqueKey={'collection-loader'} />
-            </section>
-          ) : null}
-
           {/* List Collection */}
-          {!isLoading && !error && listCollection?.data?.length ? (
-            <>
-              <section
-                className={`container mx-auto grid grid-rows-1 grid-cols-2 gap-2`}
-              >
-                {listCollection.data.map((i, index) => (
-                  <div key={index}>
-                    <button
-                      onClick={() => toggleSelect(i)}
-                      className={`border-2 ${
-                        listSelected.find((f) => f.id === i.id) ? ' ' : ''
-                      } border-solid w-full block relative text-center p-1 rounded-md shadow hover:shadow-md `}
-                    >
-                      <span
-                        title={i.title}
-                        className={`flex w-full h-full space-x-2 px-2 py-1 items-center font-semibold`}
-                      >
-                        <div className={`truncate`}>{i.title}</div>
-
-                        <div
-                          className={`${
-                            listSelected.find((f) => f.id === i.id)
-                              ? ''
-                              : 'hidden'
-                          } absolute top-0 right-1 bg-white p-1`}
-                        >
-                          <CheckCircleIcon
-                            width="30"
-                            className={`text-green-600`}
-                          ></CheckCircleIcon>
-                        </div>
-                      </span>
-                    </button>
-                  </div>
-                ))}
-              </section>
-              <div className={`flex container mx-auto justify-end mt-3 `}>
-                <Pagination
-                  page={page}
-                  total={listCollection.total}
-                  limit={listCollection.limit}
-                  onPageChange={setPage}
-                />
-              </div>
-
-              <div className={`mt-4 mb-2 flex justify-center space-x-2`}>
-                <Button
-                  disabled={!listSelected.length}
-                  onClick={onApply}
-                  icon="attach-2-outline"
-                  color="info"
-                  className={`w-full`}
+          {!error ? (
+            listCollection?.data?.length ? (
+              <>
+                <section
+                  className={`container mx-auto grid grid-rows-1 grid-cols-2 gap-2`}
                 >
-                  Select {listSelected.length ? `(${listSelected.length})` : ''}
-                </Button>
-              </div>
-              {listSelected.length ? (
-                <div>
-                  <div className={`my-4`}>
-                    <hr />
-                  </div>
-                  <div className={` mb-0 flex justify-center`}>
-                    <Button
-                      color="info-outline"
-                      onClick={onClear}
-                      icon="trash-outline"
-                    >
-                      Clear
-                    </Button>
-                  </div>
-                </div>
-              ) : null}
-            </>
-          ) : null}
+                  {listCollection.data.map((i, index) => (
+                    <div key={index}>
+                      <button
+                        onClick={() => toggleSelect(i)}
+                        className={`border-2 ${
+                          listSelected.find((f) => f.id === i.id) ? ' ' : ''
+                        } border-solid w-full block relative text-center p-1 rounded-md shadow hover:shadow-md `}
+                      >
+                        <span
+                          title={i.title}
+                          className={`flex w-full h-full space-x-2 px-2 py-1 items-center font-semibold`}
+                        >
+                          <div className={`truncate`}>{i.title}</div>
 
-          {/* Not found */}
-          {!isLoading && !error && !listCollection?.data?.length ? (
-            <section className={`flex justify-center items-center `}>
-              <div>
-                <figure>
-                  <img
-                    width="175"
-                    className={`mx-auto`}
-                    src="/nodata_flower.png"
-                    alt="no data"
+                          <div
+                            className={`${
+                              listSelected.find((f) => f.id === i.id)
+                                ? ''
+                                : 'hidden'
+                            } absolute top-0 right-1 bg-white p-1`}
+                          >
+                            <CheckCircleIcon
+                              width="30"
+                              className={`text-green-600`}
+                            ></CheckCircleIcon>
+                          </div>
+                        </span>
+                      </button>
+                    </div>
+                  ))}
+                </section>
+                <div className={`flex container mx-auto justify-end mt-3 `}>
+                  <Pagination
+                    page={page}
+                    total={listCollection.total}
+                    limit={listCollection.limit}
+                    onPageChange={setPage}
                   />
-                </figure>
-                <div className={`mt-4 text-center font-semibold`}>
-                  No collection found.
                 </div>
-                <div className={`mt-4 flex justify-center`}>
-                  <Link href={PAGES.NEW_COLLECION}>
-                    <Button color="info-outline" icon="plus-outline">
-                      Create new collection
-                    </Button>
-                  </Link>
+
+                <div className={`mt-4 mb-2 flex justify-center space-x-2`}>
+                  <Button
+                    disabled={!listSelected.length}
+                    onClick={onApply}
+                    icon="attach-2-outline"
+                    color="info"
+                    className={`w-full`}
+                  >
+                    Select{' '}
+                    {listSelected.length ? `(${listSelected.length})` : ''}
+                  </Button>
                 </div>
-              </div>
-            </section>
+                {listSelected.length ? (
+                  <div>
+                    <div className={`my-4`}>
+                      <hr />
+                    </div>
+                    <div className={` mb-0 flex justify-center`}>
+                      <Button
+                        color="info-outline"
+                        onClick={onClear}
+                        icon="trash-outline"
+                      >
+                        Clear
+                      </Button>
+                    </div>
+                  </div>
+                ) : null}
+              </>
+            ) : (
+              <section className={`flex justify-center items-center `}>
+                <div>
+                  <figure className={`w-24 mt-2 mx-auto`}>
+                    <img
+                      className={`w-full`}
+                      src="/nodata_flower.png"
+                      alt="no data"
+                    />
+                  </figure>
+                  <div className={`mt-4 text-center text-sm font-semibold`}>
+                    No collection found.
+                  </div>
+                </div>
+              </section>
+            )
           ) : null}
 
           {!isLoading && error ? <GetDataError /> : null}

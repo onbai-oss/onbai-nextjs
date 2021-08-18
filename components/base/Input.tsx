@@ -16,9 +16,11 @@ const Input: React.FC<IInputProps> = (props) => {
   }, [icon, disabled])
 
   return (
-    <div className={`relative`}>
+    <div className={`relative `}>
       {icon && icon ? (
-        <div className={`absolute bottom-1/2 left-3 transform translate-y-1/2`}>
+        <div
+          className={`absolute bottom-1/2 left-3 transform translate-y-1/2 `}
+        >
           <i
             data-eva={icon}
             data-eva-fill={disabled ? '#D1D5DB' : '#4B5563'}

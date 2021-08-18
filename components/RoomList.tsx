@@ -2,14 +2,15 @@ import { getData } from '@/utils/api'
 import { PAGES, ROOM } from '@/utils/constant'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import React, { ReactElement, useState, Fragment } from 'react'
+import React, { ReactElement, useState } from 'react'
 import Input from './base/Input'
 import Pagination from './base/Pagination'
 import CollectionLoader from './base/CollectionLoader'
 import GetDataError from './base/GetDataError'
 import { userContext } from './auth/userProvider'
-import { Listbox, Transition } from '@headlessui/react'
+import { Listbox } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
+import { debounce } from 'lodash-es'
 
 interface Props {}
 
@@ -24,7 +25,6 @@ export default function RoomList({}: Props): ReactElement {
   const [selected, setSelected] = useState(listRoomStatus[0])
 
   const user = userContext()
-
   const router = useRouter()
 
   const [page, setPage] = useState(0)
@@ -99,7 +99,7 @@ export default function RoomList({}: Props): ReactElement {
               icon="search-outline"
               type="search"
               placeholder="search..."
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={debounce((e) => setSearch(e.target.value), 500)}
               defaultValue={search}
             ></Input>
           </form>
@@ -107,68 +107,67 @@ export default function RoomList({}: Props): ReactElement {
       </div>
 
       <div>
-        {!isLoadingRoom && !errorRooms && rooms?.data?.length ? (
-          <div
-            className={`my-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  grid-rows-1 gap-4`}
-          >
-            {rooms.data?.map((i) => (
-              <Link href={PAGES.ROOM + `/${i.id}`} key={i.id}>
-                <button
-                  className={`appearance-none relative px-4 py-2 w-full block rounded-md shadow hover:shadow-md border-2 border-solid focus:ring-1 ring-gray-600 ring-offset-2 hover:text-blue-500`}
-                >
-                  {i?.status == ROOM.STATUS.PLAYING ? (
-                    <div title="Playing" className={`absolute top-1 right-1`}>
-                      <span className="flex h-2.5 w-2.5">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75"></span>
-                        <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
-                      </span>
-                    </div>
-                  ) : null}
-
-                  {i?.status == ROOM.STATUS.WAIT ? (
-                    <div title="Wait" className={`absolute top-1 right-1`}>
-                      <span className="flex h-2.5 w-2.5">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-500 opacity-75"></span>
-                        <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-yellow-500"></span>
-                      </span>
-                    </div>
-                  ) : null}
-
-                  {i?.status == ROOM.STATUS.END ? (
-                    <div title="Wait" className={`absolute top-1 right-1`}>
-                      <span className="flex h-2.5 w-2.5">
-                        <span className="absolute inline-flex h-full w-full rounded-full bg-gray-500 opacity-75"></span>
-                      </span>
-                    </div>
-                  ) : null}
-
-                  <div className={`flex space-x-1 items-center font-semibold`}>
-                    <div className={`truncate`}>{i?.name}</div>
-                  </div>
-                </button>
-              </Link>
-            ))}
-          </div>
-        ) : (
-          <div className={`text-center`}>
-            <figure className={`w-32 mx-auto`}>
-              <img
-                className={`w-full`}
-                src="/nodata_flower.png"
-                alt="no data"
-              />
-            </figure>
-            <div className={`mt-4 font-semibold`}>No room found.</div>
-          </div>
-        )}
-
-        {isLoadingRoom ? (
-          <section className={`flex justify-center`}>
-            <CollectionLoader uniqueKey={'roomlist-loader'} />
-          </section>
-        ) : null}
-
+        {/* Error */}
         {!isLoadingRoom && errorRooms ? <GetDataError /> : null}
+
+        {!errorRooms ? (
+          rooms?.data?.length ? (
+            <div
+              className={`my-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  grid-rows-1 gap-4`}
+            >
+              {rooms.data?.map((i) => (
+                <Link href={PAGES.ROOM + `/${i.id}`} key={i.id}>
+                  <button
+                    className={`appearance-none relative px-4 py-2 w-full block rounded-md shadow hover:shadow-md border-2 border-solid focus:ring-1 ring-gray-600 ring-offset-2 hover:text-blue-500`}
+                  >
+                    {i?.status == ROOM.STATUS.PLAYING ? (
+                      <div title="Playing" className={`absolute top-1 right-1`}>
+                        <span className="flex h-2.5 w-2.5">
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75"></span>
+                          <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
+                        </span>
+                      </div>
+                    ) : null}
+
+                    {i?.status == ROOM.STATUS.WAIT ? (
+                      <div title="Wait" className={`absolute top-1 right-1`}>
+                        <span className="flex h-2.5 w-2.5">
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-500 opacity-75"></span>
+                          <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-yellow-500"></span>
+                        </span>
+                      </div>
+                    ) : null}
+
+                    {i?.status == ROOM.STATUS.END ? (
+                      <div title="Wait" className={`absolute top-1 right-1`}>
+                        <span className="flex h-2.5 w-2.5">
+                          <span className="absolute inline-flex h-full w-full rounded-full bg-gray-500 opacity-75"></span>
+                        </span>
+                      </div>
+                    ) : null}
+
+                    <div
+                      className={`flex space-x-1 items-center font-semibold`}
+                    >
+                      <div className={`truncate`}>{i?.name}</div>
+                    </div>
+                  </button>
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <div className={`text-center`}>
+              <figure className={`w-32 mx-auto mt-4`}>
+                <img
+                  className={`w-full`}
+                  src="/nodata_flower.png"
+                  alt="no data"
+                />
+              </figure>
+              <div className={`mt-4 font-semibold text-sm`}>No room found.</div>
+            </div>
+          )
+        ) : null}
       </div>
 
       <div

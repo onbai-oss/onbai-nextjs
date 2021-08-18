@@ -10,6 +10,7 @@ import Link from 'next/link'
 import { userContext } from './auth/userProvider'
 import { Listbox } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
+import { debounce } from 'lodash-es'
 
 interface Props {}
 
@@ -30,6 +31,7 @@ export default function CollectionList({}: Props): ReactElement {
   const paginateQuery = `&$skip=${
     page * limit
   }&$limit=${limit}&title[$search]=${search}&$sort[createdAt]=${selected.value}`
+
   const { data: listCollection, error, isLoading } = getData(
     user?.id ? `collection?userId=${user?.id}${paginateQuery}` : ''
   )
@@ -38,6 +40,7 @@ export default function CollectionList({}: Props): ReactElement {
     e.preventDefault()
     e.target.search.blur()
   }
+
   return (
     <section className={`py-4`}>
       <div
@@ -91,80 +94,72 @@ export default function CollectionList({}: Props): ReactElement {
               icon="search-outline"
               type="search"
               placeholder="search..."
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={debounce((e) => setSearch(e.target.value), 500)}
               defaultValue={search}
             ></Input>
           </form>
         </div>
       </div>
 
-      {/* Loading */}
-      {isLoading ? (
-        <section className={`flex justify-center`}>
-          <CollectionLoader uniqueKey={'collection-loader'} />
-        </section>
-      ) : null}
-
+      {/* Error */}
+      {!isLoading && error ? <GetDataError /> : null}
       {/* List Collection */}
-      {!isLoading && !error && listCollection?.data?.length ? (
-        <>
-          <div
-            className={`mt-2 sm:mt-0 container mx-auto px-4 grid grid-rows-1 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-3`}
-          >
-            {listCollection.data.map((i, index) => (
-              <div key={index}>
-                <Link href={PAGES.COLLECTION + `/${i.id}`}>
-                  <button
-                    className={`border-2 border-solid focus:ring-1 ring-gray-600 ring-offset-2 w-full text-center p-4 rounded-md shadow-md hover:shadow-lg hover:text-blue-500`}
-                  >
-                    <div
-                      title={i.title}
-                      className={`flex items-center justify-center space-x-2 font-semibold text-xl `}
+      {!error ? (
+        listCollection?.data?.length ? (
+          <>
+            <div
+              className={`mt-2  container mx-auto px-4 grid grid-rows-1 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-3`}
+            >
+              {listCollection.data.map((i, index) => (
+                <div key={index}>
+                  <Link href={PAGES.COLLECTION + `/${i.id}`}>
+                    <button
+                      className={`border-2 border-solid focus:ring-1 ring-gray-600 ring-offset-2 w-full text-center p-4 rounded-md shadow-md hover:shadow-lg hover:text-blue-500`}
                     >
-                      <div className={`truncate`}>{i.title}</div>
-                    </div>
-                  </button>
+                      <div
+                        title={i.title}
+                        className={`flex items-center justify-center space-x-2 font-semibold text-xl `}
+                      >
+                        <div className={`truncate`}>{i.title}</div>
+                      </div>
+                    </button>
+                  </Link>
+                </div>
+              ))}
+            </div>
+            <div className={`flex container mx-auto justify-end my-6 px-4`}>
+              <Pagination
+                page={page}
+                total={listCollection.total}
+                limit={listCollection.limit}
+                onPageChange={setPage}
+              />
+            </div>
+          </>
+        ) : (
+          <section className={`flex justify-center items-center `}>
+            <div>
+              <figure className={`w-32 mx-auto mt-4`}>
+                <img
+                  className={`mx-auto w-full`}
+                  src="/nodata_flower.png"
+                  alt="no data"
+                />
+              </figure>
+              <div className={`mt-4 text-center font-semibold text-sm`}>
+                No collection found.
+              </div>
+              <div className={`mt-4 flex justify-center`}>
+                <Link href={PAGES.NEW_COLLECION}>
+                  <Button color="info-outline" icon="plus-outline">
+                    Create new collection
+                  </Button>
                 </Link>
               </div>
-            ))}
-          </div>
-          <div className={`flex container mx-auto justify-end my-6 px-4`}>
-            <Pagination
-              page={page}
-              total={listCollection.total}
-              limit={listCollection.limit}
-              onPageChange={setPage}
-            />
-          </div>
-        </>
-      ) : null}
-
-      {/* Not found */}
-      {!isLoading && !error && !listCollection?.data?.length ? (
-        <section className={`flex justify-center items-center `}>
-          <div>
-            <figure className={`w-32 mx-auto`}>
-              <img
-                className={`mx-auto w-full`}
-                src="/nodata_flower.png"
-                alt="no data"
-              />
-            </figure>
-            <div className={`mt-4 text-center font-semibold`}>
-              No collection found.
             </div>
-            <div className={`mt-4 flex justify-center`}>
-              <Link href={PAGES.NEW_COLLECION}>
-                <Button color="info-outline" icon="plus-outline">
-                  Create new collection
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </section>
+          </section>
+        )
       ) : null}
-
-      {!isLoading && error ? <GetDataError /> : null}
     </section>
   )
 }

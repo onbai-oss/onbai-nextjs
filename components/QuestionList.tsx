@@ -121,7 +121,7 @@ export default function QuestionList({
         <div className={`grid grid-cols-1 grid-rows-1 gap-2`}>
           {isLoadingQuestion && !errorQuestion ? (
             <div className={`flex justify-center`}>
-              <CollectionLoader uniqueKey={'collection-loader'} />
+              <CollectionLoader />
             </div>
           ) : questions?.data?.length ? (
             questions?.data.map((i) => (
