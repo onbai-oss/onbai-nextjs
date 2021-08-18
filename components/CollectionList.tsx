@@ -143,10 +143,9 @@ export default function CollectionList({}: Props): ReactElement {
       {!isLoading && !error && !listCollection?.data?.length ? (
         <section className={`flex justify-center items-center `}>
           <div>
-            <figure>
+            <figure className={`w-32 mx-auto`}>
               <img
-                width="175"
-                className={`mx-auto`}
+                className={`mx-auto w-full`}
                 src="/nodata_flower.png"
                 alt="no data"
               />

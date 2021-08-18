@@ -141,10 +141,9 @@ export default function QuestionList({
               className={`flex justify-center items-center animate__animated animate__fadeIn`}
             >
               <div>
-                <div>
+                <div className={`w-32 mx-auto`}>
                   <img
-                    width="175"
-                    className={`mx-auto`}
+                    className={`mx-auto w-full`}
                     src="/nodata_flower.png"
                     alt="no data"
                   />

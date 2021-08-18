@@ -20,6 +20,7 @@ export default function oauth({}: Props): ReactElement {
       })
       .catch((e) => {
         toast.error('Login failed!')
+        console.error(e)
         router.push(PAGES.LANDING)
       })
   }, [])

@@ -127,6 +127,7 @@ export default function LoginPage() {
                   Login with Google
                 </Button>
               </a>
+              */}
               <a
                 href={process.env.NEXT_PUBLIC_OAUTH_URL + '/facebook'}
                 className={`grid`}
@@ -134,7 +135,7 @@ export default function LoginPage() {
                 <Button icon="facebook" color="info">
                   Login with Facebook
                 </Button>
-              </a> */}
+              </a>
               <a href={PAGES.SIGNUP} className={`grid`}>
                 <Button icon="email-outline" color="primary-outline">
                   Signup with email

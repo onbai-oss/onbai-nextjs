@@ -151,14 +151,14 @@ export default function RoomList({}: Props): ReactElement {
           </div>
         ) : (
           <div className={`text-center`}>
-            <figure className={`w-24 mx-auto`}>
+            <figure className={`w-32 mx-auto`}>
               <img
                 className={`w-full`}
                 src="/nodata_flower.png"
                 alt="no data"
               />
             </figure>
-            <div className={`mt-4 font-semibold`}>No rooms found.</div>
+            <div className={`mt-4 font-semibold`}>No room found.</div>
           </div>
         )}
 
