@@ -10,12 +10,14 @@ declare global {
 }
 
 interface FirebaseUiLoginProps {}
+
 const firebaseConfig = {
-  apiKey: 'AIzaSyClucD3IK2eoyEh-qB7x1uH7FAJmfFQWBU',
-  authDomain: 'onbai-online.firebaseapp.com',
-  projectId: 'onbai-online',
-  appId: '1:332060894285:web:e101767487a9b50f066804',
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 }
+
 const FirebaseUiLogin: FC<FirebaseUiLoginProps> = ({}) => {
   const [isShow, setIsShow] = useState(false)
   const loadFirebaseui = () => {
