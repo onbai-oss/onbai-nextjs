@@ -1,6 +1,5 @@
 import { app, NEXTJS_API } from '@/utils/api'
-import { FC, useState, useEffect } from 'react'
-import Head from 'next/head'
+import { FC, useEffect } from 'react'
 import Script from 'next/script'
 
 // update type firebase
@@ -9,8 +8,6 @@ declare global {
   var firebaseui: any
 }
 
-interface FirebaseUiLoginProps {}
-
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
@@ -18,8 +15,8 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 }
 
+interface FirebaseUiLoginProps {}
 const FirebaseUiLogin: FC<FirebaseUiLoginProps> = ({}) => {
-  const [isShow, setIsShow] = useState(false)
   const loadFirebaseui = () => {
     const config = {
       signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
@@ -57,8 +54,6 @@ const FirebaseUiLogin: FC<FirebaseUiLoginProps> = ({}) => {
   }
 
   useEffect(() => {
-    console.log('isShow', isShow)
-
     if (window.firebaseui) {
       loadFirebaseui()
     }
