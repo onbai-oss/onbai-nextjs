@@ -126,10 +126,7 @@ export default function CollectionPage({ user }) {
           <hr />
         </div>
 
-        <QuestionList
-          isAuthor={isAuthor}
-          onClickNew={() => setIsShowAddQuiz(true)}
-        />
+        <QuestionList />
       </main>
 
       {/* Modals */}
