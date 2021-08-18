@@ -2,7 +2,6 @@ import { PAGES } from '@/utils/constant'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import Button from './base/Button'
-import Router from 'next/router'
 
 import LogoLink from './base/LogoLink'
 import { Modal } from './base/Modal'
@@ -111,9 +110,9 @@ export function NavLoggedIn({ ...props }: INavLoggedInProps) {
               <div className={`text-center`}>
                 <h1 className={`text-xl my-4`}>You not login!</h1>
                 <div className={`flex justify-center`}>
-                  <Link href={PAGES.LOGIN}>
+                  <a href={PAGES.LOGIN} target="_self">
                     <Button type="button">Login</Button>
-                  </Link>
+                  </a>
                 </div>
               </div>
             </div>

@@ -8,20 +8,14 @@ import Pagination from './base/Pagination'
 import { Listbox } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 
-interface Props {
-  isAuthor?: boolean
-  onClickNew?
-}
+interface QuestionListProps {}
 
 const listSort = [
   { name: 'Newst', value: '-1' },
   { name: 'Oldest', value: '1' },
 ]
 
-export default function QuestionList({
-  isAuthor,
-  onClickNew,
-}: Props): ReactElement {
+export default function QuestionList({}: QuestionListProps): ReactElement {
   const [selected, setSelected] = useState(listSort[0])
 
   const router = useRouter()
