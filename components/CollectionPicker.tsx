@@ -1,12 +1,9 @@
 import { getData } from '@/utils/api'
-import { PAGES } from '@/utils/constant'
 import React, { ReactElement, useState } from 'react'
 import Button from './base/Button'
 import Input from './base/Input'
 import Pagination from './base/Pagination'
-import CollectionLoader from './base/CollectionLoader'
 import GetDataError from './base/GetDataError'
-import Link from 'next/link'
 import { Modal } from './base/Modal'
 import { userContext } from './auth/userProvider'
 import {
