@@ -29,7 +29,7 @@ export default function LoginPage() {
         </section>
 
         <section
-          className={`flex-1 bg-gradient-to-r from-green-600 to-green-500 text-white `}
+          className={`flex-1 bg-gradient-to-r from-green-600 to-green-400 text-white `}
         >
           <div className={`p-2  h-screen flex justify-center items-center`}>
             <ul className={``}>
