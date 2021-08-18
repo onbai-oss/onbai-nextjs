@@ -143,6 +143,7 @@ export default function CollectionList({}: Props): ReactElement {
                   className={`mx-auto w-full`}
                   src="/nodata_flower.png"
                   alt="no data"
+                  loading="lazy"
                 />
               </figure>
               <div className={`mt-4 text-center font-semibold text-sm`}>

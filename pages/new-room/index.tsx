@@ -65,13 +65,13 @@ export default function NewRoomPage({ user }) {
         <section
           className={`font-semibold flex flex-col justify-center items-center `}
         >
-          <div className={`my-4  text-2xl text-center`}>New Room</div>
+          <div className={`mt-2 text-2xl text-center`}>New Room</div>
         </section>
 
         <section>
           <form
             onSubmit={onSubmit}
-            className={` px-4 w-full sm:w-96 mx-auto flex flex-col `}
+            className={`px-4 w-full sm:w-96 mx-auto flex flex-col `}
           >
             <fieldset>
               <label
@@ -98,6 +98,7 @@ export default function NewRoomPage({ user }) {
                 color="info"
                 icon="arrow-circle-right-outline"
                 type="submit"
+                className={`block w-full`}
               >
                 Create
               </Button>

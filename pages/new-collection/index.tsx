@@ -71,7 +71,7 @@ export default function NewCollectionPage({ user }) {
             font-semibold flex flex-col justify-center items-center 
           `}
         >
-          <div className={`mt-4 w-40 mx-auto`}>
+          <div className={`mt-2 w-40 mx-auto`}>
             <img
               className={`w-full`}
               src="/nature.svg"
@@ -80,7 +80,7 @@ export default function NewCollectionPage({ user }) {
             />
           </div>
 
-          <div className={`my-2 text-2xl`}>
+          <div className={`mt-2 text-2xl`}>
             {isEdit ? 'Edit' : 'New'} collection{' '}
           </div>
         </div>

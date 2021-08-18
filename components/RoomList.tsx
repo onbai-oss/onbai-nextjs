@@ -161,6 +161,7 @@ export default function RoomList({}: Props): ReactElement {
                   className={`w-full`}
                   src="/nodata_flower.png"
                   alt="no data"
+                  loading="lazy"
                 />
               </figure>
               <div className={`mt-4 font-semibold text-sm`}>No room found.</div>

@@ -81,6 +81,7 @@ export function NavLoggedIn({ ...props }: INavLoggedInProps) {
                   src={`${user?.image}`}
                   alt="user avatar"
                   draggable="false"
+                  loading="lazy"
                 />
               </div>
               <div className={`text-center`}>

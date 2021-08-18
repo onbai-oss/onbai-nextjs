@@ -1,6 +1,7 @@
 import { UserWrapper } from '@/components/auth/userProvider'
 import { app } from '@/utils/api'
 import type { AppProps } from 'next/app'
+import Script from 'next/script'
 import Head from 'next/head'
 import { useState } from 'react'
 import { useEffect } from 'react'
@@ -42,17 +43,16 @@ function App({ Component, pageProps }: AppProps) {
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
         />
-        <script
-          src="https://cdn.jsdelivr.net/npm/eva-icons@1.1.3/eva.min.js"
-          integrity="sha256-gjzS0a/05vKcbfZH+V+l5VEXWSzMhddz6x5swhlhjtY="
-          crossOrigin="anonymous"
-        ></script>
         <link
           type="text/css"
           rel="stylesheet"
           href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css"
         />
       </Head>
+      <Script
+        strategy="beforeInteractive"
+        src="https://cdn.jsdelivr.net/npm/eva-icons@1.1.3/eva.min.js"
+      />
 
       <UserWrapper value={user}>
         <Component {...pageProps} />
@@ -67,7 +67,7 @@ function App({ Component, pageProps }: AppProps) {
         toastOptions={{
           // Define default options
           className: '',
-          duration: 1500,
+          duration: 2000,
           style: {
             background: '#fff',
             color: '#1B324F',
