@@ -29,7 +29,9 @@ function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>Onbai - Free education tools</title>
+        <title>
+          {process.env.NODE_ENV === 'production' ? '' : '[DEV]'} Onbai.online{' '}
+        </title>
         <link rel="icon" href="/favicon.ico" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link

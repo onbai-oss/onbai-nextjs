@@ -1,11 +1,17 @@
 import Footer from '@/components/base/Footer'
 import { NavUnlogin } from '@/components/NavUnlogin'
+import { NextSeo } from 'next-seo'
 
 export default function Home() {
   return (
     <>
+      <NextSeo
+        title={'Landing'}
+        titleTemplate={`${
+          process.env.NODE_ENV === 'development' ? '[DEV]' : ''
+        } Onbai.online | %s`}
+      />
       <NavUnlogin />
-
       <main className={`min-h-screen `}>
         <div
           className={`h-64 text-2xl font-semibold flex flex-col justify-center items-center`}

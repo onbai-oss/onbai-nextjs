@@ -82,7 +82,7 @@ export default function IntroCard({}: Props): ReactElement {
             <div
               className={` text-blue-500 text-2xl flex space-x-2 items-center`}
             >
-              <div> What you want create </div>
+              <div>What you want create</div>
             </div>
           </div>
 

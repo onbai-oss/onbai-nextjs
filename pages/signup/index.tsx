@@ -1,10 +1,17 @@
 import LogoLink from '@/components/base/LogoLink'
 import FirebaseUiLogin from '@/components/auth/FirebaseUiLogin'
 import Footer from '@/components/base/Footer'
+import { NextSeo } from 'next-seo'
 
 export default function SignUpPage() {
   return (
     <>
+      <NextSeo
+        title={'Signup'}
+        titleTemplate={`${
+          process.env.NODE_ENV === 'development' ? '[DEV]' : ''
+        } Onbai.online | %s`}
+      />
       <main className={`w-screen h-screen flex flex-col sm:flex-row`}>
         <div className={`p-2 w-full sm:w-96 flex justify-center items-center `}>
           <div className={`w-full`}>

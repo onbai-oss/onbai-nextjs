@@ -8,6 +8,7 @@ import { useEffect } from 'react'
 import { Tab } from '@headlessui/react'
 import { ROOM } from '@/utils/constant'
 import Footer from '@/components/base/Footer'
+import { NextSeo } from 'next-seo'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -22,6 +23,12 @@ export default function DashboardPage({ user }) {
 
   return (
     <>
+      <NextSeo
+        title={'Dashboard'}
+        titleTemplate={`${
+          process.env.NODE_ENV === 'development' ? '[DEV]' : ''
+        } Onbai.online | %s`}
+      />
       <NavLoggedIn />
       <main className={`mb-8 min-h-screen`}>
         <IntroCard />

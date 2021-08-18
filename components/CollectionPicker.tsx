@@ -73,15 +73,12 @@ export default function CollectionPicker({
     <div>
       <Modal isOpen={isOpen} closeModal={onCloseModal}>
         <div>
-          <div className={`font-semibold text-2xl text-center`}>
+          <div className={`font-semibold text-2xl text-center mb-4`}>
             Select collections
           </div>
           <section
             className={`mb-2 mt-2 container mx-auto flex flex-col sm:flex-row justify-between items-center`}
           >
-            {/* <h1 className={`font-semibold text-xl`}>
-              {listCollection?.total} collections
-            </h1> */}
             <div className={`mr-4`}>
               <Listbox value={selected} onChange={setSelected}>
                 <div className="relative">
@@ -149,7 +146,7 @@ export default function CollectionPicker({
           {!isLoading && !error && listCollection?.data?.length ? (
             <>
               <section
-                className={`container mx-auto grid grid-rows-1 grid-cols-2 gap-2.5`}
+                className={`container mx-auto grid grid-rows-1 grid-cols-2 gap-2`}
               >
                 {listCollection.data.map((i, index) => (
                   <div key={index}>

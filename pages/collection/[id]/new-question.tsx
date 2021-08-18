@@ -12,6 +12,7 @@ import { Modal } from '@/components/base/Modal'
 import confetti from 'canvas-confetti'
 import { getPropsUserSever } from '@/utils/session'
 import Footer from '@/components/base/Footer'
+import { NextSeo } from 'next-seo'
 
 export default function NewQuiz({ user }) {
   const router = useRouter()
@@ -103,8 +104,13 @@ export default function NewQuiz({ user }) {
 
   return (
     <>
+      <NextSeo
+        title={'New question'}
+        titleTemplate={`${
+          process.env.NODE_ENV === 'development' ? '[DEV]' : ''
+        } Onbai.online | %s`}
+      />
       <NavLoggedIn />
-
       <main className={`min-h-screen`}>
         <div
           className={`h-32 font-semibold flex flex-col justify-center items-center bg-gradient-to-r from-green-600 to-green-500`}
