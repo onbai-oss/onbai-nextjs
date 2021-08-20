@@ -2,7 +2,6 @@ import { PAGES } from '@/utils/constant'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import Button from './base/Button'
-import Router from 'next/router'
 
 import LogoLink from './base/LogoLink'
 import { Modal } from './base/Modal'
@@ -31,13 +30,13 @@ export function NavLoggedIn({ ...props }: INavLoggedInProps) {
   }
 
   const onLogout = () => {
-    NEXTJS_API.post('/api/logout').then((res) => {
+    NEXTJS_API.post('api/logout').then((res) => {
       if (res.data) {
         app
           .logout()
           .then(() => {
             toast.success('✨ Logout success.')
-            Router.push(PAGES.LANDING)
+            location.pathname = '/'
           })
           .catch((e) => {
             console.error(e)
@@ -82,6 +81,7 @@ export function NavLoggedIn({ ...props }: INavLoggedInProps) {
                   src={`${user?.image}`}
                   alt="user avatar"
                   draggable="false"
+                  loading="lazy"
                 />
               </div>
               <div className={`text-center`}>
@@ -111,9 +111,9 @@ export function NavLoggedIn({ ...props }: INavLoggedInProps) {
               <div className={`text-center`}>
                 <h1 className={`text-xl my-4`}>You not login!</h1>
                 <div className={`flex justify-center`}>
-                  <Link href={PAGES.LOGIN}>
+                  <a href={PAGES.LOGIN} target="_self">
                     <Button type="button">Login</Button>
-                  </Link>
+                  </a>
                 </div>
               </div>
             </div>

@@ -112,7 +112,7 @@ NEXTJS_API.interceptors.response.use(
 
 const fetcher = (url) => API.get(url).then((res) => res.data)
 
-const getData = (url: string) => {
+const getData = (url: string, opt?: any) => {
   const { data, error } = useSWR(url, fetcher, {
     shouldRetryOnError: false,
   })

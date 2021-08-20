@@ -17,6 +17,7 @@ import RoomUserJoin from '@/components/room/RoomUserJoin'
 import RoomSoloMode from '@/components/room/RoomSoloMode'
 import RoomResult from '@/components/room/RoomResult'
 import Footer from '@/components/base/Footer'
+import { NextSeo } from 'next-seo'
 
 export default function RoomPage({ user }) {
   // Init
@@ -141,6 +142,13 @@ export default function RoomPage({ user }) {
 
   return (
     <>
+      <NextSeo
+        title={'Room ' + (room?.name || '')}
+        titleTemplate={`${
+          process.env.NODE_ENV === 'development' ? '[DEV]' : ''
+        } Onbai.online | %s`}
+      />
+
       <NavLoggedIn />
 
       <main className={`min-h-screen mb-24 `}>

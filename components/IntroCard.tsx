@@ -56,7 +56,12 @@ export default function IntroCard({}: Props): ReactElement {
         </div>
         <div>
           <div className="w-44 mx-auto">
-            <img className={`w-full`} src="/hot.svg" alt="" />
+            <img
+              className={`w-full`}
+              src="/hot.svg"
+              alt="intro"
+              loading="lazy"
+            />
           </div>
         </div>
         <div className={`flex mt-2 mb-6 justify-center`}>
@@ -73,7 +78,7 @@ export default function IntroCard({}: Props): ReactElement {
       <Modal isOpen={isShowModal} closeModal={() => setIsShowModal(false)}>
         <div>
           <div className={`w-44 mt-4 mb-2 mx-auto`}>
-            <img className={`w-full`} src="/new.svg" alt="" />
+            <img className={`w-full`} src="/new.svg" alt="new" loading="lazy" />
           </div>
 
           <div
@@ -82,7 +87,7 @@ export default function IntroCard({}: Props): ReactElement {
             <div
               className={` text-blue-500 text-2xl flex space-x-2 items-center`}
             >
-              <div> What you want create </div>
+              <div>What you want create</div>
             </div>
           </div>
 

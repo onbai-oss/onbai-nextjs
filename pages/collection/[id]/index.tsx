@@ -12,6 +12,7 @@ import toast from 'react-hot-toast'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { getPropsUserSever } from '@/utils/session'
 import Footer from '@/components/base/Footer'
+import { NextSeo } from 'next-seo'
 
 export default function CollectionPage({ user }) {
   const router = useRouter()
@@ -55,6 +56,12 @@ export default function CollectionPage({ user }) {
 
   return (
     <>
+      <NextSeo
+        title={'Collection ' + (collection?.title || '')}
+        titleTemplate={`${
+          process.env.NODE_ENV === 'development' ? '[DEV]' : ''
+        } Onbai.online | %s`}
+      />
       <NavLoggedIn />
       <main className={`min-h-screen`}>
         <div className={`my-6`}>
@@ -119,10 +126,7 @@ export default function CollectionPage({ user }) {
           <hr />
         </div>
 
-        <QuestionList
-          isAuthor={isAuthor}
-          onClickNew={() => setIsShowAddQuiz(true)}
-        />
+        <QuestionList />
       </main>
 
       {/* Modals */}

@@ -4,25 +4,18 @@ import CollectionLoader from './base/CollectionLoader'
 import { useRouter } from 'next/router'
 import { getData } from '@/utils/api'
 import { PAGES } from '@/utils/constant'
-import Button from './base/Button'
 import Pagination from './base/Pagination'
 import { Listbox } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 
-interface Props {
-  isAuthor?: boolean
-  onClickNew?
-}
+interface QuestionListProps {}
 
 const listSort = [
   { name: 'Newst', value: '-1' },
   { name: 'Oldest', value: '1' },
 ]
 
-export default function QuestionList({
-  isAuthor,
-  onClickNew,
-}: Props): ReactElement {
+export default function QuestionList({}: QuestionListProps): ReactElement {
   const [selected, setSelected] = useState(listSort[0])
 
   const router = useRouter()
@@ -121,7 +114,7 @@ export default function QuestionList({
         <div className={`grid grid-cols-1 grid-rows-1 gap-2`}>
           {isLoadingQuestion && !errorQuestion ? (
             <div className={`flex justify-center`}>
-              <CollectionLoader uniqueKey={'collection-loader'} />
+              <CollectionLoader />
             </div>
           ) : questions?.data?.length ? (
             questions?.data.map((i) => (
@@ -141,10 +134,9 @@ export default function QuestionList({
               className={`flex justify-center items-center animate__animated animate__fadeIn`}
             >
               <div>
-                <div>
+                <div className={`w-32 mx-auto`}>
                   <img
-                    width="175"
-                    className={`mx-auto`}
+                    className={`mx-auto w-full`}
                     src="/nodata_flower.png"
                     alt="no data"
                   />

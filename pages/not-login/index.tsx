@@ -1,10 +1,17 @@
 import Button from '@/components/base/Button'
 import { PAGES } from '@/utils/constant'
+import { NextSeo } from 'next-seo'
 import Link from 'next/link'
 
 export default function NotLoginPage() {
   return (
     <>
+      <NextSeo
+        title={'Please login to continue'}
+        titleTemplate={`${
+          process.env.NODE_ENV === 'development' ? '[DEV]' : ''
+        } Onbai.online | %s`}
+      />
       <main
         className={`p-4 flex min-h-screen justify-center items-start bg-green-500`}
       >

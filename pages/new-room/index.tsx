@@ -10,6 +10,7 @@ import { customAlphabet } from 'nanoid'
 import { pick } from 'lodash-es'
 import { getPropsUserSever } from '@/utils/session'
 import Footer from '@/components/base/Footer'
+import { NextSeo } from 'next-seo'
 
 export default function NewRoomPage({ user }) {
   const onSubmit = (e) => {
@@ -45,6 +46,12 @@ export default function NewRoomPage({ user }) {
 
   return (
     <>
+      <NextSeo
+        title={'New room'}
+        titleTemplate={`${
+          process.env.NODE_ENV === 'development' ? '[DEV]' : ''
+        } Onbai.online | %s`}
+      />
       <NavLoggedIn />
       <main className={`min-h-screen mb-24 sm:mb-0`}>
         <div className={`mt-4 w-40 mx-auto`}>
@@ -58,13 +65,13 @@ export default function NewRoomPage({ user }) {
         <section
           className={`font-semibold flex flex-col justify-center items-center `}
         >
-          <div className={`my-4  text-2xl text-center`}>New Room</div>
+          <div className={`mt-2 text-2xl text-center`}>New Room</div>
         </section>
 
         <section>
           <form
             onSubmit={onSubmit}
-            className={` px-4 w-full sm:w-96 mx-auto flex flex-col `}
+            className={`px-4 w-full sm:w-96 mx-auto flex flex-col `}
           >
             <fieldset>
               <label
@@ -91,6 +98,7 @@ export default function NewRoomPage({ user }) {
                 color="info"
                 icon="arrow-circle-right-outline"
                 type="submit"
+                className={`block w-full`}
               >
                 Create
               </Button>

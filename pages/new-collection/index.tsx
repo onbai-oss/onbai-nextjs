@@ -10,6 +10,7 @@ import { PAGES } from '@/utils/constant'
 import { getPropsUserSever } from '@/utils/session'
 import PleaseLogin from '@/components/PleaseLogin'
 import Footer from '@/components/base/Footer'
+import { NextSeo } from 'next-seo'
 
 export default function NewCollectionPage({ user }) {
   const router = useRouter()
@@ -56,15 +57,21 @@ export default function NewCollectionPage({ user }) {
 
   return (
     <>
-      <NavLoggedIn />
+      <NextSeo
+        title={isEdit ? 'Edit collection ' + title : 'New collection'}
+        titleTemplate={`${
+          process.env.NODE_ENV === 'development' ? '[DEV]' : ''
+        } Onbai.online | %s`}
+      />
 
+      <NavLoggedIn />
       <main className={`my-4 min-h-screen`}>
         <div
           className={`
             font-semibold flex flex-col justify-center items-center 
           `}
         >
-          <div className={`mt-4 w-40 mx-auto`}>
+          <div className={`mt-2 w-40 mx-auto`}>
             <img
               className={`w-full`}
               src="/nature.svg"
@@ -73,7 +80,7 @@ export default function NewCollectionPage({ user }) {
             />
           </div>
 
-          <div className={`my-2 text-2xl`}>
+          <div className={`mt-2 text-2xl`}>
             {isEdit ? 'Edit' : 'New'} collection{' '}
           </div>
         </div>

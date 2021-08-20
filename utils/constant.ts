@@ -4,7 +4,6 @@ export const PAGES = {
   DASHBOARD: '/dashboard',
   LOGIN: '/login',
   SIGNUP: '/signup',
-  FORGOT_PASSWORD: '/forgot-password',
   COLLECTION: '/collection',
   NEW_COLLECION: '/new-collection',
   EDIT_COLLECION: '/edit-collection',

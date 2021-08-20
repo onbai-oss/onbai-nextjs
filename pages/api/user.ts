@@ -1,5 +1,6 @@
 import { withIronSession } from 'next-iron-session'
 
+// save user infomation
 function handler(req, res, session) {
   const user = req.session.get('user')
   if (user) {
