@@ -9,17 +9,8 @@ declare global {
   var firebaseui: any
 }
 
-const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-}
-
 interface FirebaseUiLoginProps {}
 const FirebaseUiLogin: FC<FirebaseUiLoginProps> = ({}) => {
-  const LANGUAGE_CODE = 'en'
-
   const loadFirebaseui = () => {
     const config = {
       signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
@@ -68,33 +59,6 @@ const FirebaseUiLogin: FC<FirebaseUiLoginProps> = ({}) => {
   }, [])
   return (
     <>
-      {global.firebase ? null : (
-        <Script
-          src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"
-          strategy="beforeInteractive"
-        />
-      )}
-      {global.firebase?.auth ? null : (
-        <Script
-          src="https://www.gstatic.com/firebasejs/8.9.1/firebase-auth.js"
-          strategy="beforeInteractive"
-        />
-      )}
-
-      {global.firebaseui ? null : (
-        <Script
-          src={`https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth__${LANGUAGE_CODE}.js`}
-          onLoad={() => {
-            if (!firebase.apps.length) {
-              firebase.initializeApp(firebaseConfig)
-            } else {
-              firebase.app() // if already initialized, use that one
-            }
-            loadFirebaseui()
-          }}
-        />
-      )}
-
       <div className={`animate__animated animate__fadeInUp`}>
         <div id="firebaseui-auth-container"></div>
       </div>
