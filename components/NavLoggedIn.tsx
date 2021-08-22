@@ -1,13 +1,12 @@
 import { PAGES } from '@/utils/constant'
-import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import Button from './base/Button'
-
 import LogoLink from './base/LogoLink'
 import { Modal } from './base/Modal'
 import toast from 'react-hot-toast'
 import { app, NEXTJS_API } from '@/utils/api'
 import { userContext } from './auth/userProvider'
+import { firebaseLogout } from '@/utils/firebase'
 
 export interface INavLoggedInProps {}
 
@@ -29,21 +28,18 @@ export function NavLoggedIn({ ...props }: INavLoggedInProps) {
     setIsOpen(true)
   }
 
-  const onLogout = () => {
-    NEXTJS_API.post('api/logout').then((res) => {
-      if (res.data) {
-        app
-          .logout()
-          .then(() => {
-            toast.success('✨ Logout success.')
-            location.pathname = '/'
-          })
-          .catch((e) => {
-            console.error(e)
-            toast.error('💥 Logout error.')
-          })
-      }
-    })
+  const onLogout = async () => {
+    try {
+      await Promise.all([
+        NEXTJS_API.post('api/logout'),
+        firebaseLogout(),
+        app.logout(),
+      ])
+      location.pathname = PAGES.LANDING
+    } catch (error) {
+      console.error(error)
+      toast.error('💥 Logout error.')
+    }
   }
 
   return (
