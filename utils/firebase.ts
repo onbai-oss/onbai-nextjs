@@ -15,12 +15,11 @@ if (typeof window !== 'undefined' && !firebase.apps.length) {
   firebase.initializeApp(firebaseConfig)
 }
 
-const provider = new firebase.auth.GoogleAuthProvider()
-
-firebase.auth().useDeviceLanguage()
-
 export const onGoogleLogin = async () => {
   try {
+    const provider = new firebase.auth.GoogleAuthProvider()
+    firebase.auth().useDeviceLanguage()
+
     await firebase.auth().signInWithPopup(provider)
     if (!firebase.auth().currentUser) throw 'No User'
     toast.success('✨ Login success.')
