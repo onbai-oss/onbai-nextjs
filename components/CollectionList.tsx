@@ -14,7 +14,7 @@ import { debounce } from 'lodash-es'
 interface Props {}
 
 const listSort = [
-  { name: 'Newst', value: '-1' },
+  { name: 'Newest', value: '-1' },
   { name: 'Oldest', value: '1' },
 ]
 
