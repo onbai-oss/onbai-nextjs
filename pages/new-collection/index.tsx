@@ -2,7 +2,7 @@ import Button from '@/components/base/Button'
 import Input from '@/components/base/Input'
 import { useRouter } from 'next/router'
 import { NavLoggedIn } from '@/components/NavLoggedIn'
-import { FormEventHandler, useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 
 import { API } from '@/utils/api'
@@ -20,7 +20,7 @@ export default function NewCollectionPage({ user }) {
   const [title, setTitle] = useState('')
   const [desc, setDesc] = useState('')
 
-  const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
+  const onSubmit = (e) => {
     e.preventDefault()
     console.log('submit', e)
     const data = {
@@ -34,17 +34,15 @@ export default function NewCollectionPage({ user }) {
     ).then((res) => {
       console.log(res)
       toast.success(isEdit ? 'Updated!' : 'Collection created!')
-      router.push(PAGES.DASHBOARD)
+      router.push(PAGES.DASHBOARD).then(() => {})
     })
   }
-
-  const onColorPick = (e) => {}
 
   useEffect(() => {
     if (isEdit) {
       // TODO get data collection
       API.get('collection/' + id).then((res) => {
-        const { title, desc, color, icon } = res.data
+        const { title, desc } = res.data
         setTitle(title)
         setDesc(desc)
       })
@@ -107,7 +105,7 @@ export default function NewCollectionPage({ user }) {
               autoComplete="off"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-            ></Input>
+            />
           </fieldset>
           <fieldset className={`mt-6 grid grid-cols-1 grid-rows-1`}>
             <Button
@@ -121,7 +119,7 @@ export default function NewCollectionPage({ user }) {
         </form>
       </main>
 
-      <Footer></Footer>
+      <Footer />
     </>
   )
 }

@@ -11,7 +11,7 @@ import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 interface QuestionListProps {}
 
 const listSort = [
-  { name: 'Newst', value: '-1' },
+  { name: 'Newest', value: '-1' },
   { name: 'Oldest', value: '1' },
 ]
 
@@ -24,6 +24,7 @@ export default function QuestionList({}: QuestionListProps): ReactElement {
   const [page, setPage] = useState(0)
   const [limit, setLimit] = useState(10)
   const [search, setSearch] = useState('')
+
   const paginateQuery = `&$skip=${
     page * limit
   }&$limit=${limit}&question[$search]=${search}&$sort[createdAt]=${
@@ -42,12 +43,14 @@ export default function QuestionList({}: QuestionListProps): ReactElement {
   }
 
   const onClickQuestion = (questionID) => {
-    router.push({
-      pathname: `${id}${PAGES.EDIT_QUESTION}/${questionID}`,
-      query: {
-        mode: 'editSingle',
-      },
-    })
+    router
+      .push({
+        pathname: `${id}${PAGES.EDIT_QUESTION}/${questionID}`,
+        query: {
+          mode: 'editSingle',
+        },
+      })
+      .then(() => {})
   }
 
   return (

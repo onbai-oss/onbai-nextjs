@@ -12,13 +12,15 @@ import {
   SelectorIcon,
 } from '@heroicons/react/solid'
 import { Listbox } from '@headlessui/react'
+
 interface Props {
   isOpen
   onCloseModal
   onSelected
 }
+
 const listSort = [
-  { name: 'Newst', value: '-1' },
+  { name: 'Newest', value: '-1' },
   { name: 'Oldest', value: '1' },
 ]
 

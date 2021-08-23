@@ -10,16 +10,9 @@ import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import duration from 'dayjs/plugin/duration'
 import '../styles/globals.css'
+
 dayjs.extend(relativeTime)
 dayjs.extend(duration)
-
-const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-}
-const LANGUAGE_CODE = 'en'
 
 function App({ Component, pageProps }: AppProps) {
   const [user, setUser] = useState<any>(undefined)
@@ -38,19 +31,6 @@ function App({ Component, pageProps }: AppProps) {
       })
   }, [])
 
-  useEffect(() => {
-    if (firebaseLoad.length === 4) {
-      if (!firebase.apps.length) {
-        console.log('Init firebase')
-        firebase.initializeApp(firebaseConfig)
-        firebase.analytics()
-      } else {
-        console.log('Re-init firebase')
-        firebase.app()
-      }
-    }
-  }, [firebaseLoad])
-
   return (
     <>
       <Head>
@@ -67,32 +47,8 @@ function App({ Component, pageProps }: AppProps) {
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
         />
-        <link
-          type="text/css"
-          rel="stylesheet"
-          href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css"
-        />
       </Head>
 
-      {/* Firebase */}
-      <Script
-        onLoad={() => setFirebaseLoad((o) => [...o, 1])}
-        src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"
-      />
-      <Script
-        onLoad={() => setFirebaseLoad((o) => [...o, 2])}
-        src="https://www.gstatic.com/firebasejs/8.10.0/firebase-analytics.js"
-      />
-      <Script
-        onLoad={() => setFirebaseLoad((o) => [...o, 3])}
-        src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"
-      />
-      <Script
-        src={`https://www.gstatic.com/firebasejs/ui/5.0.0/firebase-ui-auth__${LANGUAGE_CODE}.js`}
-        onLoad={() => {
-          setFirebaseLoad((o) => [...o, 4])
-        }}
-      />
       {/* Others */}
       <Script
         strategy="beforeInteractive"
