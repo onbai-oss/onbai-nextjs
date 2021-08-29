@@ -134,7 +134,7 @@ export default function QuestionList({}: QuestionListProps): ReactElement {
             ))
           ) : (
             <div
-              className={`flex justify-center items-center animate__animated animate__fadeIn`}
+              className={`flex my-4 justify-center items-center animate__animated animate__fadeIn`}
             >
               <div>
                 <div className={`w-32 mx-auto`}>
