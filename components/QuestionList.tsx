@@ -114,7 +114,7 @@ export default function QuestionList({}: QuestionListProps): ReactElement {
           </div>
         </div>
         {/* List questions */}
-        <div className={`grid grid-cols-1 grid-rows-1 gap-2`}>
+        <div className={`grid grid-cols-1 grid-rows-1 gap-2 mt-4 `}>
           {isLoadingQuestion && !errorQuestion ? (
             <div className={`flex justify-center`}>
               <CollectionLoader />
@@ -124,10 +124,10 @@ export default function QuestionList({}: QuestionListProps): ReactElement {
               <button
                 key={i.id}
                 onClick={() => onClickQuestion(i.id)}
-                className={`max-w-full w-96 mx-auto shadow rounded-md hover:shadow-md hover:border-blue-500 border-2 border-transparent border-solid   p-4`}
+                className={`max-w-full w-96 mx-auto shadow-md rounded-md hover:shadow-md hover:border-blue-500 border-2 border-transparent border-solid p-4`}
               >
                 <div
-                  className={`prose prose-sm`}
+                  className={`prose `}
                   dangerouslySetInnerHTML={{ __html: i.question }}
                 ></div>
               </button>

@@ -14,8 +14,7 @@ export function NavLoggedIn({ ...props }: INavLoggedInProps) {
   const user = userContext()
 
   useEffect(() => {
-    // @ts-ignore
-    eva && eva?.replace()
+    global.eva && global.eva?.replace()
   }, [])
 
   let [isOpen, setIsOpen] = useState(false)

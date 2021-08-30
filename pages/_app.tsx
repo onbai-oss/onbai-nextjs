@@ -10,6 +10,7 @@ import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import duration from 'dayjs/plugin/duration'
 import '../styles/globals.css'
+import 'tippy.js/dist/tippy.css'
 
 dayjs.extend(relativeTime)
 dayjs.extend(duration)
@@ -46,6 +47,10 @@ function App({ Component, pageProps }: AppProps) {
         <link
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+        />
+        <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.min.css"
         />
       </Head>
 

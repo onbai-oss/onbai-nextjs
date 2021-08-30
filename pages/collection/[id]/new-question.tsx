@@ -1,7 +1,7 @@
 import Button from '@/components/base/Button'
-import Editor from '@/components/Editor'
+import OnbaiEditor from '@/components/Editor'
 import { NavLoggedIn } from '@/components/NavLoggedIn'
-import { useEditor, EditorContent } from '@tiptap/react'
+import { useEditor } from '@tiptap/react'
 import { FormEventHandler, useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import StarterKit from '@tiptap/starter-kit'
@@ -13,6 +13,11 @@ import confetti from 'canvas-confetti'
 import { getPropsUserSever } from '@/utils/session'
 import Footer from '@/components/base/Footer'
 import { NextSeo } from 'next-seo'
+import CharacterCount from '@tiptap/extension-character-count'
+import TextStyle from '@tiptap/extension-text-style'
+import { Color } from '@tiptap/extension-color'
+import TextAlign from '@tiptap/extension-text-align'
+import Image from '@tiptap/extension-image'
 
 export default function NewQuiz({ user }) {
   const router = useRouter()
@@ -20,41 +25,54 @@ export default function NewQuiz({ user }) {
   const [isShowDelete, setIsShowDelete] = useState(false)
 
   const defaultEditor = {
-    extensions: [StarterKit],
+    extensions: [
+      StarterKit,
+      CharacterCount,
+      TextStyle,
+      Color,
+      Image,
+      TextAlign.configure({
+        types: ['heading', 'paragraph'],
+      }),
+    ],
     editorProps: {
       attributes: {
         spellcheck: 'false',
         class:
-          'onbai-editor prose prose-blue w-full max-w-full px-4 py-2 border-2 border-solid border-gray-600 hover:border-gray-500 rounded-md focus:outline-none focus:ring-1 ring-gray-600 ring-offset-2',
+          'onbai-editor prose w-full max-w-full px-4 pt-2 pb-4 border-2 border-solid border-gray-300 focus:outline-none rounded-b-md',
       },
     },
     content: ``,
     editable: true,
   }
-  const questionEditor = useEditor(defaultEditor)
-  const answerEditor = useEditor(defaultEditor)
-  const hintEditor = useEditor(defaultEditor)
-  const explainEditor = useEditor(defaultEditor)
+  const questionEditor: any = useEditor(defaultEditor)
+  const answerEditor: any = useEditor(defaultEditor)
+  const hintEditor: any = useEditor(defaultEditor)
+  const explainEditor: any = useEditor(defaultEditor)
 
   useEffect(() => {
-    if (questionID) {
-      API.get(PAGES.QUESTION + `/${questionID}`).then((res) => {
-        const { answer, hint, explain, question } = res.data
+    try {
+      if (questionID) {
+        API.get(PAGES.QUESTION + `/${questionID}`).then((res) => {
+          const { answer, hint, explain, question } = res.data
 
-        questionEditor?.commands?.setContent(question)
-        answerEditor?.commands?.setContent(answer)
-        hintEditor?.commands?.setContent(hint)
-        explainEditor?.commands?.setContent(explain)
-      })
+          questionEditor?.commands.setContent(question)
+          answerEditor?.commands.setContent(answer)
+          hintEditor?.commands.setContent(hint)
+          explainEditor?.commands.setContent(explain)
+        })
+      }
+    } catch (error) {
+      console.error(error)
     }
   }, [questionID, questionEditor, answerEditor, hintEditor, explainEditor])
 
   const resetEditor = () => {
-    questionEditor?.commands?.setContent(``)
-    answerEditor?.commands?.setContent(``)
-    hintEditor?.commands?.setContent(``)
-    explainEditor?.commands?.setContent(``)
-    questionEditor?.commands?.focus()
+    questionEditor?.commands.setContent(``)
+    answerEditor?.commands.setContent(``)
+    hintEditor?.commands.setContent(``)
+    explainEditor?.commands.setContent(``)
+    questionEditor?.commands.focus()
   }
 
   const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
@@ -112,10 +130,8 @@ export default function NewQuiz({ user }) {
       />
       <NavLoggedIn />
       <main className={`min-h-screen`}>
-        <div
-          className={`h-32 font-semibold flex flex-col justify-center items-center bg-gradient-to-r from-green-600 to-green-500`}
-        >
-          <div className={`my-4 text-white text-2xl text-center`}>
+        <div className={`bg-green-500 p-4 text-white text-center`}>
+          <div className={`  font-semibold text-2xl `}>
             {questionID ? (
               <div>Edit question </div>
             ) : (
@@ -126,77 +142,84 @@ export default function NewQuiz({ user }) {
           </div>
         </div>
 
-        <form onSubmit={onSubmit} className={`p-4 max-w-2xl mx-auto`}>
-          <fieldset className={`my-2`}>
-            <label className={`my-2 flex items-center font-semibold`}>
-              <i data-eva="question-mark-outline" data-eva-fill="#1B324F"></i>
-              <span className={`mx-1`}>Question</span>
-              <span className={`text-red-500`}>*</span>
-            </label>
-            <Editor editor={questionEditor} />
-          </fieldset>
-
-          <fieldset className={`my-2`}>
-            <label className={`my-2 flex items-center font-semibold`}>
-              <i data-eva="edit-outline" data-eva-fill="#1B324F"></i>
-              <span className={`mx-1`}>Answer</span>
-              <span className={`text-red-500`}>*</span>
-            </label>
-            <Editor editor={answerEditor} />
-          </fieldset>
-
-          <fieldset className={`my-2`}>
-            <label className={`my-2 flex items-center font-semibold`}>
-              <i data-eva="bulb-outline" data-eva-fill="#1B324F"></i>
-              <span className={`mx-1`}>Hint</span>
-            </label>
-            <Editor editor={hintEditor} />
-          </fieldset>
-
-          <fieldset className={`my-2`}>
-            <label className={`my-2 flex items-center font-semibold`}>
-              <i data-eva="info-outline" data-eva-fill="#1B324F"></i>
-              <span className={`mx-1`}>Explain</span>
-            </label>
-            <Editor editor={explainEditor} />
-          </fieldset>
-
-          <div className={`animate__animated animate__fadeIn animate__faster`}>
-            <fieldset className={`mt-6 flex justify-center -mx-2`}>
-              <div className={`mx-2`}>
-                <Button
-                  color="info"
-                  icon="arrow-circle-right-outline"
-                  type="submit"
-                >
-                  {questionID ? 'Update' : 'Create'}
-                </Button>
-              </div>
+        <form onSubmit={onSubmit} className={`px-4 max-w-2xl mx-auto`}>
+          <div className={``}>
+            <fieldset className={`my-2`}>
+              <label className={`my-2 flex items-center font-semibold`}>
+                <i data-eva="question-mark-outline" data-eva-fill="#1B324F"></i>
+                <span className={`mx-1`}>Question</span>
+                <span className={`text-red-500`}>*</span>
+              </label>
+              <OnbaiEditor editor={questionEditor} />
             </fieldset>
 
-            <div className={`mt-4`}>
-              <hr />
-            </div>
+            <fieldset className={`my-2`}>
+              <label className={`my-2 flex items-center font-semibold`}>
+                <i data-eva="edit-outline" data-eva-fill="#1B324F"></i>
+                <span className={`mx-1`}>Answer</span>
+                <span className={`text-red-500`}>*</span>
+              </label>
+              <OnbaiEditor editor={answerEditor} />
+            </fieldset>
 
-            {/* <div className={`mt-4 flex justify-center`}>
+            <fieldset className={`my-2 hidden`}>
+              <label className={`my-2 flex items-center font-semibold`}>
+                <i data-eva="bulb-outline" data-eva-fill="#1B324F"></i>
+                <span className={`mx-1`}>Hint</span>
+              </label>
+              <OnbaiEditor editor={hintEditor} />
+            </fieldset>
+
+            <fieldset className={`my-2 hidden`}>
+              <label className={`my-2 flex items-center font-semibold`}>
+                <i data-eva="info-outline" data-eva-fill="#1B324F"></i>
+                <span className={`mx-1`}>Explain</span>
+              </label>
+              <OnbaiEditor editor={explainEditor} />
+            </fieldset>
+          </div>
+
+          <div>
+            <div
+              className={`animate__animated animate__fadeIn animate__faster`}
+            >
+              <fieldset className={`mt-6 flex justify-center -mx-2`}>
+                <div className={`mx-2`}>
+                  <Button
+                    color="info"
+                    icon="arrow-circle-right-outline"
+                    type="submit"
+                  >
+                    {questionID ? 'Update' : 'Create'}
+                  </Button>
+                </div>
+              </fieldset>
+
+              {/* <div className={`mt-4 flex justify-center`}>
             <Button icon="eye-outline" color="info-outline" type="button">
               Preview
             </Button>
           </div> */}
 
-            {questionID ? (
-              <div className={`mt-4 flex justify-center`}>
-                <Button
-                  color="danger-outline"
-                  icon="trash-outline"
-                  type="button"
-                  onClick={() => setIsShowDelete(true)}
-                >
-                  Delete
-                </Button>
-              </div>
-            ) : null}
+              {questionID ? (
+                <div className={`mb-10`}>
+                  <div className={`border-t-2 border-dashed my-4`}></div>
+                  <div className={`mt-4 flex justify-center`}>
+                    <Button
+                      color="danger-outline"
+                      icon="trash-outline"
+                      type="button"
+                      onClick={() => setIsShowDelete(true)}
+                    >
+                      Delete
+                    </Button>
+                  </div>
+                </div>
+              ) : null}
+            </div>
           </div>
+
+          <div></div>
         </form>
       </main>
 
