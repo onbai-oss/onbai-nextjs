@@ -13,22 +13,8 @@
   } */
 }
 
-.tiptap-custom-menubar button {
-  border: 1px solid black;
-  padding: 5px 8px;
-  margin: 5px;
-  border-radius: 4px;
-}
-.tiptap-custom-menubar button.is-active {
-  border: 1px solid #15af7c;
-  padding: 5px;
-  margin: 5px;
-  background: #15af7c;
-  color: white;
-}
-
 .onbai-editor {
-  min-height: 64px;
+  min-height: 100px;
 }
 
 /* Hidden arrow number input */
@@ -52,4 +38,9 @@
     /* The third layer */ 0 20px 0 -10px #eee,
     /* The third layer shadow */ 0 20px 1px -9px rgba(0, 0, 0, 0.15);
   /* Padding for demo purposes */
+}
+
+img.ProseMirror-selectednode {
+  cursor: pointer;
+  outline: 3px solid #68cef8;
 }

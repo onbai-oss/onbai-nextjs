@@ -1,6 +1,11 @@
-import firebase from 'firebase/app'
-import 'firebase/analytics'
-import 'firebase/auth'
+import { initializeApp } from 'firebase/app'
+import { getAnalytics } from 'firebase/analytics'
+import {
+  GoogleAuthProvider,
+  useDeviceLanguage,
+  signInWithPopup,
+  getAuth,
+} from 'firebase/auth'
 import { app, NEXTJS_API } from './api'
 import toast from 'react-hot-toast'
 
@@ -11,20 +16,24 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 }
 
-if (typeof window !== 'undefined' && !firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig)
+export const firebaseApp = initializeApp(firebaseConfig)
+export const firebaseAuth = getAuth(firebaseApp)
+
+export const firebaseAnalytics = () => {
+  if (process.browser) {
+    return getAnalytics(firebaseApp)
+  }
 }
 
 export const onGoogleLogin = async () => {
   try {
-    const provider = new firebase.auth.GoogleAuthProvider()
-    firebase.auth().useDeviceLanguage()
+    useDeviceLanguage(firebaseAuth)
+    const provider = new GoogleAuthProvider()
+    await signInWithPopup(firebaseAuth, provider)
+    if (!firebaseAuth.currentUser) throw 'No User'
 
-    await firebase.auth().signInWithPopup(provider)
-    if (!firebase.auth().currentUser) throw 'No User'
     toast.success('✨ Login success.')
-    //@ts-ignore
-    const idToken = await firebase.auth().currentUser.getIdToken(true)
+    const idToken = await firebaseAuth.currentUser.getIdToken(true)
     const { user } = await app.authenticate({
       strategy: 'firebase',
       access_token: idToken,
@@ -37,6 +46,4 @@ export const onGoogleLogin = async () => {
   }
 }
 
-export const firebaseLogout = () => firebase.auth().signOut()
-
-export default firebase
+export const firebaseLogout = () => firebaseAuth.signOut()

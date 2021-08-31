@@ -10,8 +10,7 @@ const Input: React.FC<IInputProps> = (props) => {
 
   useEffect(() => {
     if (icon) {
-      // @ts-ignore
-      eva && eva?.replace()
+      global.eva && global.eva?.replace()
     }
   }, [icon, disabled])
 

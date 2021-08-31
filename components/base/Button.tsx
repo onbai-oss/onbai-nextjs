@@ -30,8 +30,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
     useEffect(() => {
       if (icon) {
-        // @ts-ignore
-        eva && eva?.replace()
+        global.eva && global.eva?.replace()
       }
     }, [icon])
 
@@ -41,10 +40,10 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         className={`
       ${className ? className : ''}
-      appearance-none cursor-pointer outline-none 
-      px-4 py-2.5 font-semibold rounded 
+      appearance-none cursor-pointer outline-none
+      px-4 py-2.5 font-semibold rounded
       focus:ring-1 ring-gray-600 ring-offset-2
-      hover:shadow-md 
+      hover:shadow-md
       ${
         disabled
           ? outline
