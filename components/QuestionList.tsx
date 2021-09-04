@@ -1,12 +1,12 @@
-import React, { ReactElement, useState } from 'react'
-import Input from './base/Input'
-import CollectionLoader from './base/CollectionLoader'
-import { useRouter } from 'next/router'
 import { getData } from '@/utils/api'
 import { PAGES } from '@/utils/constant'
-import Pagination from './base/Pagination'
 import { Listbox } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
+import { useRouter } from 'next/router'
+import React, { ReactElement, useState } from 'react'
+import CollectionLoader from './base/CollectionLoader'
+import Input from './base/Input'
+import Pagination from './base/Pagination'
 
 interface QuestionListProps {}
 

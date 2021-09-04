@@ -15,7 +15,7 @@ const Textarea: React.FC<ITextareaProps> = (props) => {
         className={`
         appearance-none cursor-pointer outline-none
          pr-3 py-2 font-semibold rounded w-full
-        border-2 border-solid 
+        border-2 border-solid
         focus:ring-1 ring-gray-600 ring-offset-2
         pl-3
         ${disabled ? 'cursor-not-allowed' : ''}

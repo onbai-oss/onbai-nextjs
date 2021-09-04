@@ -1,24 +1,23 @@
-import React, { ReactElement } from 'react'
-import { useEffect, useState } from 'react'
+import UserList from '@/components/room/UserList'
 import { app } from '@/utils/api'
+import { ROOM } from '@/utils/constant'
+import { Disclosure } from '@headlessui/react'
 import {
-  QuestionMarkCircleIcon,
   AnnotationIcon,
-  FlagIcon,
   ClockIcon,
   CogIcon,
+  FlagIcon,
+  QuestionMarkCircleIcon,
 } from '@heroicons/react/outline'
-import { userContext } from '../auth/userProvider'
-import { roomContext } from './roomProvider'
-import { shuffle, filter, chunk, get } from 'lodash-es'
-import UserList from '@/components/room/UserList'
-import toast from 'react-hot-toast'
 import confetti from 'canvas-confetti'
-import { ROOM } from '@/utils/constant'
-import Button from '../base/Button'
-import { useInterval } from 'react-use'
 import dayjs from 'dayjs'
-import { Disclosure } from '@headlessui/react'
+import { chunk, filter, get, shuffle } from 'lodash-es'
+import React, { ReactElement, useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
+import { useInterval } from 'react-use'
+import { userContext } from '../auth/userProvider'
+import Button from '../base/Button'
+import { roomContext } from './roomProvider'
 
 interface Props {}
 

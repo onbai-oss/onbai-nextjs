@@ -19,7 +19,7 @@ export default function Pagination({
 
   const btnClass = `
   mx-1 border border-gray-300 shadow rounded-md bg-white py-2 px-4 text-sm font-semibold
-  hover:shadow-md hover:bg-blue-500 hover:text-white flex justify-center items-center 
+  hover:shadow-md hover:bg-blue-500 hover:text-white flex justify-center items-center
   `
 
   const onChange = (type) => {

@@ -1,13 +1,13 @@
-import { initializeApp } from 'firebase/app'
 import { getAnalytics } from 'firebase/analytics'
+import { initializeApp } from 'firebase/app'
 import {
-  GoogleAuthProvider,
-  useDeviceLanguage,
-  signInWithPopup,
   getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  useDeviceLanguage,
 } from 'firebase/auth'
-import { app, NEXTJS_API } from './api'
 import toast from 'react-hot-toast'
+import { app, NEXTJS_API } from './api'
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,

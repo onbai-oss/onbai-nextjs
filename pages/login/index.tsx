@@ -1,5 +1,5 @@
-import LogoLink from '@/components/base/LogoLink'
 import FirebaseUiLogin from '@/components/auth/FirebaseUiLogin'
+import LogoLink from '@/components/base/LogoLink'
 import { NextSeo } from 'next-seo'
 
 export default function LoginPage() {

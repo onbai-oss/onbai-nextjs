@@ -1,12 +1,12 @@
-import IntroCard from '@/components/IntroCard'
-import RoomList from '@/components/RoomList'
-import CollectionList from '@/components/CollectionList'
-import { NavLoggedIn } from '@/components/NavLoggedIn'
 import Footer from '@/components/base/Footer'
+import CollectionList from '@/components/CollectionList'
+import IntroCard from '@/components/IntroCard'
+import { NavLoggedIn } from '@/components/NavLoggedIn'
+import RoomList from '@/components/RoomList'
+import { PAGES } from '@/utils/constant'
 import { getPropsUserSever } from '@/utils/session'
 import { NextSeo } from 'next-seo'
 import Router from 'next/router'
-import { PAGES } from '@/utils/constant'
 
 export default function DashboardPage({ user }) {
   if (!user) {

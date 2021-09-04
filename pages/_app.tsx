@@ -1,16 +1,15 @@
 import { UserWrapper } from '@/components/auth/userProvider'
 import { app } from '@/utils/api'
-import type { AppProps } from 'next/app'
-import Script from 'next/script'
-import Head from 'next/head'
-import { useState } from 'react'
-import { useEffect } from 'react'
-import { Toaster } from 'react-hot-toast'
 import dayjs from 'dayjs'
-import relativeTime from 'dayjs/plugin/relativeTime'
 import duration from 'dayjs/plugin/duration'
-import '../styles/globals.css'
+import relativeTime from 'dayjs/plugin/relativeTime'
+import type { AppProps } from 'next/app'
+import Head from 'next/head'
+import Script from 'next/script'
+import { useEffect, useState } from 'react'
+import { Toaster } from 'react-hot-toast'
 import 'tippy.js/dist/tippy.css'
+import '../styles/globals.css'
 
 dayjs.extend(relativeTime)
 dayjs.extend(duration)
