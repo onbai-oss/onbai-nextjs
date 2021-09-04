@@ -1,11 +1,10 @@
+import feathers from '@feathersjs/client'
 import axios, { AxiosInstance } from 'axios'
 import Router from 'next/router'
 import toast from 'react-hot-toast'
-import { PAGES } from './constant'
-import useSWR from 'swr'
 import io from 'socket.io-client'
-import feathers from '@feathersjs/client'
-
+import useSWR from 'swr'
+import { PAGES } from './constant'
 /**
  * Feathers.js apis
  * docs: https://docs.feathersjs.com/api/client/rest.html#jquery

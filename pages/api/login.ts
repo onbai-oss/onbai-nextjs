@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { withIronSession, Session } from 'next-iron-session'
+import { Session, withIronSession } from 'next-iron-session'
 type NextIronRequest = NextApiRequest & { session: Session }
 
 async function handler(

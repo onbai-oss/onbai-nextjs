@@ -1,16 +1,15 @@
 import Button from '@/components/base/Button'
+import Footer from '@/components/base/Footer'
 import Input from '@/components/base/Input'
-import { useRouter } from 'next/router'
 import { NavLoggedIn } from '@/components/NavLoggedIn'
-import { useEffect, useState } from 'react'
-import toast from 'react-hot-toast'
-
+import PleaseLogin from '@/components/PleaseLogin'
 import { API } from '@/utils/api'
 import { PAGES } from '@/utils/constant'
 import { getPropsUserSever } from '@/utils/session'
-import PleaseLogin from '@/components/PleaseLogin'
-import Footer from '@/components/base/Footer'
 import { NextSeo } from 'next-seo'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
 
 export default function NewCollectionPage({ user }) {
   const router = useRouter()
@@ -66,7 +65,7 @@ export default function NewCollectionPage({ user }) {
       <main className={`my-4 min-h-screen`}>
         <div
           className={`
-            font-semibold flex flex-col justify-center items-center 
+            font-semibold flex flex-col justify-center items-center
           `}
         >
           <div className={`mt-2 w-40 mx-auto`}>

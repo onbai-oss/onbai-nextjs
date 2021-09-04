@@ -1,12 +1,12 @@
+import { app, NEXTJS_API } from '@/utils/api'
 import { PAGES } from '@/utils/constant'
+import { firebaseLogout } from '@/utils/firebase'
 import React, { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
+import { userContext } from './auth/userProvider'
 import Button from './base/Button'
 import LogoLink from './base/LogoLink'
 import { Modal } from './base/Modal'
-import toast from 'react-hot-toast'
-import { app, NEXTJS_API } from '@/utils/api'
-import { userContext } from './auth/userProvider'
-import { firebaseLogout } from '@/utils/firebase'
 
 export interface INavLoggedInProps {}
 

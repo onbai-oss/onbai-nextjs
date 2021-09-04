@@ -1,7 +1,7 @@
-import React from 'react'
-import { EditorContent } from '@tiptap/react'
-import styled from 'styled-components'
 import Tippy from '@tippyjs/react'
+import { EditorContent } from '@tiptap/react'
+import React from 'react'
+import styled from 'styled-components'
 import { colors } from 'tailwindcss/defaultTheme'
 
 interface Props {}

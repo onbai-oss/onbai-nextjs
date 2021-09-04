@@ -1,16 +1,16 @@
 import Button from '@/components/base/Button'
+import Footer from '@/components/base/Footer'
 import Input from '@/components/base/Input'
 import { NavLoggedIn } from '@/components/NavLoggedIn'
 import { API } from '@/utils/api'
 import { API_PATH, PAGES, ROOM } from '@/utils/constant'
+import { getPropsUserSever } from '@/utils/session'
+import confetti from 'canvas-confetti'
+import { pick } from 'lodash-es'
+import { customAlphabet } from 'nanoid'
+import { NextSeo } from 'next-seo'
 import Router from 'next/router'
 import toast from 'react-hot-toast'
-import confetti from 'canvas-confetti'
-import { customAlphabet } from 'nanoid'
-import { pick } from 'lodash-es'
-import { getPropsUserSever } from '@/utils/session'
-import Footer from '@/components/base/Footer'
-import { NextSeo } from 'next-seo'
 
 export default function NewRoomPage({ user }) {
   const onSubmit = (e) => {

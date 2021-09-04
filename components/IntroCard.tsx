@@ -1,12 +1,10 @@
 import { PAGES } from '@/utils/constant'
-import Link from 'next/link'
-import React, { ReactElement, useState } from 'react'
-import Button from './base/Button'
-import { Menu } from '@headlessui/react'
-import { Modal } from './base/Modal'
 import { FolderAddIcon, UserGroupIcon } from '@heroicons/react/solid'
 import { shuffle } from 'lodash-es'
-import { useEffect } from 'react'
+import Link from 'next/link'
+import React, { ReactElement, useEffect, useState } from 'react'
+import Button from './base/Button'
+import { Modal } from './base/Modal'
 
 interface Props {}
 

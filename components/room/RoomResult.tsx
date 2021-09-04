@@ -1,15 +1,14 @@
+import { app } from '@/utils/api'
+import { PAGES } from '@/utils/constant'
+import dayjs from 'dayjs'
+import { toArray } from 'lodash-es'
+import Link from 'next/link'
 import React, { ReactElement, useState } from 'react'
+import toast from 'react-hot-toast'
 import { userContext } from '../auth/userProvider'
 import Button from '../base/Button'
-import { roomContext } from './roomProvider'
-import { toArray } from 'lodash-es'
-import { app } from '@/utils/api'
-import toast from 'react-hot-toast'
-import router from 'next/router'
-import { PAGES } from '@/utils/constant'
-import Link from 'next/link'
 import { Modal } from '../base/Modal'
-import dayjs from 'dayjs'
+import { roomContext } from './roomProvider'
 
 interface Props {}
 

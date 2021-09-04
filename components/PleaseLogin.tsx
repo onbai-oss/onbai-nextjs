@@ -1,7 +1,7 @@
-import React, { ReactElement } from 'react'
 import Button from '@/components/base/Button'
 import { PAGES } from '@/utils/constant'
 import Link from 'next/link'
+import React, { ReactElement } from 'react'
 
 interface Props {}
 

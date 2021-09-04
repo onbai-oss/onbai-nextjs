@@ -1,18 +1,18 @@
 import Button from '@/components/base/Button'
+import Footer from '@/components/base/Footer'
 import Input from '@/components/base/Input'
 import { Modal } from '@/components/base/Modal'
 import { NavLoggedIn } from '@/components/NavLoggedIn'
 import QuestionList from '@/components/QuestionList'
 import { API, getData } from '@/utils/api'
 import { PAGES } from '@/utils/constant'
+import { getPropsUserSever } from '@/utils/session'
+import { NextSeo } from 'next-seo'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { FormEventHandler, useState } from 'react'
-import toast from 'react-hot-toast'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
-import { getPropsUserSever } from '@/utils/session'
-import Footer from '@/components/base/Footer'
-import { NextSeo } from 'next-seo'
+import toast from 'react-hot-toast'
 
 export default function CollectionPage({ user }) {
   const router = useRouter()

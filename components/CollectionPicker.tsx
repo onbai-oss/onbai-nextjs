@@ -1,17 +1,17 @@
 import { getData } from '@/utils/api'
-import React, { ReactElement, useState } from 'react'
-import Button from './base/Button'
-import Input from './base/Input'
-import Pagination from './base/Pagination'
-import GetDataError from './base/GetDataError'
-import { Modal } from './base/Modal'
-import { userContext } from './auth/userProvider'
+import { Listbox } from '@headlessui/react'
 import {
   CheckCircleIcon,
   CheckIcon,
   SelectorIcon,
 } from '@heroicons/react/solid'
-import { Listbox } from '@headlessui/react'
+import React, { ReactElement, useState } from 'react'
+import { userContext } from './auth/userProvider'
+import Button from './base/Button'
+import GetDataError from './base/GetDataError'
+import Input from './base/Input'
+import { Modal } from './base/Modal'
+import Pagination from './base/Pagination'
 
 interface Props {
   isOpen
