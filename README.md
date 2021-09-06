@@ -1,6 +1,6 @@
 # Onbai Next.js
 
-![GitHub](https://img.shields.io/github/license/001123/onbai-nextjs-dev?style=for-the-badge) ![David](https://img.shields.io/david/001123/onbai-nextjs-dev?style=for-the-badge) ![GitHub package.json version](https://img.shields.io/github/package-json/v/001123/onbai-nextjs-dev?style=for-the-badge) ![GitHub branch checks state](https://img.shields.io/github/checks-status/001123/onbai-nextjs-dev/main?style=for-the-badge)
+![GitHub](https://img.shields.io/github/license/001123/onbai-nextjs-dev?style=for-the-badge) ![GitHub package.json version](https://img.shields.io/github/package-json/v/001123/onbai-nextjs-dev?style=for-the-badge) ![GitHub branch checks state](https://img.shields.io/github/checks-status/001123/onbai-nextjs-dev/main?style=for-the-badge)
 ![Lines of code](https://img.shields.io/tokei/lines/github/001123/onbai-nextjs-dev?style=for-the-badge)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/001123/onbai-nextjs-dev?style=for-the-badge) ![Relative date](https://img.shields.io/date/1629018000?label=Created&style=for-the-badge)
 
@@ -29,5 +29,8 @@ Example `env.development.local`:
 NEXT_PUBLIC_API_URL = "http://192.168.1.97:3030/"
 SESSION_KEY = "complex_password_at_least_32_characters_long"
 SESSION_COOKIE_NAME = "onbai_user"
-NEXT_PUBLIC_OAUTH_URL="http://localhost:3030/oauth"
 ```
+
+## Server
+
+[Glitch](https://glitch.com/edit/#!/onbai-feathers)
